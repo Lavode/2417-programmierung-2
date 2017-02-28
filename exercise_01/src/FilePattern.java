@@ -12,6 +12,8 @@
  *
  */
 public class FilePattern {
+	private String pattern;
+
 	/**
 	 * Creates a new instance of the FilePattern class that filters
 	 * file names based on the given pattern.
@@ -20,7 +22,7 @@ public class FilePattern {
 	 * @see FilePattern
 	 */
 	public FilePattern(String pattern) {
-		// your implementation
+		this.pattern = pattern;
 	}
 
 	/**
@@ -29,7 +31,39 @@ public class FilePattern {
 	 * @return true if filename matches the pattern
 	 */
 	public boolean matches(String filename) {
-		throw new NotImplementedException();
+		String regex = globToRegex(this.pattern);
+		System.out.println(this.pattern + " -> " + regex);
+
+		return false;
 	}
-    
+
+	private String globToRegex(String glob) {
+		StringBuilder out = new StringBuilder();
+
+		for (char c : glob.toCharArray()) {
+			switch (c) {
+				case '*':
+					out.append(".*");
+					break;
+				case '?':
+					out.append(".");
+					break;
+				case '[':
+				case ']':
+				case '{':
+				case '}':
+					out.append("\\" + c);
+					break;
+				default:
+					out.append(c);
+			}
+		}
+
+		return out.toString();
+	}
+
+	public static void main(String[] args) {
+		FilePattern f = new FilePattern("te?st*with?[fu{}nny]*");
+		f.matches("foo");
+	}
 }
