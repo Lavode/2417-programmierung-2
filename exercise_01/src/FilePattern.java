@@ -35,14 +35,18 @@ public class FilePattern {
 	 * @return true if filename matches the pattern
 	 */
 	public boolean matches(String filename) {
-		String regex = globToRegex(this.pattern);
-		Pattern pattern = Pattern.compile(regex);
+		Pattern pattern = globToRegexPattern(this.pattern);
 		Matcher matcher = pattern.matcher(filename);
 
 		return matcher.matches();
 	}
 
-	private String globToRegex(String glob) {
+	/**
+	 * Convert a Bash-style Glob to a Java-compmatible Regex.
+	 * @param String glob glob which to convert to regex.
+	 * @return java.util.regex.Pattern compiled pattern.
+	 */
+	private Pattern globToRegexPattern(String glob) {
 		StringBuilder out = new StringBuilder();
 
 		for (char c : glob.toCharArray()) {
@@ -67,7 +71,7 @@ public class FilePattern {
 			}
 		}
 
-		return out.toString();
+		return Pattern.compile(out.toString());
 	}
 
 	public static void main(String[] args) {
