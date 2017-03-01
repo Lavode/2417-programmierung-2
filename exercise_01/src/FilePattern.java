@@ -1,3 +1,6 @@
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+
 /**
  * Filters file names using command-line wildcards.
  *
@@ -8,7 +11,8 @@
  * '*.md' matches all files with the markdown extension.
  * 'exercise_??.md' matches, for example, 'exercise_01.md'.
  * 
- * @author You!
+ * @author Pascal Gerig
+ * @author Michael Senn
  *
  */
 public class FilePattern {
@@ -32,9 +36,10 @@ public class FilePattern {
 	 */
 	public boolean matches(String filename) {
 		String regex = globToRegex(this.pattern);
-		System.out.println(this.pattern + " -> " + regex);
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(filename);
 
-		return false;
+		return matcher.matches();
 	}
 
 	private String globToRegex(String glob) {
