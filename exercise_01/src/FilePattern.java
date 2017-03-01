@@ -74,9 +74,4 @@ public class FilePattern {
 
 		return Pattern.compile(out.toString());
 	}
-
-	public static void main(String[] args) {
-		FilePattern f = new FilePattern("te?st*with?[fu{}nny]*");
-		f.matches("foo");
-	}
 }
