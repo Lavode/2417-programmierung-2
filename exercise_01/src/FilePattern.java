@@ -57,6 +57,8 @@ public class FilePattern {
 				case ']':
 				case '{':
 				case '}':
+				case '(':
+				case ')':
 				case '.':
 					out.append("\\" + c);
 					break;
