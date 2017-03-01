@@ -43,6 +43,9 @@ public class FilePattern {
 
 	/**
 	 * Convert a Bash-style Glob to a Java-compmatible Regex.
+	 *
+	 * This conversion supports basic globs only - namely `*`, `?` and
+	 * non-negated character classes (`[0-9]`, `[abc]`).
 	 * @param String glob glob which to convert to regex.
 	 * @return java.util.regex.Pattern compiled pattern.
 	 */
@@ -57,8 +60,6 @@ public class FilePattern {
 				case '?':
 					out.append(".");
 					break;
-				case '[':
-				case ']':
 				case '{':
 				case '}':
 				case '(':
