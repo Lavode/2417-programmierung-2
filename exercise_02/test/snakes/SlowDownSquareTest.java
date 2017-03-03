@@ -18,10 +18,12 @@ public class SlowDownSquareTest extends SquareTest {
 		game.movePlayer(2); // moves Jack
 		assertEquals(3, jack.position());
 		assertEquals(1, jill.position());
-		game.movePlayer(4); // moves Jack again, since he's on a RollBackSquare
+		game.movePlayer(4); // moves Jill
 		assertEquals(3, jack.position());
 		assertEquals(5, jill.position());
-		game.movePlayer(2); // now it'se Jill's turn
+		// Now it's Jack's turn - due to being on a SlowDown square, he
+		// should only move half this amount.
+		game.movePlayer(2);
 		assertEquals(4, jack.position());
 		assertEquals(5, jill.position());
 	}
