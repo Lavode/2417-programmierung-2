@@ -8,4 +8,7 @@ public class WormholeEntrance extends Square {
 		super(game, position);
 	}
 
+	public String squareLabel() {
+		return super.squareLabel() + " (Entrance)";
+	}
 }

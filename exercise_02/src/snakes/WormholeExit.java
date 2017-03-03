@@ -6,4 +6,7 @@ public class WormholeExit extends Square {
 		super(game, position);
 	}
 
+	public String squareLabel() {
+		return super.squareLabel() + " (Exit)";
+	}
 }
