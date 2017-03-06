@@ -18,3 +18,10 @@ public class WormholeEntrance extends Square {
 	}
 }
 
+<<<<<<< HEAD
+=======
+	public String squareLabel() {
+		return super.squareLabel() + " (Entrance)";
+	}
+}
+>>>>>>> fafddb92fdbf678022f3642fa7bf2c90d2adff9f

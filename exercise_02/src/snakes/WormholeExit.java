@@ -10,6 +10,7 @@ public class WormholeExit extends Square {
 		index = count;
 	}
 
+
 	@Override
 	public boolean isWormholeExit() {
 		return true;
@@ -20,4 +21,10 @@ public class WormholeExit extends Square {
 	public int getIndex(){
 		return index;
 	}
+
+
+	public String squareLabel() {
+		return super.squareLabel() + " (Exit)";
+	}
 }
+

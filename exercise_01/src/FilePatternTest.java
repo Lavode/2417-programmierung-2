@@ -176,4 +176,20 @@ public class FilePatternTest {
     @Test public void fMarkDotTxtShouldNotMatchDotTxt() {
         assertFalse(newFileFilter("f?.txt").matches(".txt"));
     }
+
+    @Test public void characterClassShouldMatchMatchingFiles() {
+	    FilePattern pattern = newFileFilter("test[12]");
+	    assertTrue(pattern.matches("test1"));
+	    assertTrue(pattern.matches("test2"));
+	    assertFalse(pattern.matches("test3"));
+	    assertFalse(pattern.matches("test"));
+    }
+
+    @Test public void characterRangeShouldMatchMatchingFiles() {
+	    FilePattern pattern = newFileFilter("test[1-3]");
+	    assertTrue(pattern.matches("test1"));
+	    assertTrue(pattern.matches("test3"));
+	    assertFalse(pattern.matches("test5"));
+	    assertFalse(pattern.matches("test"));
+    }
 }

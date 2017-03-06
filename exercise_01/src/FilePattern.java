@@ -1,3 +1,6 @@
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+
 /**
  * Filters file names using command-line wildcards.
  *
@@ -8,10 +11,13 @@
  * '*.md' matches all files with the markdown extension.
  * 'exercise_??.md' matches, for example, 'exercise_01.md'.
  * 
- * @author You!
+ * @author Pascal Gerig
+ * @author Michael Senn
  *
  */
 public class FilePattern {
+	private String pattern;
+
 	/**
 	 * Creates a new instance of the FilePattern class that filters
 	 * file names based on the given pattern.
@@ -22,7 +28,10 @@ public class FilePattern {
 	private String pattern;
 	
 	public FilePattern(String pattern) {
+<<<<<<< HEAD
 		// your implementation
+=======
+>>>>>>> fafddb92fdbf678022f3642fa7bf2c90d2adff9f
 		this.pattern = pattern;
 	}
 
@@ -32,6 +41,7 @@ public class FilePattern {
 	 * @return true if filename matches the pattern
 	 */
 	public boolean matches(String filename) {
+<<<<<<< HEAD
 		int i = 0;
 		int valueOfStar;
 		//boolean error = false;
@@ -89,6 +99,45 @@ public class FilePattern {
 		return true;
 		
 		//throw new NotImplementedException();
+=======
+		Pattern pattern = globToRegexPattern(this.pattern);
+		Matcher matcher = pattern.matcher(filename);
+
+		return matcher.matches();
 	}
-    
+
+	/**
+	 * Convert a Bash-style Glob to a Java-compmatible Regex.
+	 *
+	 * This conversion supports basic globs only - namely `*`, `?` and
+	 * non-negated character classes (`[0-9]`, `[abc]`).
+	 * @param String glob glob which to convert to regex.
+	 * @return java.util.regex.Pattern compiled pattern.
+	 */
+	private Pattern globToRegexPattern(String glob) {
+		StringBuilder out = new StringBuilder();
+
+		for (char c : glob.toCharArray()) {
+			switch (c) {
+				case '*':
+					out.append(".*");
+					break;
+				case '?':
+					out.append(".");
+					break;
+				case '{':
+				case '}':
+				case '(':
+				case ')':
+				case '.':
+					out.append("\\" + c);
+					break;
+				default:
+					out.append(c);
+			}
+		}
+
+		return Pattern.compile(out.toString());
+>>>>>>> fafddb92fdbf678022f3642fa7bf2c90d2adff9f
+	}
 }
