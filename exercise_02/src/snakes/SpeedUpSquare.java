@@ -8,4 +8,9 @@ public class SpeedUpSquare extends Square {
 	public String squareLabel() {
 		return super.squareLabel() + " (SpeedUp)";
 	}
+
+	@Override
+	public ISquare moveAndLand(int moves) {
+		return super.moveAndLand(moves * 2);
+	}
 }
