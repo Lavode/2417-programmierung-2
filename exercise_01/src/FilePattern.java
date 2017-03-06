@@ -19,8 +19,11 @@ public class FilePattern {
 	 * @param pattern the pattern used to filter file names.
 	 * @see FilePattern
 	 */
+	private String pattern;
+	
 	public FilePattern(String pattern) {
 		// your implementation
+		this.pattern = pattern;
 	}
 
 	/**
@@ -29,7 +32,63 @@ public class FilePattern {
 	 * @return true if filename matches the pattern
 	 */
 	public boolean matches(String filename) {
-		throw new NotImplementedException();
+		int i = 0;
+		int valueOfStar;
+		//boolean error = false;
+		boolean starfound = false;
+		//String copyFilename = filename;
+		//String copyPattern = this.pattern;
+		//check from beginning to '*' or end
+		if(this.pattern.length()>filename.length())
+		{
+			return false;
+		}
+		while(i<this.pattern.length() && !starfound)
+		{
+			if(this.pattern.charAt(i) == '*')
+			{
+				starfound = true;
+			}
+			else if(this.pattern.charAt(i) == '?' || this.pattern.charAt(i) == filename.charAt(i))
+			{
+				i++;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		valueOfStar = i;
+		if(!starfound && this.pattern.length()!= filename.length())
+		{
+			return false;
+		}
+		//check from end to '*'
+		if(starfound)
+		{
+			i = filename.length()-1;
+			int j = this.pattern.length()-1;
+			while(this.pattern.charAt(j)!='*')
+			{
+				if(this.pattern.charAt(j) == '&' || this.pattern.charAt(j) == filename.charAt(i))
+				{
+					i--;
+					j--;
+				}
+				else
+				{
+					return false;
+				}
+			}
+			if(filename.length() - (filename.length() - i -1) - valueOfStar <1)
+			{
+				return false;
+			}
+		}
+		
+		return true;
+		
+		//throw new NotImplementedException();
 	}
     
 }

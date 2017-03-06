@@ -41,6 +41,10 @@ public class Square implements ISquare {
 	public boolean isWormholeExit() {
 		return false;
 	}
+	
+	public boolean isWormholeEntrance(){
+		return false;
+	}
 
 	public String toString() {
 		return "[" + this.squareLabel() + this.player() + "]";
