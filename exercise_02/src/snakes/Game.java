@@ -36,7 +36,12 @@ public class Game {
 		game.setSquareToLadder(2, 4);
 		game.setSquareToLadder(6, 2);
 		game.setSquareToSnake(11, -6);
-		game.setSquare(3, new SlowDownSquare(game, 3));
+		game.setSquareToSlowDownSquare(3);
+		game.setSquareToSpeedUpSquare(5);
+		game.setSquareToWormholeEntrance(14);
+		game.setSquareToWormholeExit(4);
+		game.setSquareToWormholeExit(10);
+		game.setSquareToWormholeExit(13);
 		game.play();
 	}
 
@@ -134,23 +139,23 @@ public class Game {
 		this.setSquare(position, new Snake(transport, this, position));
 	}
 	//
-	public void setSquareToSlowDownSquare(int position, int transport) {
+	public void setSquareToSlowDownSquare(int position) {
 		this.setSquare(position, new SlowDownSquare(this, position));
 	}
 	
-	public void setSquareToSpeedUpSquare(int position, int transport) {
+	public void setSquareToSpeedUpSquare(int position) {
 		this.setSquare(position, new SpeedUpSquare(this, position));
 	}
 	
-	public void setSquareToWormholeEntrance(int position, int transport) {
+	public void setSquareToWormholeEntrance(int position) {
 		this.setSquare(position, new WormholeEntrance(this, position));
 	}
 	
-	public void setSquareToWormholeExit(int position, int transport) {
+	public void setSquareToWormholeExit(int position) {
 		this.setSquare(position, new WormholeExit(this, position));
 	}
 	
-	public void setSquareToRollBackSquare(int position, int transport) {
+	public void setSquareToRollBackSquare(int position) {
 		this.setSquare(position, new RollBackSquare(this, position));
 	}
 

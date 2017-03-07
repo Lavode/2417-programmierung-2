@@ -1,3 +1,10 @@
+/* Special Square
+ * 
+ * Provides following functionality:
+ * - First player to land on this square wins the game
+ * 
+ */
+
 package snakes;
 
 public class LastSquare extends Square {

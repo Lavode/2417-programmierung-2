@@ -1,3 +1,10 @@
+/* Special Square
+ * 
+ * Provides following functionality:
+ *  - Override of landHereOrGoHome method, player will be moved backwards a certain amount of squares
+ * 
+ */
+
 package snakes;
 
 import java.util.ArrayList;

@@ -1,3 +1,9 @@
+/*
+ * 
+ * I don't understand what this should be and do
+ * 
+ * 
+ */
 package snakes;
 
 public class RollBackSquare extends Square {

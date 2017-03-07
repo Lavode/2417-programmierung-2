@@ -1,3 +1,10 @@
+/* Special Square
+ * 
+ * Provides following functionality:
+ * - Override of landHereOrGoHome method, player will be moved forward a certain amount of squares
+ * 
+ */
+
 package snakes;
 
 public class Ladder extends Square {

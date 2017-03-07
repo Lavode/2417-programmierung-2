@@ -1,3 +1,10 @@
+/* Special Square
+ * 
+ * Provides following functionality:
+ * - Override on moveAndLand method, Players move goes double as far as normal
+ * 
+ */
+
 package snakes;
 
 public class SpeedUpSquare extends Square {

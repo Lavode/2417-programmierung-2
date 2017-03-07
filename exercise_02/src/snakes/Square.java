@@ -1,3 +1,10 @@
+/* Default Square
+ * 
+ * Provides following functionality:
+ * - Keeps Track of Players on this Square, provides methodes to enter/leave this square
+ * - Knows it's neighbours
+ * 
+ */
 package snakes;
 
 public class Square implements ISquare {
