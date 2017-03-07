@@ -14,7 +14,7 @@ public class SlowDownSquareTest extends SquareTest {
 	}
 
 	@Test
-	public void slowDownSquare() {
+	public void slowDownSquareHalvesNextMove() {
 		game.movePlayer(2); // moves Jack
 		assertEquals(3, jack.position());
 		assertEquals(1, jill.position());
