@@ -133,6 +133,26 @@ public class Game {
 	public void setSquareToSnake(int position, int transport) {
 		this.setSquare(position, new Snake(transport, this, position));
 	}
+	//
+	public void setSquareToSlowDownSquare(int position, int transport) {
+		this.setSquare(position, new SlowDownSquare(this, position));
+	}
+	
+	public void setSquareToSpeedUpSquare(int position, int transport) {
+		this.setSquare(position, new SpeedUpSquare(this, position));
+	}
+	
+	public void setSquareToWormholeEntrance(int position, int transport) {
+		this.setSquare(position, new WormholeEntrance(this, position));
+	}
+	
+	public void setSquareToWormholeExit(int position, int transport) {
+		this.setSquare(position, new WormholeExit(this, position));
+	}
+	
+	public void setSquareToRollBackSquare(int position, int transport) {
+		this.setSquare(position, new RollBackSquare(this, position));
+	}
 
 	public ISquare findSquare(int position, int moves) {
 		assert position + moves <= 2 * size - 1; // can't go more than size-1 moves backwards past end
