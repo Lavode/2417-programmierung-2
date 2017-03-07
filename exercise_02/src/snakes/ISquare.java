@@ -9,5 +9,5 @@ public interface ISquare {
 	public void leave(Player player);
 	public boolean isOccupied();
 	public ISquare landHereOrGoHome();
-	boolean isWormholeExit();
+	public boolean isWormholeExit();
 }

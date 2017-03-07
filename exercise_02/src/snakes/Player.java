@@ -33,7 +33,7 @@ public class Player {
 		square.enter(this);
 		return true;
 	}
-
+	
 	public String toString() {
 		return name;
 	}
