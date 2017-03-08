@@ -142,19 +142,19 @@ public class Game {
 	public void setSquareToSlowDownSquare(int position) {
 		this.setSquare(position, new SlowDownSquare(this, position));
 	}
-	
+
 	public void setSquareToSpeedUpSquare(int position) {
 		this.setSquare(position, new SpeedUpSquare(this, position));
 	}
-	
+
 	public void setSquareToWormholeEntrance(int position) {
 		this.setSquare(position, new WormholeEntrance(this, position));
 	}
-	
+
 	public void setSquareToWormholeExit(int position) {
 		this.setSquare(position, new WormholeExit(this, position));
 	}
-	
+
 	public void setSquareToRollBackSquare(int position) {
 		this.setSquare(position, new RollBackSquare(this, position));
 	}

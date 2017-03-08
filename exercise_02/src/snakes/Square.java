@@ -43,7 +43,7 @@ public class Square implements ISquare {
 	public ISquare landHereOrGoHome() {
 		return this.isOccupied() ? game.firstSquare() : this;
 	}
-	
+
 	public boolean isWormholeExit(){
 		return false;
 	}

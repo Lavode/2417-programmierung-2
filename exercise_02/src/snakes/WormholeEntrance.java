@@ -14,7 +14,7 @@ public class WormholeEntrance extends Square {
 	public WormholeEntrance(Game game, int position) {
 		super(game, position);
 	}
-	
+
 	@Override
 	public ISquare landHereOrGoHome() {
 		return this.destination().landHereOrGoHome();
@@ -26,7 +26,7 @@ public class WormholeEntrance extends Square {
 		int listPosition = generator.nextInt(length);
 		return game.wormholeExits().get(listPosition);
 	}
-	
+
 	public String squareLabel() {
 		return super.squareLabel() + " (Entrance)";
 	}
