@@ -1,7 +1,7 @@
 /*
  * 
- * I don't understand what this should be and do
- * 
+ * Square which, when standing on, causes the next move of a player to be
+ * backwards rather than forward.
  * 
  */
 package snakes;
