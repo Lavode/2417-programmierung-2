@@ -2,3 +2,14 @@
 ## Lab 01 ##
 **Grade:** ok <br>
 **Feedback**: Very nice and clean conversion of glob to regex, simple and elegant solution. Good job! Commit messages and size/contents of commits are also okay.
+
+
+## Lab 02 ##
+**Grade:**  revise<br>
+**Feedback**: Your implementation is again very nice and clean, and you made good use of the existing architecture, good job! I just added one little comment about the naming convention for constants (i.e. final instance variables, they SHOULD_BE_ALL_CAPS). Your RollAgainSquareTest is rather minimal (this is just a remark you don't have to extend the test). E.g. you could have tested what happens when Jill enters that field after Jack. I like the fact that you commented the test though, it helps to convey its purpose.<br>
+
+The problem are your class comments. First of all, they need to be of the form \/** ... \*/, rather than /* ... \*/, otherwise they are just comments (can only be seen right where they are written), instead of API documentation (can be seen when hovering over methods/classes, can be exported to HTML pages, etc). Further, you should be more specific. What do you mean by "player will be moved forward a certain amount of squares"? Who defines this "certain amount"? The square, the game, ...? And all child classes of Square are basically special squares, that’s sort of implied by the inheritance hierarchy. Also, don't talk about what methods a class provides and overrides, but what functionality it provides. E.g. a square defines its behaviour when entered or left by players, etc. Then, you don't always need to write "Provides following functionality:", because, except for annotations (@author, @version, …), this is what a class comment mainly talks about.<br>
+
+About your method comments: the comments about params and return values are fine, plus, you did write real Javadoc comments there (with two starts in the beginning). However, most of them aren’t just accessor methods, so you need to comment on how they modify the receiver’s (i.e. the square’s) state/behaviour, not just @params and @return. For example: moveAndLand() defines the square’s entire behaviour when being left by a player. Also, landHereOrGoHome() isn’t just there to be overridden, it defines a specific behaviour as well. Lastly, I wouldn’t say enter and leave are callback methods… <br>
+
+Please read the [doc comment guidelines](http://www.oracle.com/technetwork/java/javase/documentation/index-137868.html) again, improve your comments (on all of the square classes and the ISquare interface), and make sure they actually are Javadoc comments. Don’t spend too much time on this, but since it was an important part of this exercise, I need you to do some improvements. This shouldn’t take too long. Also, according to the exercise description, you need to add all the new fields to the Game.java at least once. You seem to have forgotten the RollAgainSquare, so please add that one the the game as well.
