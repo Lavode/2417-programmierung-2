@@ -20,7 +20,7 @@ public class ParserTest
 		assertEquals(
 			new ArrayList<Command>(
 				Arrays.asList(
-					northCommand(1)
+					Parser.northCommand(1)
 				)
 			),
 			cmdList
@@ -34,7 +34,7 @@ public class ParserTest
 		assertEquals(
 			new ArrayList<Command>(
 				Arrays.asList(
-					eastCommand(1)
+					Parser.eastCommand(1)
 				)
 			),
 			cmdList
@@ -48,7 +48,7 @@ public class ParserTest
 		assertEquals(
 			new ArrayList<Command>(
 				Arrays.asList(
-					southCommand(1)
+					Parser.southCommand(1)
 				)
 			),
 			cmdList
@@ -62,7 +62,7 @@ public class ParserTest
 		assertEquals(
 			new ArrayList<Command>(
 				Arrays.asList(
-					westCommand(1)
+					Parser.westCommand(1)
 				)
 			),
 			cmdList
@@ -76,10 +76,10 @@ public class ParserTest
 		assertEquals(
 			new ArrayList<Command>(
 				Arrays.asList(
-					northCommand(1),
-					southCommand(1),
-					westCommand(1),
-					northCommand(1)
+					Parser.northCommand(1),
+					Parser.southCommand(1),
+					Parser.westCommand(1),
+					Parser.northCommand(1)
 				)
 			),
 			cmdList
@@ -93,8 +93,8 @@ public class ParserTest
 		assertEquals(
 			new ArrayList<Command>(
 				Arrays.asList(
-					northCommand(3),
-					southCommand(12)
+					Parser.northCommand(3),
+					Parser.southCommand(12)
 				)
 			),
 			cmdList
@@ -104,22 +104,6 @@ public class ParserTest
 	@Test(expected = ParserException.class)
 	public void throwsParsereExceptionOnInvalidInput() throws ParserException  {
 		List<Command> cmdList = Parser.parse("giblbyboo 3\nsouth 12");
-	}
-
-	private Command northCommand(int count) {
-		return new Command(Command.Direction.NORTH, count);
-	}
-
-	private Command eastCommand(int count) {
-		return new Command(Command.Direction.EAST, count);
-	}
-
-	private Command southCommand(int count) {
-		return new Command(Command.Direction.SOUTH, count);
-	}
-
-	private Command westCommand(int count) {
-		return new Command(Command.Direction.WEST, count);
 	}
 }
 

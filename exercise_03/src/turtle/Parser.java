@@ -44,19 +44,19 @@ public class Parser
 		throw new ParserException();
 	}
 
-	private static Command northCommand(int count) {
+	protected static Command northCommand(int count) {
 		return new Command(Command.Direction.NORTH, count);
 	}
 
-	private static Command eastCommand(int count) {
+	protected static Command eastCommand(int count) {
 		return new Command(Command.Direction.EAST, count);
 	}
 
-	private static Command southCommand(int count) {
+	protected static Command southCommand(int count) {
 		return new Command(Command.Direction.SOUTH, count);
 	}
 
-	private static Command westCommand(int count) {
+	protected static Command westCommand(int count) {
 		return new Command(Command.Direction.WEST, count);
 	}
 }
