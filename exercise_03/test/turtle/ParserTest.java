@@ -102,8 +102,23 @@ public class ParserTest
 	}
 
 	@Test(expected = ParserException.class)
-	public void throwsParsereExceptionOnInvalidInput() throws ParserException  {
-		List<Command> cmdList = Parser.parse("giblbyboo 3\nsouth 12");
+	public void throwsParsereExceptionOnUnknownDirection() throws ParserException  {
+		List<Command> cmdList = Parser.parse("giblbyboo 3");
+	}
+
+	@Test(expected = ParserException.class)
+	public void throwsParserExceptionOnMissingNumber() throws ParserException  {
+		List<Command> cmdList = Parser.parse("north\n");
+	}
+
+	@Test(expected = ParserException.class)
+	public void throwsParserExceptionOnMissingDirection() throws ParserException  {
+		List<Command> cmdList = Parser.parse("12\n");
+	}
+
+	@Test(expected = ParserException.class)
+	public void throwsParserExceptionOnEmptyLine() throws ParserException  {
+		List<Command> cmdList = Parser.parse("\n");
 	}
 }
 
