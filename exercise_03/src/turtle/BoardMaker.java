@@ -1,8 +1,27 @@
 package turtle;
 
+import java.util.List;
+import java.util.ArrayList;
+import java.awt.Point;
+
 public class BoardMaker {
 	private boolean[][] board;
 	private final static int SIZE = 100;
+	private Point position;
+
+	private List<Command> cmdList;
+
+	public Point getPosition() {
+		return this.position;
+	}
+
+	public boolean currentField() {
+		return getFieldAt(this.position);
+	}
+
+	public boolean getFieldAt(Point position) {
+		return this.board[position.x][position.y];
+	}
 
 	/**
 	 * Parse the given turtle program and evaluate it. Render the trail as
@@ -13,32 +32,20 @@ public class BoardMaker {
 	 * @return SIZExSIZE boolean board, where true values denote "red trail".
 	 */
 	public boolean[][] makeBoardFrom(String turtleProgram) throws ParserException {
+		// Reset board
+		this.initialBoard();
 
-		// TODO: Read text below!
-		// You should handle parsing of the program in a different class.
-		// That class should create and store individual programs, which
-		// can then be executed.
-		//
-		// An example of how this method could be implemented follows.
-		// Please note that this is not real Java code; you will have
-		// to come up with your own classes and structures!
-		/*
-		// You can create a new board each time makeBoardFrom is called.
-		boolean[][] board = new boolean[SIZE][SIZE];
+		Program program = new Program(turtleProgram);
+		program.execute(this);
 
-		// Create a parser that accepts a program and creates individual
-		// programs.
-		CommandParser parser = new CommandParser();
-		parser.parse(turtleProgram);
+		return this.board;
+	}
 
-		// Iterate over the parsed commands and keep track of the turtle.
-		for each parsed command {
-			execute the command on the board and update the state of the turtle
-		}
-		*/
+	public boolean[][] initialBoard(int size) {
+		this.board = new boolean[size][size];
+		this.position = new Point(size / 2, size / 2);
 
-		// TODO: remove this and return a board instead
-		throw new UnsupportedOperationException();
+		return this.board;
 	}
 
 	/**
@@ -46,7 +53,74 @@ public class BoardMaker {
 	 * @return board, must be of size SIZExSIZE.
 	 */
 	public boolean[][] initialBoard() {
-		// TODO: remove this and return a board instead
-		throw new UnsupportedOperationException();
+		return this.initialBoard(SIZE);
+	}
+
+	public void moveUp(int count) {
+		for (int i = 1; i <= count; i++) {
+			this.moveUp();
+		}
+	}
+
+	public void moveUp() {
+		if (this.position.y == 0) {
+			this.position.y = this.board.length - 1;
+		} else {
+			this.position.y -= 1;
+		}
+		touchField();
+	}
+
+
+	public void moveDown(int count) {
+		for (int i = 1; i <= count; i++) {
+			this.moveDown();
+		}
+	}
+
+	public void moveDown() {
+		if (this.position.y == this.board.length - 1) {
+			this.position.y = 0;
+		} else {
+			this.position.y += 1;
+		}
+		touchField();
+	}
+
+
+	public void moveLeft(int count) {
+		for (int i = 1; i <= count; i++) {
+			this.moveLeft();
+		}
+	}
+
+	public void moveLeft() {
+		if (this.position.x == 0) {
+			this.position.x = this.board.length -1;
+		} else {
+			this.position.x -= 1;
+		}
+		touchField();
+	}
+
+
+	public void moveRight(int count) {
+		for (int i = 1; i <= count; i++) {
+			this.moveRight();
+		}
+	}
+
+	public void moveRight() {
+		if (this.position.x == this.board.length - 1) {
+			this.position.x = 0;
+		} else {
+			this.position.x += 1;
+		}
+		touchField();
+	}
+
+
+	private void touchField() {
+		this.board[this.position.x][this.position.y] = true;
 	}
 }
