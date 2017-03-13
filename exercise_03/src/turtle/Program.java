@@ -13,5 +13,8 @@ public class Program
 	}
 
 	public void execute(BoardMaker board) {
+		for (Command c : this.commandList) {
+			c.execute(board);
+		}
 	}
 }

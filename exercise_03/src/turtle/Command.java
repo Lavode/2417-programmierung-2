@@ -19,6 +19,23 @@ public class Command
 		this.count = count;
 	}
 
+	public void execute(BoardMaker board) {
+		switch(this.direction) {
+			case NORTH:
+				board.moveUp(this.count);
+				break;
+			case EAST:
+				board.moveRight(this.count);
+				break;
+			case SOUTH:
+				board.moveDown(this.count);
+				break;
+			case WEST:
+				board.moveLeft(this.count);
+				break;
+		}
+	}
+
 	public boolean equals(Object other) {
 		Command cmd = (Command)other;
 		return (cmd.direction == this.direction && cmd.count == this.count);
