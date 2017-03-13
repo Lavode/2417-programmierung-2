@@ -7,7 +7,7 @@
 package snakes;
 
 public class SlowDownSquare extends Square {
-	private final int slowDownFactor = 2; //@Silas: in Java, constants should be written in all-caps (e.g. SLOW_DOWN_FACTOR)
+	private final int SLOW_DOWN_FACTOR = 2;
 	public SlowDownSquare(Game game, int position) {
 		super(game, position);
 	}
@@ -17,7 +17,7 @@ public class SlowDownSquare extends Square {
 
 	@Override
 	public ISquare moveAndLand(int moves) {
-		int halfedMoves = moves / slowDownFactor;
+		int halfedMoves = moves / SLOW_DOWN_FACTOR;
 		if (halfedMoves == 0) {
 			halfedMoves = 1;
 		}
