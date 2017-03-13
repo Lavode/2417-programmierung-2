@@ -8,49 +8,55 @@ import java.util.Scanner;
 
 public class Parser
 {
-	static Pattern MOVE_NORTH = Pattern.compile("^north ([0-9]+)$");
-	static Pattern MOVE_EAST  = Pattern.compile("^east ([0-9]+)$");
-	static Pattern MOVE_SOUTH = Pattern.compile("^south ([0-9]+)$");
-	static Pattern MOVE_WEST  = Pattern.compile("^west ([0-9]+)$");
+	static Pattern COMMAND_PATTERN = Pattern.compile("^(north|east|south|west) ([0-9]+)$");
 
-	public static List<Command> parse(String program) {
+	public static List<Command> parse(String program) throws ParserException {
 		List<Command> cmdList = new ArrayList<Command>();
 
 		Scanner scanner = new Scanner(program);
 
 		while (scanner.hasNextLine()) {
 			String cmd = scanner.nextLine();
-
-			if (MOVE_NORTH.matcher(cmd).matches()) {
-				cmdList.add(northCommand());
-
-			} else if (MOVE_EAST.matcher(cmd).matches()) {
-				cmdList.add(eastCommand());
-
-			} else if (MOVE_SOUTH.matcher(cmd).matches()) {
-				cmdList.add(southCommand());
-
-			} else if (MOVE_WEST.matcher(cmd).matches()) {
-				cmdList.add(westCommand());
-			}
+			cmdList.add(parseCommand(cmd));
 		}
 
 		return cmdList;
 	}
 
-	private static Command northCommand() {
-		return new Command(Command.Direction.NORTH);
+	private static Command parseCommand(String cmd) throws ParserException {
+		Matcher matcher = COMMAND_PATTERN.matcher(cmd);
+		if (matcher.matches()) {
+			String cmdDirection = matcher.group(1);
+			int cmdCount = Integer.parseInt(matcher.group(2));
+
+			switch(cmdDirection) {
+				case "north":
+					return northCommand(cmdCount);
+				case "east":
+					return eastCommand(cmdCount);
+				case "south":
+					return southCommand(cmdCount);
+				case "west":
+					return westCommand(cmdCount);
+			}
+		}
+
+		throw new ParserException();
 	}
 
-	private static Command eastCommand() {
-		return new Command(Command.Direction.EAST);
+	private static Command northCommand(int count) {
+		return new Command(Command.Direction.NORTH, count);
 	}
 
-	private static Command southCommand() {
-		return new Command(Command.Direction.SOUTH);
+	private static Command eastCommand(int count) {
+		return new Command(Command.Direction.EAST, count);
 	}
 
-	private static Command westCommand() {
-		return new Command(Command.Direction.WEST);
+	private static Command southCommand(int count) {
+		return new Command(Command.Direction.SOUTH, count);
+	}
+
+	private static Command westCommand(int count) {
+		return new Command(Command.Direction.WEST, count);
 	}
 }
