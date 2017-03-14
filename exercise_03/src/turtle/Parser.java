@@ -8,10 +8,11 @@ import java.util.Scanner;
 
 public class Parser
 {
-	static Pattern COMMAND_PATTERN = Pattern.compile("^(north|east|south|west|north east|north west|south east|south west) ([0-9]+)$");
+	static Pattern MOVEMENT_COMMAND_PATTERN = Pattern.compile("^(north|east|south|west|north east|north west|south east|south west) ([0-9]+)$");
+	static Pattern JUMP_COMMAND_PATTERN = Pattern.compile("^jump ([0-9]+) ([0-9]+)$");
 
-	public static List<Command> parse(String program) throws ParserException {
-		List<Command> cmdList = new ArrayList<Command>();
+	public static List<ICommand> parse(String program) throws ParserException {
+		List<ICommand> cmdList = new ArrayList<ICommand>();
 
 		Scanner scanner = new Scanner(program);
 
@@ -23,8 +24,36 @@ public class Parser
 		return cmdList;
 	}
 
-	private static Command parseCommand(String cmd) throws ParserException {
-		Matcher matcher = COMMAND_PATTERN.matcher(cmd);
+	private static ICommand parseCommand(String cmd) throws ParserException {
+		ICommand command;
+
+		command = parseJumpCommand(cmd);
+
+		if (command == null) {
+			command = parseMovementCommand(cmd);
+		}
+
+		if (command != null) {
+			return command;
+		} else {
+			throw new ParserException();
+		}
+	}
+
+	private static JumpCommand parseJumpCommand(String cmd) {
+		Matcher matcher = JUMP_COMMAND_PATTERN.matcher(cmd);
+		if (matcher.matches()) {
+			int x = Integer.parseInt(matcher.group(1));
+			int y = Integer.parseInt(matcher.group(2));
+
+			return jumpCommand(x, y);
+		} else {
+			return null;
+		}
+	}
+
+	private static MovementCommand parseMovementCommand(String cmd) {
+		Matcher matcher = MOVEMENT_COMMAND_PATTERN.matcher(cmd);
 		if (matcher.matches()) {
 			String cmdDirection = matcher.group(1);
 			int cmdCount = Integer.parseInt(matcher.group(2));
@@ -48,39 +77,43 @@ public class Parser
 					return southWestCommand(cmdCount);
 			}
 		}
+		return null;
 
-		throw new ParserException();
 	}
 
-	protected static Command northCommand(int count) {
-		return new Command(Command.Direction.NORTH, count);
+	protected static MovementCommand northCommand(int count) {
+		return new MovementCommand(MovementCommand.Direction.NORTH, count);
 	}
 
-	protected static Command eastCommand(int count) {
-		return new Command(Command.Direction.EAST, count);
+	protected static MovementCommand eastCommand(int count) {
+		return new MovementCommand(MovementCommand.Direction.EAST, count);
 	}
 
-	protected static Command southCommand(int count) {
-		return new Command(Command.Direction.SOUTH, count);
+	protected static MovementCommand southCommand(int count) {
+		return new MovementCommand(MovementCommand.Direction.SOUTH, count);
 	}
 
-	protected static Command westCommand(int count) {
-		return new Command(Command.Direction.WEST, count);
+	protected static MovementCommand westCommand(int count) {
+		return new MovementCommand(MovementCommand.Direction.WEST, count);
 	}
 
-	protected static Command northEastCommand(int count) {
-		return new Command(Command.Direction.NORTH_EAST, count);
+	protected static MovementCommand northEastCommand(int count) {
+		return new MovementCommand(MovementCommand.Direction.NORTH_EAST, count);
 	}
 
-	protected static Command northWestCommand(int count) {
-		return new Command(Command.Direction.NORTH_WEST, count);
+	protected static MovementCommand northWestCommand(int count) {
+		return new MovementCommand(MovementCommand.Direction.NORTH_WEST, count);
 	}
 
-	protected static Command southEastCommand(int count) {
-		return new Command(Command.Direction.SOUTH_EAST, count);
+	protected static MovementCommand southEastCommand(int count) {
+		return new MovementCommand(MovementCommand.Direction.SOUTH_EAST, count);
 	}
 
-	protected static Command southWestCommand(int count) {
-		return new Command(Command.Direction.SOUTH_WEST, count);
+	protected static MovementCommand southWestCommand(int count) {
+		return new MovementCommand(MovementCommand.Direction.SOUTH_WEST, count);
+	}
+
+	protected static JumpCommand jumpCommand(int x, int y) {
+		return new JumpCommand(x, y);
 	}
 }

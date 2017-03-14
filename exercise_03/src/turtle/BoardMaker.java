@@ -10,8 +10,6 @@ public class BoardMaker {
 	private Point position;
 	private boolean autoTouch = true;
 
-	private List<Command> cmdList;
-
 	public Point getPosition() {
 		return this.position;
 	}
@@ -176,6 +174,11 @@ public class BoardMaker {
 			this.touchField();
 		}
 		this.autoTouch = true;
+	}
+
+	public void jump(int x, int y) {
+		this.position.x = x;
+		this.position.y = y;
 	}
 
 

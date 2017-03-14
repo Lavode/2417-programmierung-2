@@ -1,6 +1,6 @@
 package turtle;
 
-public class Command
+public class MovementCommand implements ICommand
 {
 	public enum Direction {
 		NORTH, EAST, SOUTH, WEST, NORTH_EAST, NORTH_WEST, SOUTH_EAST, SOUTH_WEST
@@ -9,12 +9,12 @@ public class Command
 	Direction direction;
 	int count;
 
-	public Command(Direction direction) {
+	public MovementCommand(Direction direction) {
 		this.direction = direction;
 		this.count = 1;
 	}
 
-	public Command(Direction direction, int count) {
+	public MovementCommand(Direction direction, int count) {
 		this.direction = direction;
 		this.count = count;
 	}
@@ -49,7 +49,7 @@ public class Command
 	}
 
 	public boolean equals(Object other) {
-		Command cmd = (Command)other;
+		MovementCommand cmd = (MovementCommand)other;
 		return (cmd.direction == this.direction && cmd.count == this.count);
 	}
 }
