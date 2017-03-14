@@ -1,7 +1,14 @@
 package turtle;
 
+/**
+ * A command which makes a player move a number of steps into one of the eight
+ * cardinal directions.
+ */
 public class MovementCommand implements ICommand
 {
+	/** 
+	 * Enum representing the eight cardinal directions.
+	 */
 	public enum Direction {
 		NORTH, EAST, SOUTH, WEST, NORTH_EAST, NORTH_WEST, SOUTH_EAST, SOUTH_WEST
 	}
@@ -9,16 +16,34 @@ public class MovementCommand implements ICommand
 	Direction direction;
 	int count;
 
+	/**
+	 * Initialize new instance of this class.
+	 *
+	 * Assumes number of steps to be `1`.
+	 *
+	 * @param direction Direction which to walk.
+	 */
 	public MovementCommand(Direction direction) {
 		this.direction = direction;
 		this.count = 1;
 	}
 
+	/**
+	 * Initialize new instance of this class.
+	 *
+	 * @param direction Direction which to walk.
+	 * @param count Number of steps which to take. Must be > 0.
+	 */
 	public MovementCommand(Direction direction, int count) {
+		assert(count > 0);
+
 		this.direction = direction;
 		this.count = count;
 	}
 
+	/**
+	 * Move player character according to given count and direction.
+	 */
 	public void execute(BoardMaker board) {
 		switch(this.direction) {
 			case NORTH:
@@ -48,6 +73,11 @@ public class MovementCommand implements ICommand
 		}
 	}
 
+	/** Compare commands for equality.
+	 *
+	 * Two commands are considered equal if their direction and number of
+	 * steps to take are equal.
+	 */
 	public boolean equals(Object other) {
 		MovementCommand cmd = (MovementCommand)other;
 		return (cmd.direction == this.direction && cmd.count == this.count);
