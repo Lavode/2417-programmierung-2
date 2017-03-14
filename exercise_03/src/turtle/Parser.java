@@ -6,11 +6,24 @@ import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 import java.util.Scanner;
 
+/**
+ * Fully-static (and stateless) class to parse a user-supplied Turtle program into a
+ * sequence of commands which can be executed against a game board.
+ */
 public class Parser
 {
-	static Pattern MOVEMENT_COMMAND_PATTERN = Pattern.compile("^(north|east|south|west|north east|north west|south east|south west) ([0-9]+)$");
-	static Pattern JUMP_COMMAND_PATTERN = Pattern.compile("^jump ([0-9]+) ([0-9]+)$");
+	private static Pattern MOVEMENT_COMMAND_PATTERN = Pattern.compile("^(north|east|south|west|north east|north west|south east|south west) ([0-9]+)$");
+	private static Pattern JUMP_COMMAND_PATTERN = Pattern.compile("^jump ([0-9]+) ([0-9]+)$");
 
+	/**
+	 * Parse a user-supplied Turtle-program, outputting a sequence of
+	 * commands - classes implementing the ICommand interfacec - which can
+	 * then be executed on a game board.
+	 *
+	 * @param program User-supplied program. Invalid input will lead to an exception.
+	 * @throws ParserException if the supplied input program is invalid.
+	 * @return List of commands corresponding to the entered program.
+	 */
 	public static List<ICommand> parse(String program) throws ParserException {
 		List<ICommand> cmdList = new ArrayList<ICommand>();
 

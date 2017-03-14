@@ -37,13 +37,24 @@ public class BoardMaker {
 		Program program = new Program(turtleProgram);
 		program.execute(this);
 
+		assert(this.board.length == SIZE);
 		return this.board;
 	}
 
+	/**
+	 * (Re)initialize board with given size.
+	 *
+	 * This will purge the board, allowing (or requiring) a fresh start.
+	 *
+	 * @param size Length of board. Must be > 0.
+	 */
 	public boolean[][] initialBoard(int size) {
+		assert(size > 0);
+
 		this.board = new boolean[size][size];
 		this.position = new Point(size / 2, size / 2);
 
+		assert(this.board.length == size);
 		return this.board;
 	}
 
@@ -55,12 +66,26 @@ public class BoardMaker {
 		return this.initialBoard(SIZE);
 	}
 
+	/** 
+	 * Move upwards.
+	 *
+	 * Hitting the border of the field will cause the character to wrap
+	 * around, appearing on the other side.
+	 *
+	 * @param count Number of steps to take. Must be > 0.
+	 */
 	public void moveUp(int count) {
+		assert(count > 0);
 		for (int i = 1; i <= count; i++) {
 			this.moveUp();
 		}
 	}
 
+	/**
+	 * Move one step upwards.
+	 *
+	 * Same wrap-around logic as with moveUpwards(int) applies.
+	 */
 	public void moveUp() {
 		if (this.position.y == 0) {
 			this.position.y = this.board.length - 1;
@@ -73,12 +98,26 @@ public class BoardMaker {
 	}
 
 
+	/** 
+	 * Move downwards.
+	 *
+	 * Hitting the border of the field will cause the character to wrap
+	 * around, appearing on the other side.
+	 *
+	 * @param count Number of steps to take. Must be > 0.
+	 */
 	public void moveDown(int count) {
+		assert(count > 0);
 		for (int i = 1; i <= count; i++) {
 			this.moveDown();
 		}
 	}
 
+	/**
+	 * Move one step downwards.
+	 *
+	 * Same wrap-around logic as with moveDown(int) applies.
+	 */
 	public void moveDown() {
 		if (this.position.y == this.board.length - 1) {
 			this.position.y = 0;
@@ -91,12 +130,26 @@ public class BoardMaker {
 	}
 
 
+	/** 
+	 * Move towards the left.
+	 *
+	 * Hitting the border of the field will cause the character to wrap
+	 * around, appearing on the other side.
+	 *
+	 * @param count Number of steps to take. Must be > 0.
+	 */
 	public void moveLeft(int count) {
+		assert(count > 0);
 		for (int i = 1; i <= count; i++) {
 			this.moveLeft();
 		}
 	}
 
+	/**
+	 * Move one step to the left.
+	 *
+	 * Same wrap-around logic as with moveLeft(int) applies.
+	 */
 	public void moveLeft() {
 		if (this.position.x == 0) {
 			this.position.x = this.board.length -1;
@@ -109,12 +162,26 @@ public class BoardMaker {
 	}
 
 
+	/** 
+	 * Move towards the right.
+	 *
+	 * Hitting the border of the field will cause the character to wrap
+	 * around, appearing on the other side.
+	 *
+	 * @param count Number of steps to take. Must be > 0.
+	 */
 	public void moveRight(int count) {
+		assert(count > 0);
 		for (int i = 1; i <= count; i++) {
 			this.moveRight();
 		}
 	}
 
+	/**
+	 * Move one step to the right.
+	 *
+	 * Same wrap-around logic as with moveRight(int) applies.
+	 */
 	public void moveRight() {
 		if (this.position.x == this.board.length - 1) {
 			this.position.x = 0;
@@ -128,7 +195,16 @@ public class BoardMaker {
 
 
 	// @TODO: Lots of repetitive code here.
+	/** 
+	 * Move towards the top right.
+	 *
+	 * Hitting the border of the field will cause the character to wrap
+	 * around, appearing on the other side.
+	 *
+	 * @param count Number of steps to take. Must be > 0.
+	 */
 	public void moveUpRight(int count) {
+		assert(count > 0);
 		// As we want to draw a diagonal line, rather than a
 		// zig-zag-line, we'll disable automatic touching of fields.
 		this.autoTouch = false;
@@ -140,7 +216,16 @@ public class BoardMaker {
 		this.autoTouch = true;
 	}
 
+	/** 
+	 * Move towards the top left.
+	 *
+	 * Hitting the border of the field will cause the character to wrap
+	 * around, appearing on the other side.
+	 *
+	 * @param count Number of steps to take. Must be > 0.
+	 */
 	public void moveUpLeft(int count) {
+		assert(count > 0);
 		// As we want to draw a diagonal line, rather than a
 		// zig-zag-line, we'll disable automatic touching of fields.
 		this.autoTouch = false;
@@ -152,7 +237,16 @@ public class BoardMaker {
 		this.autoTouch = true;
 	}
 
+	/** 
+	 * Move towards the bottom right.
+	 *
+	 * Hitting the border of the field will cause the character to wrap
+	 * around, appearing on the other side.
+	 *
+	 * @param count Number of steps to take. Must be > 0.
+	 */
 	public void moveDownRight(int count) {
+		assert(count > 0);
 		// As we want to draw a diagonal line, rather than a
 		// zig-zag-line, we'll disable automatic touching of fields.
 		this.autoTouch = false;
@@ -164,7 +258,16 @@ public class BoardMaker {
 		this.autoTouch = true;
 	}
 
+	/** 
+	 * Move towards the bottom left.
+	 *
+	 * Hitting the border of the field will cause the character to wrap
+	 * around, appearing on the other side.
+	 *
+	 * @param count Number of steps to take. Must be > 0.
+	 */
 	public void moveDownLeft(int count) {
+		assert(count > 0);
 		// As we want to draw a diagonal line, rather than a
 		// zig-zag-line, we'll disable automatic touching of fields.
 		this.autoTouch = false;
@@ -176,7 +279,16 @@ public class BoardMaker {
 		this.autoTouch = true;
 	}
 
+	/**
+	 * Jump to position on the field.
+	 *
+	 * @param x X coordinate. Must be >= 0.
+	 * @param y Y coordinate. Must be >= 0.
+	 */
 	public void jump(int x, int y) {
+		assert(x >= 0);
+		assert(y >= 0);
+
 		this.position.x = x;
 		this.position.y = y;
 	}
