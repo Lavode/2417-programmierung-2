@@ -1,7 +1,6 @@
-/* Special Square
+/** Special Square
  * 
- * Provides following functionality:
- * - Override of landHereOrGoHome method, instead of landing on this Square the Player lands on random WormholeExit Square
+ *A field which, upon being entered by a player, causes the player to teleport to a random selected WormholeExit square
  * 
  */
 

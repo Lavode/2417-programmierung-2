@@ -1,4 +1,4 @@
-/*
+/**
  * 
  * A field which, upon being entered by a player, causes the player to roll a
  * second time.

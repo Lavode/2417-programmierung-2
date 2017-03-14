@@ -1,7 +1,7 @@
-/* Special Square
+/** Special Square
  * 
- * Provides following functionality:
- * - If a player lands on a WormholeEntrance Square, he will automatically be moved to a WormholeExit square
+ * A field which, upon being entered by a player, does nothing special, but in case of a player entering a WormholeEntrance square, he will be teleportet to
+ * eighter this or another WormholeExit square.
  * 
  */
 

@@ -1,4 +1,4 @@
-/*
+/**
  * 
  * Square which, when standing on, causes the next move of a player to be
  * backwards rather than forward.

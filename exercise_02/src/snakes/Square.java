@@ -1,9 +1,5 @@
-/* Default Square
- * 
- * Provides following functionality:
- * - Keeps Track of Players on this Square, provides methodes to enter/leave this square
- * - Knows it's neighbours
- * 
+/** 
+ * 	A square which allowes a maximum of one player to stand on it. In case a second player tries to land when it's occupied, the player is beeing sent to the first square.
  */
 package snakes;
 

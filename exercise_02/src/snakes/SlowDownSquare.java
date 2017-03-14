@@ -1,8 +1,5 @@
-/* Special Square
- * 
- * Provides following functionality:
- * - Override on moveAndLand method, Players move only goes half as far as normal
- * 
+/** 
+ * A field which, upon being entered by a player, causes the player to only move half the amount of the number delivered by the die but at least one.
  */
 package snakes;
 

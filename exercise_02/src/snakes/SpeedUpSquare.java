@@ -1,8 +1,5 @@
-/* Special Square
- * 
- * Provides following functionality:
- * - Override on moveAndLand method, Players move goes double as far as normal
- * 
+/** 
+ * 	A field which, upon being entered by a player, causes the player to roll move double as far as the number provided by the die.
  */
 
 package snakes;
