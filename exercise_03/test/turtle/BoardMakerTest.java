@@ -76,4 +76,10 @@ public class BoardMakerTest
 		this.board.moveRight(9);
 		assertEquals(new Point(1, 2), this.board.getPosition());
 	}
+
+	@Test
+	public void jumpSetsPosition() {
+		this.board.jump(1, 4);
+		assertEquals(new Point(1, 4), this.board.getPosition());
+	}
 }
