@@ -8,6 +8,7 @@ public class BoardMaker {
 	private boolean[][] board;
 	private final static int SIZE = 100;
 	private Point position;
+	private boolean autoTouch = true;
 
 	private List<Command> cmdList;
 
@@ -68,7 +69,9 @@ public class BoardMaker {
 		} else {
 			this.position.y -= 1;
 		}
-		touchField();
+		if (this.autoTouch) {
+			this.touchField();
+		}
 	}
 
 
@@ -84,7 +87,9 @@ public class BoardMaker {
 		} else {
 			this.position.y += 1;
 		}
-		touchField();
+		if (this.autoTouch) {
+			this.touchField();
+		}
 	}
 
 
@@ -100,7 +105,9 @@ public class BoardMaker {
 		} else {
 			this.position.x -= 1;
 		}
-		touchField();
+		if (this.autoTouch) {
+			this.touchField();
+		}
 	}
 
 
@@ -116,7 +123,59 @@ public class BoardMaker {
 		} else {
 			this.position.x += 1;
 		}
-		touchField();
+		if (this.autoTouch) {
+			this.touchField();
+		}
+	}
+
+
+	// @TODO: Lots of repetitive code here.
+	public void moveUpRight(int count) {
+		// As we want to draw a diagonal line, rather than a
+		// zig-zag-line, we'll disable automatic touching of fields.
+		this.autoTouch = false;
+		for (int i = 1; i <= count; i++) {
+			this.moveRight();
+			this.moveUp();
+			this.touchField();
+		}
+		this.autoTouch = true;
+	}
+
+	public void moveUpLeft(int count) {
+		// As we want to draw a diagonal line, rather than a
+		// zig-zag-line, we'll disable automatic touching of fields.
+		this.autoTouch = false;
+		for (int i = 1; i <= count; i++) {
+			this.moveLeft();
+			this.moveUp();
+			this.touchField();
+		}
+		this.autoTouch = true;
+	}
+
+	public void moveDownRight(int count) {
+		// As we want to draw a diagonal line, rather than a
+		// zig-zag-line, we'll disable automatic touching of fields.
+		this.autoTouch = false;
+		for (int i = 1; i <= count; i++) {
+			this.moveRight();
+			this.moveDown();
+			this.touchField();
+		}
+		this.autoTouch = true;
+	}
+
+	public void moveDownLeft(int count) {
+		// As we want to draw a diagonal line, rather than a
+		// zig-zag-line, we'll disable automatic touching of fields.
+		this.autoTouch = false;
+		for (int i = 1; i <= count; i++) {
+			this.moveLeft();
+			this.moveDown();
+			this.touchField();
+		}
+		this.autoTouch = true;
 	}
 
 

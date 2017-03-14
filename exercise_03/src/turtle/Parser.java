@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class Parser
 {
-	static Pattern COMMAND_PATTERN = Pattern.compile("^(north|east|south|west) ([0-9]+)$");
+	static Pattern COMMAND_PATTERN = Pattern.compile("^(north|east|south|west|north east|north west|south east|south west) ([0-9]+)$");
 
 	public static List<Command> parse(String program) throws ParserException {
 		List<Command> cmdList = new ArrayList<Command>();
@@ -38,6 +38,14 @@ public class Parser
 					return southCommand(cmdCount);
 				case "west":
 					return westCommand(cmdCount);
+				case "north east":
+					return northEastCommand(cmdCount);
+				case "north west":
+					return northWestCommand(cmdCount);
+				case "south east":
+					return southEastCommand(cmdCount);
+				case "south west":
+					return southWestCommand(cmdCount);
 			}
 		}
 
@@ -58,5 +66,21 @@ public class Parser
 
 	protected static Command westCommand(int count) {
 		return new Command(Command.Direction.WEST, count);
+	}
+
+	protected static Command northEastCommand(int count) {
+		return new Command(Command.Direction.NORTH_EAST, count);
+	}
+
+	protected static Command northWestCommand(int count) {
+		return new Command(Command.Direction.NORTH_WEST, count);
+	}
+
+	protected static Command southEastCommand(int count) {
+		return new Command(Command.Direction.SOUTH_EAST, count);
+	}
+
+	protected static Command southWestCommand(int count) {
+		return new Command(Command.Direction.SOUTH_WEST, count);
 	}
 }

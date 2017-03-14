@@ -87,6 +87,23 @@ public class ParserTest
 	}
 
 	@Test
+	public void parsesBidirectionalCommands() throws ParserException  {
+		List<Command> cmdList = Parser.parse("north east 1\nnorth west 1\nsouth east 1\nsouth west 1\n");
+
+		assertEquals(
+			new ArrayList<Command>(
+				Arrays.asList(
+					Parser.northEastCommand(1),
+					Parser.northWestCommand(1),
+					Parser.southEastCommand(1),
+					Parser.southWestCommand(1)
+				)
+			),
+			cmdList
+		);
+	}
+
+	@Test
 	public void parsesCommandsWithArbitraryLengthParameter() throws ParserException  {
 		List<Command> cmdList = Parser.parse("north 3\nsouth 12");
 
@@ -120,6 +137,14 @@ public class ParserTest
 	public void throwsParserExceptionOnEmptyLine() throws ParserException  {
 		List<Command> cmdList = Parser.parse("\n");
 	}
+
+	@Test(expected = ParserException.class)
+	public void throwsParserExceptionOnInvalidBidirectionalDirection1() throws ParserException  {
+		List<Command> cmdList = Parser.parse("north south 1\n");
+	}
+
+	@Test(expected = ParserException.class)
+	public void throwsParserExceptionOnInvalidBidirectionalDirection2() throws ParserException  {
+		List<Command> cmdList = Parser.parse("east west 1\n");
+	}
 }
-
-
