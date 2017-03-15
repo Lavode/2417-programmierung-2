@@ -7,6 +7,9 @@ import java.util.regex.Matcher;
 import java.util.Scanner;
 
 /**
+ * @author Michael Senn
+ * @author Pascal Gerig
+ * 
  * Fully-static (and stateless) class to parse a user-supplied Turtle program into a
  * sequence of commands which can be executed against a game board.
  */
@@ -33,7 +36,7 @@ public class Parser
 			String cmd = scanner.nextLine();
 			cmdList.add(parseCommand(cmd));
 		}
-
+		scanner.close();
 		return cmdList;
 	}
 

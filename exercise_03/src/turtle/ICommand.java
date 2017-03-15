@@ -1,15 +1,14 @@
 package turtle;
 
 /**
- * An interface to be implemented by classes which are to be used as commands
+ * @author Pascal Gerig 
+ * @author Michael Senn
+ *
+ *  An interface to be implemented by classes which are to be used as commands
  * in the turtle games.
  *
  * Commands can be any type of instruction, like 'north 5', 'jump 12 5',
  * 'circle 3' etc.
- * 
- * @author Pascal Gerig 
- * @author Michael Senn
- *
  */
 public interface ICommand
 {

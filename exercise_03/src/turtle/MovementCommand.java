@@ -1,6 +1,9 @@
 package turtle;
 
 /**
+ * @author Michael Senn
+ * @author Pascal Gerig
+ * 
  * A command which makes a player move a number of steps into one of the eight
  * cardinal directions.
  */
@@ -13,8 +16,8 @@ public class MovementCommand implements ICommand
 		NORTH, EAST, SOUTH, WEST, NORTH_EAST, NORTH_WEST, SOUTH_EAST, SOUTH_WEST
 	}
 
-	Direction direction;
-	int count;
+	private Direction direction;
+	private int count;
 
 	/**
 	 * Initialize new instance of this class.

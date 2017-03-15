@@ -1,14 +1,29 @@
+
 package turtle;
 
-import java.util.List;
-import java.util.ArrayList;
 import java.awt.Point;
 
+
+/**
+ * @author Michael Senn
+ * @author Pascal Gerig 
+ *
+ *
+ *	Representation of the Board, handles the movement on this board.
+ *
+ *	Invariant: After first call of "initialBoard()" the position variable will be set at all time
+ */
 public class BoardMaker {
 	private boolean[][] board;
 	private final static int SIZE = 100;
 	private Point position;
 	private boolean autoTouch = true;
+	
+	
+	private void invariant()
+	{
+		assert this.getPosition() != null;
+	}
 
 	public Point getPosition() {
 		return this.position;
@@ -38,6 +53,7 @@ public class BoardMaker {
 		program.execute(this);
 
 		assert(this.board.length == SIZE);
+		this.invariant();
 		return this.board;
 	}
 
@@ -47,6 +63,7 @@ public class BoardMaker {
 	 * This will purge the board, allowing (or requiring) a fresh start.
 	 *
 	 * @param size Length of board. Must be > 0.
+	 * @return SIZExSIZE boolean board.
 	 */
 	public boolean[][] initialBoard(int size) {
 		assert(size > 0);
@@ -55,6 +72,7 @@ public class BoardMaker {
 		this.position = new Point(size / 2, size / 2);
 
 		assert(this.board.length == size);
+		this.invariant();
 		return this.board;
 	}
 
@@ -79,6 +97,7 @@ public class BoardMaker {
 		for (int i = 1; i <= count; i++) {
 			this.moveUp();
 		}
+		this.invariant();
 	}
 
 	/**
@@ -95,6 +114,7 @@ public class BoardMaker {
 		if (this.autoTouch) {
 			this.touchField();
 		}
+		this.invariant();
 	}
 
 
@@ -111,6 +131,7 @@ public class BoardMaker {
 		for (int i = 1; i <= count; i++) {
 			this.moveDown();
 		}
+		this.invariant();
 	}
 
 	/**
@@ -127,6 +148,7 @@ public class BoardMaker {
 		if (this.autoTouch) {
 			this.touchField();
 		}
+		this.invariant();
 	}
 
 
@@ -143,6 +165,7 @@ public class BoardMaker {
 		for (int i = 1; i <= count; i++) {
 			this.moveLeft();
 		}
+		this.invariant();
 	}
 
 	/**
@@ -159,6 +182,7 @@ public class BoardMaker {
 		if (this.autoTouch) {
 			this.touchField();
 		}
+		this.invariant();
 	}
 
 
@@ -175,6 +199,7 @@ public class BoardMaker {
 		for (int i = 1; i <= count; i++) {
 			this.moveRight();
 		}
+		this.invariant();
 	}
 
 	/**
@@ -191,6 +216,7 @@ public class BoardMaker {
 		if (this.autoTouch) {
 			this.touchField();
 		}
+		this.invariant();
 	}
 
 
@@ -214,6 +240,7 @@ public class BoardMaker {
 			this.touchField();
 		}
 		this.autoTouch = true;
+		this.invariant();
 	}
 
 	/** 
@@ -235,6 +262,7 @@ public class BoardMaker {
 			this.touchField();
 		}
 		this.autoTouch = true;
+		this.invariant();
 	}
 
 	/** 
@@ -256,6 +284,7 @@ public class BoardMaker {
 			this.touchField();
 		}
 		this.autoTouch = true;
+		this.invariant();
 	}
 
 	/** 
@@ -277,20 +306,24 @@ public class BoardMaker {
 			this.touchField();
 		}
 		this.autoTouch = true;
+		this.invariant();
 	}
 
 	/**
 	 * Jump to position on the field.
 	 *
-	 * @param x X coordinate. Must be >= 0.
-	 * @param y Y coordinate. Must be >= 0.
+	 * @param x X coordinate. Must be >= 0 and < board.size.
+	 * @param y Y coordinate. Must be >= 0 and < board.size.
 	 */
 	public void jump(int x, int y) {
 		assert(x >= 0);
 		assert(y >= 0);
+		assert(x < this.board.length);
+		assert(y < this.board.length);
 
 		this.position.x = x;
 		this.position.y = y;
+		this.invariant();
 	}
 
 

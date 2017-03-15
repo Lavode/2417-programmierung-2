@@ -2,6 +2,12 @@ package turtle;
 
 import java.util.List;
 
+/**
+ * @author Michael Senn
+ * @author Pascal Gerig
+ *
+ *	Representation of a collection of commands entered by the user. The object then parses the input and - if possible - executes the command
+ */
 public class Program
 {
 	private String program;

@@ -1,6 +1,9 @@
 package turtle;
 
 /**
+ * @author Michael Senn
+ * @author Pascal Gerig
+ * 
  * A command which makes the player character jump onto an arbitrary field,
  * without leaving a trace.
  */
