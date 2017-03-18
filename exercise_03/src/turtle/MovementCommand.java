@@ -34,7 +34,7 @@ public class MovementCommand implements ICommand
 	/**
 	 * Initialize new instance of this class.
 	 *
-	 * @param direction Direction which to walk.
+	 * @param direction Direction which to walk. (@Silas: you could/should also state and check the precondition for this param)
 	 * @param count Number of steps which to take. Must be > 0.
 	 */
 	public MovementCommand(Direction direction, int count) {
@@ -46,6 +46,10 @@ public class MovementCommand implements ICommand
 
 	/**
 	 * Move player character according to given count and direction.
+	 * 
+	 * @Silas: you have a parameter here, so you should state and check its preconditions. For example, what happens if board is null?
+	 * You should state whether or not you accept this case, and, if you do, how you will handle it. If you don't accept it, you should
+	 * state that explicitly, and then assert it not to be null.
 	 */
 	public void execute(BoardMaker board) {
 		switch(this.direction) {
@@ -80,6 +84,9 @@ public class MovementCommand implements ICommand
 	 *
 	 * Two commands are considered equal if their direction and number of
 	 * steps to take are equal.
+	 * 
+	 * @Silas: again, the contract... Granted, there's not much to check here, but
+	 * you'll still get an NPE if other == null
 	 */
 	public boolean equals(Object other) {
 		MovementCommand cmd = (MovementCommand)other;

@@ -23,7 +23,8 @@ public class Parser
 	 * commands - classes implementing the ICommand interfacec - which can
 	 * then be executed on a game board.
 	 *
-	 * @param program User-supplied program. Invalid input will lead to an exception.
+	 * @param program User-supplied program. Invalid input will lead to an exception. @Silas: maybe you should say what a valid input (or rather, turtle program) is, or where you 
+	 * 																							you'd find a definition.
 	 * @throws ParserException if the supplied input program is invalid.
 	 * @return List of commands corresponding to the entered program.
 	 */
