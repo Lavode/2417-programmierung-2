@@ -23,4 +23,4 @@ Please read the [doc comment guidelines](http://www.oracle.com/technetwork/java/
 
 One remark about invariants: you should always check them before AND after public method calls. Usually, you have a method <code>private boolean invariant(){...}</code> and then you can check <code>assert(invariant);</code> as first and last line in all public methods.
 
-Your UMLs are good too, not much to say about them. They are both accurate and exhaustive.
+Your UMLs are good too, they are both mostly accurate and exhaustive. You should maybe be more careful with composition vs. aggregation. For example, I think for program and ICommand, the composition makes sense, but between Program and Parser it's more of an aggregation (also, the diamond is most likely at the wrong end of the line there - a program doesn't have a parser, a parser has a program, right?). It's a fine line, but maybe you should have a look at this again. You don't need to revise anything though.
