@@ -3,7 +3,7 @@ package snakes;
 /**
  * A die for rolling random numbers
  */
-public class Die {
+public class Die implements IDie {
 	protected final int faces;
 
 	/**
@@ -15,11 +15,10 @@ public class Die {
 		this.faces = faces;
 	}
 
-	/**
-	 * Roll the die and obtain the result
-	 *
-	 * @return a random number between 1 and faces
+	/* (non-Javadoc)
+	 * @see snakes.IDie#roll()
 	 */
+	@Override
 	public int roll() {
 		int result = 1 + (int) (faces * Math.random());
 		assert result >= 1 && result <= faces;

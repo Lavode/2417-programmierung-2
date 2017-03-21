@@ -269,7 +269,7 @@ public class Game {
 		return exits;
 	}
 
-	public Die getDie() {
+	public IDie getDie() {
 		return die;
 	}
 
