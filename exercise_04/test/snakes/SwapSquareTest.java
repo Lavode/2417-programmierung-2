@@ -11,11 +11,16 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
 
 public class SwapSquareTest {
+	private Game game;
+
+	@Before
+	public void init() {
+		this.game = mock(Game.class);
+		when(this.game.isValidPosition(anyInt())).thenReturn(true);
+	}
+
 	@Test
 	public void landHereOrGoHomeSwapsPlayerWithNextPlayer() {
-		Game game = mock(Game.class);
-		when(game.isValidPosition(anyInt())).thenReturn(true);
-
 		StandardSquare sq1 = mock(StandardSquare.class);
 		Player player1 = mock(Player.class);
 		when(player1.position()).thenReturn(1);
@@ -30,5 +35,16 @@ public class SwapSquareTest {
 
 		SwapSquare testSquare = new SwapSquare(game, 2);
 		assertEquals(sq2, testSquare.landHereOrGoHome());
+	}
+
+	@Test
+	public void toStringReturnsUsefulRepresentation() {
+		Player player = mock(Player.class);
+		when(player.toString()).thenReturn("John");
+
+		SwapSquare sq = new SwapSquare(game, 1);
+		sq.enter(player);
+
+		assertEquals("[1 (Swap)<John>]", sq.toString());
 	}
 }

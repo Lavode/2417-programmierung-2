@@ -13,13 +13,18 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
 
 public class WormholeTest {
+	private Game game;
+
+	@Before
+	public void init() {
+		this.game = mock(Game.class);
+		when(this.game.isValidPosition(anyInt())).thenReturn(true);
+	}
+
 
 	@Test
 	public void wormholeTeleportsPlayerToRandomExit()
 	{
-		Game game = mock(Game.class);
-		when(game.isValidPosition(anyInt())).thenReturn(true);
-
 		List<Square> squareList = new LinkedList<Square>(
 				Arrays.asList(
 					new WormholeExitSquare(game, 3),
@@ -41,10 +46,27 @@ public class WormholeTest {
 	@Test
 	public void wormholeDoesNotTeleportPlayerIfNoExitsPresent()
 	{
-		Game game = mock(Game.class);
-		when(game.isValidPosition(anyInt())).thenReturn(true);
-
 		WormholeEntranceSquare sq = new WormholeEntranceSquare(game, 2);
 		assertEquals(sq, sq.landHereOrGoHome());
+	}
+
+	@Test
+	public void toStringReturnsUsefulRepresentation() {
+		Player player = mock(Player.class);
+		when(player.toString()).thenReturn("John");
+
+		WormholeEntranceSquare entrance = new WormholeEntranceSquare(game, 1);
+		WormholeExitSquare exit = new WormholeExitSquare(game, 2);
+
+		entrance.enter(player);
+		assertEquals("[1 (Entrance)<John>]", entrance.toString());
+
+		exit.enter(player);
+		assertEquals("[2 (Exit)<John>]", exit.toString());
+	}
+
+	@Test
+	public void wormholeExitShouldBeWormholeExit() {
+		assertTrue(new WormholeExitSquare(game, 1).isWormholeExit());
 	}
 }

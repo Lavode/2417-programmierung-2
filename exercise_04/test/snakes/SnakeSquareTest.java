@@ -13,14 +13,20 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
 
 public class SnakeSquareTest {
+	private Game game;
+
+	@Before
+	public void init() {
+		this.game = mock(Game.class);
+		when(this.game.isValidPosition(anyInt())).thenReturn(true);
+	}
+
 	@Test
 	public void testLandHereOrGoHomeDefault()
 	{
 		Square start = mock(Square.class);
 		when(start.landHereOrGoHome()).thenReturn(start);
 
-		Game game = mock(Game.class);
-		when(game.isValidPosition(anyInt())).thenReturn(true);
 		when(game.getSquare(1)).thenReturn(start);
 
 		SnakeSquare testSquare = new SnakeSquare(-1, game, 2);
@@ -30,18 +36,28 @@ public class SnakeSquareTest {
 	@Test (expected = AssertionError.class)
 	public void positiveTransportFailsContract()
 	{
-		Game game = mock(Game.class);
-		when(game.isValidPosition(anyInt())).thenReturn(true);
-
 		SnakeSquare testSquare = new SnakeSquare(1, game, 1);
 	}
 
 	@Test (expected = AssertionError.class)
 	public void transportLeadingOutsideOfBoardFailsContract()
 	{
-		Game game = mock(Game.class);
 		when(game.isValidPosition(anyInt())).thenReturn(false);
-
 		SnakeSquare testSquare = new SnakeSquare(-5, game, 1);
+	}
+
+	@Test
+	public void toStringReturnsUsefulRepresentation() {
+		StandardSquare dest = mock(StandardSquare.class);
+		when(dest.position()).thenReturn(1);
+		when(game.getSquare(1)).thenReturn(dest);
+
+		Player player = mock(Player.class);
+		when(player.toString()).thenReturn("John");
+
+		SnakeSquare sq = new SnakeSquare(-2, game, 3);
+		sq.enter(player);
+
+		assertEquals("[1<-3<John>]", sq.toString());
 	}
 }
