@@ -16,44 +16,32 @@ public class SnakeSquareTest {
 	@Test
 	public void testLandHereOrGoHomeDefault()
 	{
-		Game game = mock(Game.class);
-		Square testSquare;
 		Square start = mock(Square.class);
-		when(game.getSquare(1)).thenReturn(start);
-		when(game.isValidPosition(anyInt())).thenReturn(true);
-		when(game.firstSquare()).thenReturn(start);
 		when(start.landHereOrGoHome()).thenReturn(start);
-		testSquare = new SnakeSquare(-1,game, 2);
 
-		Square destination = testSquare.landHereOrGoHome();
-		assertEquals(start, destination);
-	}
-	
-	@Test (expected = AssertionError.class)
-	public void testNegativTransport()
-	{
 		Game game = mock(Game.class);
-		Square testSquare;
-		Square start = mock(Square.class);
-		Square end = mock(Square.class);
-		when(game.getSquare(2)).thenReturn(end);
 		when(game.isValidPosition(anyInt())).thenReturn(true);
-		when(game.firstSquare()).thenReturn(start);
-		when(end.landHereOrGoHome()).thenReturn(end);
-		testSquare = new SnakeSquare(1,game, 1);
+		when(game.getSquare(1)).thenReturn(start);
+
+		SnakeSquare testSquare = new SnakeSquare(-1, game, 2);
+		assertEquals(start, testSquare.landHereOrGoHome());
 	}
-	
+
 	@Test (expected = AssertionError.class)
-	public void testLargeTransport()
+	public void positiveTransportFailsContract()
 	{
 		Game game = mock(Game.class);
-		Square testSquare;
-		Square start = mock(Square.class);
-		Square end = mock(Square.class);
-		when(game.getSquare(1)).thenReturn(start);
+		when(game.isValidPosition(anyInt())).thenReturn(true);
+
+		SnakeSquare testSquare = new SnakeSquare(1, game, 1);
+	}
+
+	@Test (expected = AssertionError.class)
+	public void transportLeadingOutsideOfBoardFailsContract()
+	{
+		Game game = mock(Game.class);
 		when(game.isValidPosition(anyInt())).thenReturn(false);
-		when(game.firstSquare()).thenReturn(start);
-		when(start.landHereOrGoHome()).thenReturn(start);
-		testSquare = new LadderSquare(-5,game, 1);
+
+		SnakeSquare testSquare = new SnakeSquare(-5, game, 1);
 	}
 }
