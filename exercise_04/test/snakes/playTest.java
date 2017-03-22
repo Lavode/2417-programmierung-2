@@ -41,7 +41,7 @@ public class playTest {
 	}
 	
 	@Test (expected = AssertionError.class)
-	public void testMovePlayer2()
+	public void testMovePlayerAssertion()
 	{
 		Player player1 = new Player("Marcel");
 		Player player2 = new Player("Elias");
@@ -53,7 +53,7 @@ public class playTest {
 	}
 	
 	@Test
-	public void testMovePlayer3()
+	public void testMovePlayerOverEnd()
 	{
 		Player player1 = new Player("Marcel");
 		Player player2 = new Player("Elias");
@@ -66,7 +66,7 @@ public class playTest {
 	}
 	
 	@Test (expected = Error.class)
-	public void testWinner1()
+	public void testWinnerException()
 	{
 		Player player1 = new Player("Marcel");
 		Player player2 = new Player("Elias");
@@ -78,7 +78,7 @@ public class playTest {
 	}
 	
 	@Test
-	public void testWinner2()
+	public void testWinnerDefault()
 	{
 		Player player1 = new Player("Marcel");
 		Player player2 = new Player("Elias");
