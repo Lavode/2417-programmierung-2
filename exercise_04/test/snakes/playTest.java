@@ -12,21 +12,6 @@ import static org.mockito.Mockito.*;
 
 public class playTest {
 	
-	@Before
-	public void before()
-	{
-		
-		/*when(game.isValidPosition(anyInt())).thenReturn(true);
-		when(square1.moveAndLand(anyInt())).thenReturn(square2);
-		when(square2.moveAndLand(anyInt())).thenReturn(square2);
-		when(start.moveAndLand(anyInt())).thenReturn(square2);
-		
-		Square start = mock(Square.class);
-		Square square1 = mock(Square.class);
-		Square square2 = mock(Square.class);
-		*/
-	}
-	
 	@Test
 	public void testPlay()
 	{
