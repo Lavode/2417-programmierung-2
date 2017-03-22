@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
 
-public class playTest {
+public class PlayTest {
 	
 	@Test
 	public void testPlay()
@@ -65,8 +65,8 @@ public class playTest {
 		assertTrue(player1.position() == 2);
 	}
 	
-	@Test (expected = Error.class)
-	public void testWinnerException()
+	@Test(expected = GameNotOverException.class)
+	public void testWinnerException() throws GameNotOverException
 	{
 		Player player1 = new Player("Marcel");
 		Player player2 = new Player("Elias");
