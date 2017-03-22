@@ -26,7 +26,7 @@ public class Game {
 	/**
 	 * Single die instance that all players are required to use.
 	 */
-	private Die die;
+	private IDie die;
 
 	private boolean invariant() {
 		return squares.size() > 3
@@ -61,11 +61,12 @@ public class Game {
 		Queue<Player> players = new LinkedList<>();
 		players.add(new Player("Jack"));
 		players.add(new Player("Jill"));
+		IDie die = new Die(6);
 		Game game = new Game(15, players, 6);
 		game.setSquareToLadder(2, 4);
 		game.setSquareToLadder(6, 2);
 		game.setSquareToSnake(11, -6);
-		game.play();
+		game.play(die);
 	}
 
 	/**
@@ -75,7 +76,7 @@ public class Game {
 	 * and log statements to stdout and announces the winner once the
 	 * game is over.
 	 */
-	public void play() {
+	public void play(IDie die) {
 		System.out.println("Initial state: " + this);
 		while (this.notOver()) {
 			int roll = die.roll();
@@ -112,7 +113,7 @@ public class Game {
 	 * @param roll amount of squares to move
 	 */
 	public void movePlayer(int roll) {
-		assert roll>=1 && roll<= die.faces;
+		assert roll>=1 /*&& roll<= die.faces*/;
 		Player currentPlayer = players.peek();
 		currentPlayer.moveForward(roll);
 		players.remove(); // remove the player from the front
