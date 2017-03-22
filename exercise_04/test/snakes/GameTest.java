@@ -37,17 +37,60 @@ public class GameTest {
 	}
 
 	@Test
-	public void testPlayWithMockito()
+	public void testPlayWithMockito() throws GameNotOverException
 	{
-		Player player1 = new Player("Marcel");
-		Player player2 = new Player("Elias");
-		Queue<Player> players = new LinkedList<Player>();
-		players.add(player1);
-		players.add(player2);
-		Game game = new Game(4, players, 6);
+		/* I find it hard to mock the Player class here, as the
+		 * implementation of Game#play makes use of
+		 * Player#moveForward(), which has side-effects, which then
+		 * determine how long Game#play will go on.  I would have to
+		 * reimplemen half the business logic in my mock object, which
+		 * is rather undesireable. */
+		player1 = new Player("John");
+		player2 = new Player("George");
+
+		this.players = new LinkedList<Player>(
+				Arrays.asList(
+					player1,
+					player2
+				)
+		);
+
+		Game game = new Game(5, players, 6);
+
 		IDie die = mock(IDie.class);
 		when(die.roll()).thenReturn(1);
+
 		game.play(die);
+
+		assertEquals(player1, game.winner());
+	}
+
+	@Test
+	public void testPlayWithCustomMock() throws GameNotOverException
+	{
+		/* I find it hard to mock the Player class here, as the
+		 * implementation of Game#play makes use of
+		 * Player#moveForward(), which has side-effects, which then
+		 * determine how long Game#play will go on.  I would have to
+		 * reimplemen half the business logic in my mock object, which
+		 * is rather undesireable. */
+		player1 = new Player("John");
+		player2 = new Player("George");
+
+		this.players = new LinkedList<Player>(
+				Arrays.asList(
+					player1,
+					player2
+				)
+		);
+
+		Game game = new Game(5, players, 6);
+
+		IDie die = new MockDie();
+
+		game.play(die);
+
+		assertEquals(player1, game.winner());
 	}
 
 	@Test
