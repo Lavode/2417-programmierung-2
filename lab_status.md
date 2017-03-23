@@ -24,3 +24,10 @@ Please read the [doc comment guidelines](http://www.oracle.com/technetwork/java/
 One remark about invariants: you should always check them before AND after public method calls. Usually, you have a method <code>private boolean invariant(){...}</code> and then you can check <code>assert(invariant);</code> as first and last line in all public methods.
 
 Your UMLs are good too, they are both mostly accurate and exhaustive. You should maybe be more careful with composition vs. aggregation. For example, I think for program and ICommand, the composition makes sense, but between Program and Parser it's more of an aggregation (also, the diamond is most likely at the wrong end of the line there - a program doesn't have a parser, a parser has a program, right?). It's a fine line, but maybe you should have a look at this again. You don't need to revise anything though.
+
+
+## Lab 04 ##
+**Grade:** ok<br>
+**Feedback**: Well done, you tested all the relevant cases and achieved great coverage. At some point in GameTest you mentioned that you didn’t mock the Player, since you had to implement a lot of business logic. That’s definitely true. Personally, I don’t think frameworks like Mockito help you much there. However, if you really need a mock version of the player, you could create a custom mock like you did with MockDie. Regarding your comment on custom mock objects: the God class code smell is a good observation. Still, if you have such God classes, you can’t always avoid using them in tests, so you might have to mock them anyway. I would say having to use custom mocks might be a sign to check for God classes, and consider a refactoring if necessary, but it should not affect your testing behaviour.<br>
+
+One thing I missed in your statement were the advantages of mock frameworks. They seem to be more limited than whatever you can do by creating a custom mock, so why do people use them anyway?
