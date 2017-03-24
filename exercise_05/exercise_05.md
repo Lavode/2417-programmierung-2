@@ -53,7 +53,7 @@ Solomon Burke S 7 12 W
 Player names can include spaces, symbols have to be a single character, 
 coordinates are 1-indexed (that is, the top-left coordinate is (1, 1) and the 
 bottom right coordinate is (7, 12)), and targets are single characters 
-denoting the goal side (one of R, W, U, D, for right, left, up, down).
+denoting the goal side (one of R, L, U, D, for right, left, up, down).
 
 Hint: The regular expression `(.+) (.) (\d+) (\d+) (.)` matches the player 
 specification (the parentheses are used for grouping and allow you to access 
