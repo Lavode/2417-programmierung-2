@@ -1,4 +1,4 @@
-package exercise05;
+package quoridor;
 
 /**
  * Parses a Quoridor file specification and creates a {@link Game} instance.

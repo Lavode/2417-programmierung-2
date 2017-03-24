@@ -1,4 +1,4 @@
-package exercise05;
+package quoridor;
 
 /**
  * Renders a {@link Game} object.
