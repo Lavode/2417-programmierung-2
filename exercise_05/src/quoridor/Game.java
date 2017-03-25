@@ -1,6 +1,7 @@
 package quoridor;
 
 import java.awt.Point;
+import java.util.Arrays;
 
 
 /**
@@ -38,5 +39,29 @@ public class Game {
 
 	public int height() {
 		return this.height;
+	}
+
+	public Tile[][] tiles() {
+		/* It's a bit silly to wrap it in accessor, as it's a mutable
+		 * object. */
+		return this.tiles;
+	}
+
+	public boolean equals(Object other) {
+		if (!(other instanceof Game)) {
+			return false;
+		}
+
+		Game game = (Game)other;
+
+		return (
+				game.width() == this.width &&
+				game.height() == this.height &&
+				game.player1().equals(this.player1) &&
+				game.player2().equals(this.player2) &&
+				/* Array#equals() only works for shallow
+				 * arrays, so can't use it here. */
+				Arrays.deepEquals(game.tiles(), this.tiles)
+		);
 	}
 }

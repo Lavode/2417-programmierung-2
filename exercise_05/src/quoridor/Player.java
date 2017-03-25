@@ -22,4 +22,33 @@ public class Player {
 	public String name() {
 		return this.name;
 	}
+
+	public char sign() {
+		return this.sign;
+	}
+
+	public Point position() {
+		return this.position;
+	}
+
+	public Target target() {
+		return this.target;
+	}
+
+	public boolean equals(Object other) {
+		if (!(other instanceof Player)) {
+			return false;
+		}
+
+		Player player = (Player)other;
+
+		return (
+				player.name() == this.name &&
+				player.sign() == this.sign &&
+				/* awt.Point implemnents no meaningful equals() */
+				player.position().x == this.position.x &&
+				player.position().y == this.position.y &&
+				player.target() == this.target
+		);
+	}
 }
