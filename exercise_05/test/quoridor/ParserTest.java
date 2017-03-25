@@ -12,28 +12,32 @@ public class ParserTest
 {
 	@Test
 	public void parseHandlesSimpleBoard() {
-		String input = "7 9\nJohn J 1 1 R\nGeorge 3 4 D";
+		String input = "7 9\nJohn J 1 1 R\nGeorge G 3 4 D";
 		Game game = Parser.parse(input);
 
-		assertEquals(new Player("John", 'J', new Point(1, 1), Player.Target.RIGHT), game.player1());
-		assertEquals(new Player("George", 'G', new Point(3, 4), Player.Target.DOWN), game.player2());
+		assertEquals(new Player("John", 'J', new Point(1, 1), Player.Target.RIGHT), game.players()[0]);
+		assertEquals(new Player("George", 'G', new Point(3, 4), Player.Target.DOWN), game.players()[1]);
 		assertEquals(7, game.width());
 		assertEquals(9, game.height());
 	}
 
 	@Test
 	public void parseHandlesPlayerNameConsistingOfMultipleWords() {
-		String input = "7 9\nWill Smith J 1 1 R\nGeorge Orwell 3 4 D";
+		String input = "7 9\nWill Smith J 1 1 R\nGeorge Orwell G 3 4 D";
 		Game game = Parser.parse(input);
 
-		assertEquals("Will Smith", game.player1().name());
-		assertEquals("George Orwell", game.player2().name());
+		assertEquals("Will Smith", game.players()[0].name());
+		assertEquals("George Orwell", game.players()[1].name());
 	}
 
-	@Test(expected = ParserException.class)
-	public void parseThrowsExceptionIfMoreThanTwoPlayersListed() {
-		String input = "7 9\nJohn J 1 1 R\nGeorge 3 4 D\nWiliam 4 5 U\n";
-		Parser.parse(input);
+	@Test
+	public void parseHandlesMoreThanTwoPlayers() {
+		String input = "7 9\nJohn J 1 1 R\nGeorge G 3 4 D\nWilliam L 4 5 U\n";
+		Game game = Parser.parse(input);
+
+		assertEquals(new Player("John", 'J', new Point(1, 1), Player.Target.RIGHT), game.players()[0]);
+		assertEquals(new Player("George", 'G', new Point(3, 4), Player.Target.DOWN), game.players()[1]);
+		assertEquals(new Player("William", 'G', new Point(5, 6), Player.Target.UP), game.players()[2]);
 	}
 
 	@Test(expected = ParserException.class)
@@ -44,25 +48,25 @@ public class ParserTest
 
 	@Test(expected = ParserException.class)
 	public void parseThrowsExceptionIfInvalidTargetEncountered() {
-		String input = "7 9\nJohn J 1 1 X\nGeorge 3 4 D";
+		String input = "7 9\nJohn J 1 1 X\nGeorge G 3 4 W";
 		Parser.parse(input);
 	}
 
 	@Test(expected = ParserException.class)
 	public void parseThrowsExceptionOnNonNumericCoordinates() {
-		String input = "7 9\nJohn J 1 a R\nGeorge 3 4 D";
+		String input = "7 9\nJohn J 1 a R\nGeorge G 3 4 D";
 		Parser.parse(input);
 	}
 
 	@Test(expected = ParserException.class)
 	public void parseThrowsExceptionOnNonNumericBoardSize() {
-		String input = "7 a\nJohn J 1 1 R\nGeorge 3 4 D";
+		String input = "7 a\nJohn J 1 1 R\nGeorge G 3 4 D";
 		Parser.parse(input);
 	}
 
 	@Test(expected = ParserException.class)
 	public void parseThrowsExcceptionOnIncompleteLineEncountered() {
-		String input = "7 9\nJohn J 1 1 R\nGeorge 3";
+		String input = "7 9\nJohn J 1 1 R\nGeorge G 3";
 		Parser.parse(input);
 	}
 }

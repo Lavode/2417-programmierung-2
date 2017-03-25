@@ -2,14 +2,22 @@ package quoridor;
 
 import java.awt.Point;
 
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+import java.util.Scanner;
+
 /**
  * Parses a Quoridor file specification and creates a {@link Game} instance.
  */
 public class Parser {
-	public static Game parse(String input) {
-		Player p1 = new Player("John", 'J', new Point(1, 1), Player.Target.LEFT);
-		Player p2 = new Player("George", 'G', new Point(2, 2), Player.Target.DOWN);
+	private static Pattern BOARD_DIMENSION_PATTERN = Pattern.compile("^(\\d+) (\\d+)$");
+	private static Pattern PLAYER_ENTRY_PATTERN = Pattern.compile("^(.+) (.) (\\d+) (\\d+) ([RLUD])$");
 
-		return new Game(7, 7, p1, p2);
+	public static Game parse(String input) {
+		Player[] players = new Player[2];
+		players[0] = new Player("John", 'J', new Point(1, 1), Player.Target.LEFT);
+		players[1] = new Player("George", 'G', new Point(2, 2), Player.Target.DOWN);
+
+		return new Game(7, 7, players);
 	}
 }
