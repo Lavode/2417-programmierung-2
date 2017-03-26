@@ -43,12 +43,16 @@ public class Player {
 		Player player = (Player)other;
 
 		return (
-				player.name() == this.name &&
+				player.name().equals(this.name) &&
 				player.sign() == this.sign &&
 				/* awt.Point implemnents no meaningful equals() */
 				player.position().x == this.position.x &&
 				player.position().y == this.position.y &&
 				player.target() == this.target
 		);
+	}
+
+	public String toString() {
+		return String.format("<%s> [%s] @ (%s, %s) -> %s", this.name, this.sign, this.position.x, this.position.y, this.target);
 	}
 }
