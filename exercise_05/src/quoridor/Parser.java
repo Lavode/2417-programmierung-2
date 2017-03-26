@@ -5,8 +5,13 @@ import java.awt.Point;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 import java.util.Scanner;
+
 import java.util.List;
 import java.util.ArrayList;
+
+import java.io.IOException;
+import java.nio.file.Paths;
+import java.nio.file.Files;
 
 /**
  * Parses a Quoridor file specification and creates a {@link Game} instance.
@@ -14,6 +19,11 @@ import java.util.ArrayList;
 public class Parser {
 	private static Pattern BOARD_DIMENSION_PATTERN = Pattern.compile("^(\\d+) (\\d+)$");
 	private static Pattern PLAYER_ENTRY_PATTERN = Pattern.compile("^(.+) (.) (\\d+) (\\d+) (\\w)$");
+
+	public static Game parseFromFile(String path) throws ParserException, IOException {
+		String input = new String(Files.readAllBytes(Paths.get(path)));
+		return parse(input);
+	}
 
 	public static Game parse(String input) throws ParserException {
 		Scanner scanner = new Scanner(input);
