@@ -23,13 +23,7 @@ public class Parser {
 		}
 		int[] dimension = parseBoardDimension(scanner.nextLine());
 
-		List<Player> players = new ArrayList<Player>();
-		while (scanner.hasNextLine()) {
-			players.add(parsePlayer(scanner.nextLine()));
-		}
-		if (players.size() < 2) {
-			throw new ParserException("Not enough players defined.");
-		}
+		List<Player> players = parsePlayers(scanner);
 
 		return new Game(dimension[0], dimension[1], players.toArray(new Player[0]));
 	}
@@ -45,6 +39,19 @@ public class Parser {
 		} else {
 			throw new ParserException(String.format("Invalid board dimensions: %s", input));
 		}
+	}
+
+	private static List<Player> parsePlayers(Scanner scanner) throws ParserException {
+		List<Player> players = new ArrayList<Player>();
+
+		while (scanner.hasNextLine()) {
+			players.add(parsePlayer(scanner.nextLine()));
+		}
+		if (players.size() < 2) {
+			throw new ParserException("Not enough players defined.");
+		}
+
+		return players;
 	}
 
 	private static Player parsePlayer(String input) throws ParserException {
