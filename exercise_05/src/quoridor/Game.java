@@ -59,4 +59,14 @@ public class Game {
 				Arrays.deepEquals(game.tiles(), this.tiles)
 		);
 	}
+
+	public String toString() {
+		String players = "";
+		for (Player p : this.players) {
+			players += p.toString();
+			players += "\n";
+		}
+
+		return String.format("Players:\n%s\n", players);
+	}
 }
