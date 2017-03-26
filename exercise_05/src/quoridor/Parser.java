@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 public class Parser {
 	private static Pattern BOARD_DIMENSION_PATTERN = Pattern.compile("^(\\d+) (\\d+)$");
-	private static Pattern PLAYER_ENTRY_PATTERN = Pattern.compile("^(.+) (.) (\\d+) (\\d+) ([RLUD])$");
+	private static Pattern PLAYER_ENTRY_PATTERN = Pattern.compile("^(.+) (.) (\\d+) (\\d+) (\\w)$");
 
 	public static Game parse(String input) throws ParserException {
 		Scanner scanner = new Scanner(input);
