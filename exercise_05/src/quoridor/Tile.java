@@ -1,20 +1,16 @@
 package quoridor;
 
+import java.awt.Point;
+
 public class Tile {
-	private int x;
-	private int y;
+	private Point position;
 
-	public Tile(int x, int y) {
-		this.x = x;
-		this.y = y;
+	public Tile(Point position) {
+		this.position = position;
 	}
 
-	public int x() {
-		return this.x;
-	}
-
-	public int y() {
-		return this.y;
+	public Point position() {
+		return this.position;
 	}
 
 	public boolean equals(Object other) {
@@ -25,8 +21,8 @@ public class Tile {
 		Tile tile = (Tile)other;
 
 		return (
-				tile.x() == this.x &&
-				tile.y() == this.y
+				tile.position().x == this.position.x &&
+				tile.position().y == this.position.y
 		);
 	}
 }
