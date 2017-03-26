@@ -23,7 +23,7 @@ public class ParserTest
 
 	@Test
 	public void parseHandlesPlayerNameConsistingOfMultipleWords() throws ParserException {
-		String input = "7 9\nWill Smith J 1 1 R\nGeorge Orwell G 3 4 D";
+		String input = "7 9\nWill Smith J 1 1 L\nGeorge Orwell G 3 4 D";
 		Game game = Parser.parse(input);
 
 		assertEquals("Will Smith", game.players()[0].name());
