@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.io.IOException;
 
 
 /**
@@ -39,16 +40,18 @@ public class Game {
 		this.height = height;
 
 		this.tiles = new ArrayList<List<Tile>>();
-		for (int i = 0; i < width; i++) {
+		for (int i = 1; i <= width; i++) {
 			this.tiles.add(new ArrayList<Tile>());
-			for (int j = 0; j < height; j++) {
-				this.tiles.get(i).add(new Tile(new Point(i, j)));
+			for (int j = 1; j <= height; j++) {
+				/* Bloody requirement to use 1-indexed
+				 * coordinates */
+				this.tiles.get(i - 1).add(new Tile(new Point(i, j)));
 			}
 		}
 	}
 
 	public Tile getTile(int x, int y) {
-		return this.tiles.get(x).get(y);
+		return this.tiles.get(x - 1).get(y - 1);
 	}
 
 	public int width() {
@@ -104,5 +107,10 @@ public class Game {
 	{
 		//TODO
 		return false;
+	}
+
+	public static void main(String[] args) throws ParserException, IOException {
+		Parser parser = new Parser();
+		Game game = parser.parseFromFile("games/game1.txt");
 	}
 }

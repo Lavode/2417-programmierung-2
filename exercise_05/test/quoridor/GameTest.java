@@ -40,6 +40,14 @@ public class GameTest
 	}
 
 	@Test
+	public void getTileIsOneIndexed() {
+		/* If it's 0-indexed. one of these will raise an
+		 * IndexOutOfBoundsException */
+		assertTrue(game.getTile(1, 1) instanceof Tile);
+		assertTrue(game.getTile(5, 7) instanceof Tile);
+	}
+
+	@Test
 	public void setDimensionSetsDimensions() {
 		assertEquals(5, game.width());
 		assertEquals(7, game.height());
