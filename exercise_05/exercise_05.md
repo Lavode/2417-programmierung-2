@@ -48,7 +48,7 @@ players:
 ```
 7 12
 Otis Redding O 1 1 R
-Solomon Burke S 7 12 W
+Solomon Burke S 7 12 L
 ```
 Player names can include spaces, symbols have to be a single character, 
 coordinates are 1-indexed (that is, the top-left coordinate is (1, 1) and the 

@@ -29,6 +29,7 @@ public class Parser {
 		Scanner scanner = new Scanner(input);
 
 		if (!scanner.hasNextLine()) {
+			scanner.close();
 			throw new ParserException("Not enough lines in board definition!");
 		}
 		int[] dimension = parseBoardDimension(scanner.nextLine());

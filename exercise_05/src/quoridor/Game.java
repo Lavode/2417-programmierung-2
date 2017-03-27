@@ -69,4 +69,13 @@ public class Game {
 
 		return String.format("Players:\n%s\n", players);
 	}
+	
+	/**
+	 * Checks wheather a tile is occupied or not 
+	 */
+	public boolean checkOccupation()
+	{
+		//TODO
+		return false;
+	}
 }

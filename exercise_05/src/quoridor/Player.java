@@ -5,6 +5,9 @@ import java.awt.Point;
 public class Player {
 	private String name;
 	private char sign;
+	
+	/*TODO shouldn't we use a Tile here since you can make a Tile keep 
+	track of the player while the Point can't?*/ 
 	private Point position;
 	private Target target;
 
@@ -45,7 +48,7 @@ public class Player {
 		return (
 				player.name().equals(this.name) &&
 				player.sign() == this.sign &&
-				/* awt.Point implemnents no meaningful equals() */
+				/* awt.Point implements no meaningful equals() */
 				player.position().x == this.position.x &&
 				player.position().y == this.position.y &&
 				player.target() == this.target
@@ -54,5 +57,25 @@ public class Player {
 
 	public String toString() {
 		return String.format("<%s> [%s] @ (%s, %s) -> %s", this.name, this.sign, this.position.x, this.position.y, this.target);
+	}
+	
+	public void moveUp()
+	{
+		
+	}
+	
+	public void moveDown()
+	{
+		
+	}
+	
+	public void moveRight()
+	{
+		
+	}
+	
+	public void moveLeft()
+	{
+		
 	}
 }
