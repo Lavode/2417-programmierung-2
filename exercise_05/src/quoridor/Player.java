@@ -5,20 +5,18 @@ import java.awt.Point;
 public class Player {
 	private String name;
 	private char sign;
-	
-	/*TODO shouldn't we use a Tile here since you can make a Tile keep 
-	track of the player while the Point can't?*/ 
-	private Point position;
+
+	private Tile tile;
 	private Target target;
 
 	public enum Target {
 		LEFT, RIGHT, UP, DOWN
 	}
 
-	public Player(String name, char sign, Point position, Target target) {
+	public Player(String name, char sign, Tile tile, Target target) {
 		this.name = name;
 		this.sign = sign;
-		this.position = position;
+		this.tile = tile;
 		this.target = target;
 	}
 
@@ -30,8 +28,8 @@ public class Player {
 		return this.sign;
 	}
 
-	public Point position() {
-		return this.position;
+	public Tile tile() {
+		return this.tile;
 	}
 
 	public Target target() {
@@ -48,17 +46,15 @@ public class Player {
 		return (
 				player.name().equals(this.name) &&
 				player.sign() == this.sign &&
-				/* awt.Point implements no meaningful equals() */
-				player.position().x == this.position.x &&
-				player.position().y == this.position.y &&
+				player.tile().equals(this.tile) &&
 				player.target() == this.target
 		);
 	}
 
 	public String toString() {
-		return String.format("<%s> [%s] @ (%s, %s) -> %s", this.name, this.sign, this.position.x, this.position.y, this.target);
+		return String.format("<%s> [%s] @ (%s, %s) -> %s", this.name, this.sign, this.tile.position().x, this.tile.position().y, this.target);
 	}
-	
+
 	public void moveUp()
 	{
 		

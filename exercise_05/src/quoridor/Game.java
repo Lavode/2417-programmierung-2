@@ -1,6 +1,8 @@
 package quoridor;
 
 import java.awt.Point;
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 
@@ -11,16 +13,28 @@ public class Game {
 	private int width;
 	private int height;
 
-	private Player[] players;
+	private List<Player> players;
 
-	private Tile[][] tiles;
+	private List<List<Tile>> tiles;
 
-	public Game(int width, int height, Player players[]) {
+	public Game(int width, int height, List<Player> players) {
 		this.width = width;
 		this.height = height;
 		this.players = players;
 
-		this.tiles = new Tile[width][height];
+		this.tiles = new ArrayList<List<Tile>>();
+	}
+
+	public void setDimension(int width, int height) {
+		this.width = width;
+		this.height = height;
+
+		this.tiles = new ArrayList<List<Tile>>();
+		for (int i = 0; i < width; i++) {
+			for (int j = 0; j < height; j++) {
+				this.tiles.get(i).add(new Tile(new Point(i, j)));
+			}
+		}
 	}
 
 	public int width() {
@@ -31,13 +45,13 @@ public class Game {
 		return this.height;
 	}
 
-	public Tile[][] tiles() {
+	public List<List<Tile>> tiles() {
 		/* It's a bit silly to wrap it in accessor, as it's a mutable
 		 * object. */
 		return this.tiles;
 	}
 
-	public Player[] players() {
+	public List<Player> players() {
 		/* It's a bit silly to wrap it in accessor, as it's a mutable
 		 * object. */
 		return this.players;
@@ -54,9 +68,7 @@ public class Game {
 				game.width() == this.width &&
 				game.height() == this.height &&
 				game.players().equals(this.players) &&
-				/* Array#equals() only works for shallow
-				 * arrays, so can't use it here. */
-				Arrays.deepEquals(game.tiles(), this.tiles)
+				game.tiles().equals(this.tiles)
 		);
 	}
 

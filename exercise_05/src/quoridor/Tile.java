@@ -25,6 +25,7 @@ public class Tile {
 			return false;
 		}
 
+
 		Tile tile = (Tile)other;
 
 		return (

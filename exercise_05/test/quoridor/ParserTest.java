@@ -15,8 +15,8 @@ public class ParserTest
 		String input = "7 9\nJohn J 1 1 R\nGeorge G 3 4 D";
 		Game game = Parser.parse(input);
 
-		assertEquals(new Player("John", 'J', new Point(1, 1), Player.Target.RIGHT), game.players()[0]);
-		assertEquals(new Player("George", 'G', new Point(3, 4), Player.Target.DOWN), game.players()[1]);
+		assertEquals(new Player("John", 'J', new Tile(new Point(1, 1)), Player.Target.RIGHT), game.players().get(0));
+		assertEquals(new Player("George", 'G', new Tile(new Point(3, 4)), Player.Target.DOWN), game.players().get(1));
 		assertEquals(7, game.width());
 		assertEquals(9, game.height());
 	}
@@ -26,8 +26,8 @@ public class ParserTest
 		String input = "7 9\nWill Smith J 1 1 L\nGeorge Orwell G 3 4 D";
 		Game game = Parser.parse(input);
 
-		assertEquals("Will Smith", game.players()[0].name());
-		assertEquals("George Orwell", game.players()[1].name());
+		assertEquals("Will Smith", game.players().get(0).name());
+		assertEquals("George Orwell", game.players().get(1).name());
 	}
 
 	@Test
@@ -35,9 +35,9 @@ public class ParserTest
 		String input = "7 9\nJohn J 1 1 R\nGeorge G 3 4 D\nWilliam W 4 5 U\n";
 		Game game = Parser.parse(input);
 
-		assertEquals(new Player("John", 'J', new Point(1, 1), Player.Target.RIGHT), game.players()[0]);
-		assertEquals(new Player("George", 'G', new Point(3, 4), Player.Target.DOWN), game.players()[1]);
-		assertEquals(new Player("William", 'W', new Point(4, 5), Player.Target.UP), game.players()[2]);
+		assertEquals(new Player("John", 'J',    new Tile(new Point(1, 1)), Player.Target.RIGHT), game.players().get(0));
+		assertEquals(new Player("George", 'G',  new Tile(new Point(3, 4)), Player.Target.DOWN), game.players().get(1));
+		assertEquals(new Player("William", 'W', new Tile(new Point(4, 5)), Player.Target.UP), game.players().get(2));
 	}
 
 	@Test(expected = ParserException.class)

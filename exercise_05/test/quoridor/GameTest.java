@@ -1,5 +1,8 @@
 package quoridor;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.ArrayList;
 import java.awt.Point;
 
 import static org.junit.Assert.assertNotEquals;
@@ -12,26 +15,29 @@ import quoridor.Game;
 
 public class GameTest
 {
-	private Player player1 = new Player("George", 'g', new Point(1, 1), Player.Target.LEFT);
-	private Player player2 = new Player("John", 'j', new Point(3, 3), Player.Target.DOWN);
-	private Player[] players;
+	private Player player1 = new Player("George", 'g', new Tile(new Point(1, 1)), Player.Target.LEFT);
+	private Player player2 = new Player("John", 'j',   new Tile(new Point(3, 3)), Player.Target.DOWN);
+	private List<Player> players = new ArrayList<Player>(Arrays.asList(player1, player2));
 
 	private Game game;
 
 	@Before
 	public void init() {
-		this.players = new Player[2];
-		players[0] = player1;
-		players[1] = player2;
+		this.players = new ArrayList<Player>(
+				Arrays.asList(player1, player2)
+		);
 
 		this.game = new Game(5, 5, this.players);
 	}
 
 	@Test
 	public void equalsChecksForIdenticalPlayers() {
-		Player[] otherPlayers = new Player[2];
-		otherPlayers[0] = new Player("Michael", 'M', new Point(1, 1), Player.Target.RIGHT);
-		otherPlayers[1] = player1;
+		List<Player> otherPlayers = new ArrayList<Player>(
+				Arrays.asList(
+					new Player("Michael", 'M', new Tile(new Point(1, 1)), Player.Target.RIGHT), 
+					player1
+				)
+		);
 
 		Game game2 = new Game (5, 5, otherPlayers);
 		assertNotEquals(game, game2);

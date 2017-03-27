@@ -36,7 +36,7 @@ public class Parser {
 
 		List<Player> players = parsePlayers(scanner);
 
-		return new Game(dimension[0], dimension[1], players.toArray(new Player[0]));
+		return new Game(dimension[0], dimension[1], players);
 	}
 
 	private static int[] parseBoardDimension(String input) throws ParserException {
@@ -88,9 +88,12 @@ public class Parser {
 			return new Player(
 					matcher.group(1),
 					matcher.group(2).charAt(0),
+					// TODO: Use tile of game
+					new Tile(
 					new Point(
 						Integer.parseInt(matcher.group(3)),
 						Integer.parseInt(matcher.group(4))
+					)
 					),
 					target
 			);
