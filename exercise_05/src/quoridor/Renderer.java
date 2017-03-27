@@ -6,6 +6,7 @@ import java.util.*;
  * Renders a {@link Game} object.
  */
 public class Renderer {
+	private static final char WALL_SIGN = '#';
 	private Game game;
 	private char[][] output;
 
@@ -62,10 +63,10 @@ public class Renderer {
 	}
 
 	private void renderWalls() {
-		renderHorizontalLine(0, '#');
-		renderHorizontalLine(this.output.length - 1, '#');
-		renderVerticalLine(0, '#');
-		renderVerticalLine(this.output[0].length - 1, '#');
+		renderHorizontalLine(0, WALL_SIGN);
+		renderHorizontalLine(this.output.length - 1, WALL_SIGN);
+		renderVerticalLine(0, WALL_SIGN);
+		renderVerticalLine(this.output[0].length - 1, WALL_SIGN);
 	}
 
 	private void renderVerticalLine(int height, char symbol) {
