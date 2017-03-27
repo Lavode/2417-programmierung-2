@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.awt.Point;
 
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
@@ -27,7 +28,30 @@ public class GameTest
 				Arrays.asList(player1, player2)
 		);
 
-		this.game = new Game(5, 5, this.players);
+		this.game = new Game();
+		this.game.setDimension(5, 7);
+		this.game.addPlayer(player1);
+		this.game.addPlayer(player2);
+	}
+
+	@Test
+	public void getTileReturnsTile() {
+		assertTrue(game.getTile(1, 3) instanceof Tile);
+	}
+
+	@Test
+	public void setDimensionSetsDimensions() {
+		assertEquals(5, game.width());
+		assertEquals(7, game.height());
+	}
+
+	@Test
+	public void setDimensionInitialisesBoardWithTiles() {
+		for (int i = 0; i < 5; i++) {
+			for (int j = 0; j < 7; j++) {
+				assertTrue(this.game.tiles().get(i).get(j) instanceof Tile);
+			}
+		}
 	}
 
 	@Test
@@ -56,7 +80,8 @@ public class GameTest
 
 	@Test
 	public void equalsReturnsTrueForIdenticalGames() {
-		Game game2 = new Game (5, 5, players);
+		Game game2 = new Game(5, 7, players);
+
 		assertEquals(game, game2);
 	}
 }

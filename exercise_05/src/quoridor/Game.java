@@ -17,12 +17,21 @@ public class Game {
 
 	private List<List<Tile>> tiles;
 
-	public Game(int width, int height, List<Player> players) {
-		this.width = width;
-		this.height = height;
-		this.players = players;
-
+	public Game() {
 		this.tiles = new ArrayList<List<Tile>>();
+		this.players = new ArrayList<Player>();
+	}
+
+	public Game(int width, int height, List<Player> players) {
+		setDimension(width, height);
+		this.players = new ArrayList<Player>();
+		for (Player p : players) {
+			this.players.add(p);
+		}
+	}
+
+	public void addPlayer(Player player) {
+		this.players.add(player);
 	}
 
 	public void setDimension(int width, int height) {
@@ -31,10 +40,15 @@ public class Game {
 
 		this.tiles = new ArrayList<List<Tile>>();
 		for (int i = 0; i < width; i++) {
+			this.tiles.add(new ArrayList<Tile>());
 			for (int j = 0; j < height; j++) {
 				this.tiles.get(i).add(new Tile(new Point(i, j)));
 			}
 		}
+	}
+
+	public Tile getTile(int x, int y) {
+		return this.tiles.get(x).get(y);
 	}
 
 	public int width() {
@@ -59,6 +73,7 @@ public class Game {
 
 	public boolean equals(Object other) {
 		if (!(other instanceof Game)) {
+			System.out.println("Instance");
 			return false;
 		}
 
