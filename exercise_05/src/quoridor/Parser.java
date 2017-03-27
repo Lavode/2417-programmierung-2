@@ -20,52 +20,52 @@ public class Parser {
 	private static Pattern BOARD_DIMENSION_PATTERN = Pattern.compile("^(\\d+) (\\d+)$");
 	private static Pattern PLAYER_ENTRY_PATTERN = Pattern.compile("^(.+) (.) (\\d+) (\\d+) (\\w)$");
 
-	public static Game parseFromFile(String path) throws ParserException, IOException {
+	private Game game;
+
+	public Parser() {
+		this.game = new Game();
+	}
+
+	public Game parseFromFile(String path) throws ParserException, IOException {
 		String input = new String(Files.readAllBytes(Paths.get(path)));
 		return parse(input);
 	}
 
-	public static Game parse(String input) throws ParserException {
+	public Game parse(String input) throws ParserException {
 		Scanner scanner = new Scanner(input);
 
 		if (!scanner.hasNextLine()) {
 			scanner.close();
 			throw new ParserException("Not enough lines in board definition!");
 		}
-		int[] dimension = parseBoardDimension(scanner.nextLine());
+		parseBoardDimension(scanner.nextLine());
+		parsePlayers(scanner);
 
-		List<Player> players = parsePlayers(scanner);
-
-		return new Game(dimension[0], dimension[1], players);
+		return this.game;
 	}
 
-	private static int[] parseBoardDimension(String input) throws ParserException {
+	private void parseBoardDimension(String input) throws ParserException {
 		Matcher matcher = BOARD_DIMENSION_PATTERN.matcher(input);
 		if (matcher.matches()) {
-			int[] dimension = new int[2];
-			dimension[0] = Integer.parseInt(matcher.group(1));
-			dimension[1] = Integer.parseInt(matcher.group(2));
+			int width = Integer.parseInt(matcher.group(1));
+			int height = Integer.parseInt(matcher.group(2));
 
-			return dimension;
+			this.game.setDimension(width, height);
 		} else {
 			throw new ParserException(String.format("Invalid board dimensions: %s", input));
 		}
 	}
 
-	private static List<Player> parsePlayers(Scanner scanner) throws ParserException {
-		List<Player> players = new ArrayList<Player>();
-
+	private void parsePlayers(Scanner scanner) throws ParserException {
 		while (scanner.hasNextLine()) {
-			players.add(parsePlayer(scanner.nextLine()));
+			this.game.addPlayer(parsePlayer(scanner.nextLine()));
 		}
-		if (players.size() < 2) {
+		if (game.players().size() < 2) {
 			throw new ParserException("Not enough players defined.");
 		}
-
-		return players;
 	}
 
-	private static Player parsePlayer(String input) throws ParserException {
+	private Player parsePlayer(String input) throws ParserException {
 		Matcher matcher = PLAYER_ENTRY_PATTERN.matcher(input);
 		if (matcher.matches()) {
 			Player.Target target;
@@ -88,12 +88,10 @@ public class Parser {
 			return new Player(
 					matcher.group(1),
 					matcher.group(2).charAt(0),
-					// TODO: Use tile of game
-					new Tile(
-					new Point(
+					this.game.getTile(
 						Integer.parseInt(matcher.group(3)),
 						Integer.parseInt(matcher.group(4))
-					)
+
 					),
 					target
 			);
