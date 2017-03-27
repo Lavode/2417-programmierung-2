@@ -91,13 +91,14 @@ public class Game {
 	}
 
 	public String toString() {
+		String size = String.format("%sx%s", this.width, this.height);
 		String players = "";
 		for (Player p : this.players) {
 			players += p.toString();
 			players += "\n";
 		}
 
-		return String.format("Players:\n%s\n", players);
+		return String.format("Size: %s\nPlayers:\n%s\n", size, players);
 	}
 	
 	/**
@@ -112,5 +113,8 @@ public class Game {
 	public static void main(String[] args) throws ParserException, IOException {
 		Parser parser = new Parser();
 		Game game = parser.parseFromFile("games/game1.txt");
+		System.out.println(game);
+		Renderer renderer = new Renderer(game);
+		System.out.println(renderer.render());
 	}
 }

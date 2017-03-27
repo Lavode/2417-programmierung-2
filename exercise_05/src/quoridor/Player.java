@@ -36,6 +36,10 @@ public class Player {
 		return this.target;
 	}
 
+	public Point position() {
+		return this.tile.position();
+	}
+
 	public boolean equals(Object other) {
 		if (!(other instanceof Player)) {
 			return false;
