@@ -22,15 +22,37 @@ public class Parser {
 
 	private Game game;
 
+	/** 
+	 * Create new instance of Parser class.
+	 */
 	public Parser() {
 		this.game = new Game();
 	}
 
+	/** 
+	 * Read and parse a game specification from disk.
+	 *
+	 * @param path Path to file on filesystem wheree game specification resides.
+	 *
+	 * @throws ParserException if supplied game specification is invalid.
+	 * @throws IOException if reading from given path fails for any reason.
+	 *
+	 * @return Game object corresponding to specification in file. 
+	 */
 	public Game parseFromFile(String path) throws ParserException, IOException {
 		String input = new String(Files.readAllBytes(Paths.get(path)));
 		return parse(input);
 	}
 
+	/**
+	 * Read and parse a game specification from a string.
+	 *
+	 * @param input String containing game specification.
+	 *
+	 * @throws ParserException if supplied game specification is invalid.
+	 *
+	 * @return Game object corresponding to specification in given string.
+	 */
 	public Game parse(String input) throws ParserException {
 		Scanner scanner = new Scanner(input);
 

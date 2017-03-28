@@ -4,16 +4,34 @@ import java.util.*;
 
 /**
  * Renders a {@link Game} object.
+ *
+ * Supports text-based output only.
  */
 public class Renderer {
 	private static final char WALL_SIGN = '#';
 	private Game game;
 	private char[][] output;
 
+	/**
+	 * Create a new instance of this class.
+	 *
+	 * @param game To-be-rendered game. Must not be null.
+	 */
 	public Renderer(Game game) {
+		assert(game != null);
+
 		this.game = game;
 	}
 
+	/**
+	 * Render textual represenation of game.
+	 *
+	 * The game grid will be surrounded by walls, with empty grid tiles
+	 * represented by a space, and each player represented by his defined
+	 * sign.
+	 *
+	 * @return String containing a textual representation of the game.
+	 */
 	public String render() {
 		resetOutput();
 		renderWalls();
@@ -22,6 +40,11 @@ public class Renderer {
 		return this.buildOutput();
 	}
 
+	/**
+	 * Convert internal array of chars to an output string.
+	 *
+	 * @return Textual representation of output array.
+	 */
 	private String buildOutput() {
 		StringBuilder out = new StringBuilder();
 		for (char[] col : this.output) {
@@ -34,18 +57,25 @@ public class Renderer {
 		return out.toString();
 	}
 
+	/**
+	 * Initialize internal output array to accomodate for given game
+	 * object, with additional space for walls on each side. 
+	 */
 	private void resetOutput() {
 		/* Add one additional row/column on each side which will
 		 * contain the wall. */
-		this.output = new char[this.game.width() + 2][this.game.height() + 2];
+		this.output = new char[this.game.height() + 2][this.game.width() + 2];
 
-		for (int x = 0; x < this.output.length; x++) {
-			for (int y = 0; y < this.output[0].length; y++) {
-				this.output[x][y] = ' ';
+		for (int y = 0; y < this.output.length; y++) {
+			for (int x = 0; x < this.output[0].length; x++) {
+				this.output[y][x] = ' ';
 			}
 		}
 	}
 
+	/**
+	 * Render all of the game's players.
+	 */
 	private void renderPlayers() {
 		for (Player player : this.game.players()) {
 			/* So, logically convluted crap ahead.
@@ -58,10 +88,15 @@ public class Renderer {
 			 * to switch from 1-basedness to 0-basedness, then add
 			 * 1 to accomodate for the wall column/row. Which
 			 * leaves us with a difference of 0. */
-			this.output[player.position().x][player.position().y] = player.sign();
+			this.output[player.position().y][player.position().x] = player.sign();
 		}
 	}
 
+	/**
+	 * Render walls around the game board.
+	 *
+	 * To-be-used sign will be taken from WALL_SIGN constant.
+	 */
 	private void renderWalls() {
 		renderHorizontalLine(0, WALL_SIGN);
 		renderHorizontalLine(this.output.length - 1, WALL_SIGN);
@@ -69,15 +104,33 @@ public class Renderer {
 		renderVerticalLine(this.output[0].length - 1, WALL_SIGN);
 	}
 
-	private void renderVerticalLine(int height, char symbol) {
-		for (int x = 0; x < this.output.length; x++) {
-			this.output[x][height] = symbol;
+	/**
+	 * Render vertical line.
+	 *
+	 * @width Vertical coordinate where line will be drawn. Must be in
+	 * valid range for given game.
+	 */
+	private void renderVerticalLine(int width, char symbol) {
+		assert(width >= 0);
+		assert(width < this.output[0].length);
+
+		for (int y = 0; y < this.output.length; y++) {
+			this.output[y][width] = symbol;
 		}
 	}
 
-	private void renderHorizontalLine(int width, char symbol) {
-		for (int y = 0; y < this.output[width].length; y++) {
-			this.output[width][y] = symbol;
+	/**
+	 * Render horizontal line.
+	 *
+	 * @width Horizontal coordinate where line will be drawn. Must be in
+	 * valid range for given game.
+	 */
+	private void renderHorizontalLine(int height, char symbol) {
+		assert(height >= 0);
+		assert(height < this.output.length);
+
+		for (int x = 0; x < this.output[height].length; x++) {
+			this.output[height][x] = symbol;
 		}
 	}
 }
