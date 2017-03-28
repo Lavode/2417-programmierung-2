@@ -3,6 +3,7 @@ package quoridor;
 import java.awt.Point;
 
 public class Player {
+	private Game game;
 	private String name;
 	private char sign;
 
@@ -19,6 +20,11 @@ public class Player {
 		this.tile = tile;
 		this.target = target;
 	}
+	
+	public void enterGame(Game game)
+	{
+		this.game = game;
+	}
 
 	public String name() {
 		return this.name;
@@ -28,7 +34,7 @@ public class Player {
 		return this.sign;
 	}
 
-	public Tile tile() {
+	public Tile currentPosition() {
 		return this.tile;
 	}
 
@@ -50,7 +56,7 @@ public class Player {
 		return (
 				player.name().equals(this.name) &&
 				player.sign() == this.sign &&
-				player.tile().equals(this.tile) &&
+				player.currentPosition().equals(this.tile) &&
 				player.target() == this.target
 		);
 	}
@@ -61,21 +67,49 @@ public class Player {
 
 	public void moveUp()
 	{
+		Tile current = this.currentPosition();
+		Tile next = game.getTile(current.position().x, current.position().y - 1);
 		
+		if(!(next.isOccupied()))
+		{
+			current.leave();
+			next.enter(this);
+		}
 	}
 	
 	public void moveDown()
 	{
+		Tile current = this.currentPosition();
+		Tile next = game.getTile(current.position().x, current.position().y + 1);
 		
+		if(!(next.isOccupied()))
+		{
+			current.leave();
+			next.enter(this);
+		}
 	}
 	
 	public void moveRight()
 	{
+		Tile current = this.currentPosition();
+		Tile next = game.getTile(current.position().x + 1, current.position().y);
 		
+		if(!(next.isOccupied()))
+		{
+			current.leave();
+			next.enter(this);
+		}
 	}
 	
 	public void moveLeft()
 	{
+		Tile current = this.currentPosition();
+		Tile next = game.getTile(current.position().x - 1, current.position().y);
 		
+		if(!(next.isOccupied()))
+		{
+			current.leave();
+			next.enter(this);
+		}
 	}
 }

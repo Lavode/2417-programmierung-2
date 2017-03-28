@@ -20,6 +20,16 @@ public class Tile {
 		return this.player;
 	}
 	
+	public void enter(Player player)
+	{
+		this.player = player;
+	}
+	
+	public void leave()
+	{
+		this.player = null;
+	}
+	
 	public boolean equals(Object other) {
 		if (!(other instanceof Tile)) {
 			return false;

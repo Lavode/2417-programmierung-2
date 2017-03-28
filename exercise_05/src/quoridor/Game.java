@@ -30,7 +30,7 @@ public class Game {
 			this.players.add(p);
 		}
 	}
-
+	
 	public void addPlayer(Player player) {
 		this.players.add(player);
 	}
