@@ -35,6 +35,11 @@ public class Game {
 		this.players.add(player);
 	}
 
+	public boolean isValidPosition(int x, int y)
+	{
+		return 0 < x && x <= width && 0 < y && y <= height;
+	}
+	
 	public void setDimension(int width, int height) {
 		this.width = width;
 		this.height = height;

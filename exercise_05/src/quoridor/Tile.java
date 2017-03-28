@@ -11,6 +11,10 @@ public class Tile {
 		this.player = null;
 	}
 
+	public String toString()
+	{
+		return "X: " + this.position.x + ", Y:" + this.position.y;
+	}
 	public Point position() {
 		return this.position;
 	}
@@ -46,6 +50,6 @@ public class Tile {
 	
 	public boolean isOccupied()
 	{
-		return !(this.player == null);
+		return !(this.player==null);
 	}
 }
