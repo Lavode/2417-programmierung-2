@@ -16,14 +16,13 @@ public class RendererTest
 		game.setDimension(5, 3);
 		game.addPlayer(new Player("Michael", 'M', game.getTile(2, 1), Player.Target.UP));
 		game.addPlayer(new Player("Pascal", 'P', game.getTile(5, 3), Player.Target.DOWN));
-
+		
 		renderer = new Renderer(game);
 	}
 
 	@Test
-	public void renderReturnsTextRenderingOfGameObject() {
+	public void renderReturnsTextRenderingOfGameObjectValid() {
 		String should = "#######\n# M   #\n#     #\n#    P#\n#######\n";
-
 		assertEquals(should, renderer.render());
 	}
 }

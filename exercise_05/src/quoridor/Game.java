@@ -3,7 +3,6 @@ package quoridor;
 import java.awt.Point;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.io.IOException;
 
 
@@ -57,6 +56,10 @@ public class Game {
 		this.players.add(player);
 	}
 
+	/**
+	 * Checks Position (@param x, @param y) for beeing a valid Positon
+	 * @return true if valid Position, false otherwise
+	 */
 	public boolean isValidPosition(int x, int y)
 	{
 		return 0 < x && x <= width && 0 < y && y <= height;
@@ -180,15 +183,6 @@ public class Game {
 		}
 
 		return String.format("Size: %s\nPlayers:\n%s\n", size, players);
-	}
-	
-	/**
-	 * Checks wheather a tile is occupied or not 
-	 */
-	public boolean checkOccupation()
-	{
-		//TODO
-		return false;
 	}
 
 	public static void main(String[] args) throws ParserException, IOException {
