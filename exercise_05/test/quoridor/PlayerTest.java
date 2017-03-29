@@ -11,43 +11,34 @@ import org.junit.*;
 import quoridor.Player;
 
 public class PlayerTest
-{
-	private Player player = new Player("George", 'G', new Tile(new Point(1, 1)), Player.Target.LEFT);
-
-	@Before
-	public void before()
-	{
-		Game game = new Game();
-		game.setDimension(5, 5);
-		Player player1 = new Player("Player1", '1', game.getTile(1, 3), Player.Target.RIGHT);
-		Player player2 = new Player("Player2", '2', game.getTile(1, 2), Player.Target.RIGHT);
-		List<Player> players = new ArrayList<Player>();
-		players.add(player1);
-		players.add(player2);
-	}
-	
+{	
 	@Test
-	public void equalsChecksForIdenticalName() {
+	public void equalsChecksForIdenticalName() throws TileOccupiedException{
+		Player player = new Player("George", 'G', new Tile(new Point(1, 1)), Player.Target.LEFT);
 		assertNotEquals(player, new Player("John", 'G', new Tile(new Point(1, 1)), Player.Target.LEFT));
 	}
 
 	@Test
-	public void equalsChecksForIdenticalSign() {
+	public void equalsChecksForIdenticalSign() throws TileOccupiedException{
+		Player player = new Player("George", 'G', new Tile(new Point(1, 1)), Player.Target.LEFT);
 		assertNotEquals(player, new Player("George", 'H', new Tile(new Point(1, 1)), Player.Target.LEFT));
 	}
 
 	@Test
-	public void equalsChecksForIdenticalPosition() {
+	public void equalsChecksForIdenticalPosition() throws TileOccupiedException{
+		Player player = new Player("George", 'G', new Tile(new Point(1, 1)), Player.Target.LEFT);
 		assertNotEquals(player, new Player("George", 'G', new Tile(new Point(2, 1)), Player.Target.LEFT));
 	}
 
 	@Test
-	public void equalsChecksForIdenticalTarget() {
+	public void equalsChecksForIdenticalTarget() throws TileOccupiedException{
+		Player player = new Player("George", 'G', new Tile(new Point(1, 1)), Player.Target.LEFT);
 		assertNotEquals(player, new Player("George", 'G', new Tile(new Point(1, 1)), Player.Target.DOWN));
 	}
 
 	@Test
-	public void equalsReturnsTrueForIdenticalPlayers() {
+	public void equalsReturnsTrueForIdenticalPlayers() throws TileOccupiedException{
+		Player player = new Player("George", 'G', new Tile(new Point(1, 1)), Player.Target.LEFT);
 		assertEquals(player, new Player("George", 'G', new Tile(new Point(1, 1)), Player.Target.LEFT));
 	}
 	
@@ -189,8 +180,8 @@ public class PlayerTest
 		
 		player1.moveRight();
 		
-		assertTrue(game.getTile(2, 2).isOccupied());
-		assertTrue(player1.currentPosition().equals(game.getTile(2, 2)));
+		assertTrue(game.getTile(3, 1).isOccupied());
+		assertTrue(player1.currentPosition().equals(game.getTile(3, 1)));
 		assertTrue(!game.getTile(2, 1).isOccupied());
 	}
 	

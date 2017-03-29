@@ -20,9 +20,11 @@ public class Player {
 	}
 
 	public Player(String name, char sign, Tile tile, Target target) {
+		assert !tile.isOccupied();
 		this.name = name;
 		this.sign = sign;
 		this.tile = tile;
+		this.tile.enter(this);
 		this.target = target;
 		this.game = null;
 	}
