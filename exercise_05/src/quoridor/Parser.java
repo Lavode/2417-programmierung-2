@@ -1,13 +1,8 @@
 package quoridor;
 
-import java.awt.Point;
-
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 import java.util.Scanner;
-
-import java.util.List;
-import java.util.ArrayList;
 
 import java.io.IOException;
 import java.nio.file.Paths;

@@ -1,7 +1,5 @@
 package quoridor;
 
-import java.util.*;
-
 /**
  * Renders a {@link Game} object.
  *
