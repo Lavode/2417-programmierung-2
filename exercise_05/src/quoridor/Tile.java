@@ -2,6 +2,15 @@ package quoridor;
 
 import java.awt.Point;
 
+/**
+ * represents one Tile of a quoridor game
+ * keeps track of its position in the game and of player beeing on this tile 
+ * (resp. noone beeing on this tile)
+ * 
+ * @author Pascal Gerig
+ * @author Michael Senn
+ *
+ */
 public class Tile {
 	private Point position;
 	private Player player;

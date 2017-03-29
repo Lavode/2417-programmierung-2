@@ -3,8 +3,11 @@ package quoridor;
 import java.awt.Point;
 
 /**
+ * Represents a Player of the quoridor game.
+ * Can move by one step eighter up, down, left or right.
  * 
- * @author pasca
+ * @author Pascal Gerig
+ * @author Michael Senn
  *
  */
 public class Player {
