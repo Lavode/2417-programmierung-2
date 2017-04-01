@@ -12,6 +12,11 @@ import java.io.IOException;
 public class Game {
 	private int width;
 	private int height;
+	
+	private int playerAmountOfWalls;
+	
+	private Player winner;
+	private Player currentPlayer;
 
 	private List<Player> players;
 
@@ -26,6 +31,19 @@ public class Game {
 	public Game() {
 		this.tiles = new ArrayList<List<Tile>>();
 		this.players = new ArrayList<Player>();
+		this.playerAmountOfWalls = 0;
+		this.winner = null;
+		this.currentPlayer = players.get(0);
+	}
+	
+	/**
+	 * Tell game how many Walls each player can use!
+	 * Variable equals 0 if this method is never called.
+	 * @param i amount of Walls
+	 */
+	public void setWallAmount(int i)
+	{
+		this.playerAmountOfWalls = i;
 	}
 
 	/**
@@ -184,6 +202,40 @@ public class Game {
 
 		return String.format("Size: %s\nPlayers:\n%s\n", size, players);
 	}
+	
+	public boolean isNotOver()
+	{
+		return this.winner == null;
+	}
+
+	/**
+	 * Askes the player what he wants to do next.
+	 */
+	public String askOrder()
+	{
+		//TODO ask player for order
+		return "";
+	}
+	
+	public void play(Parser parser, Renderer renderer)
+	{
+		//TODO implement main gameloop
+		String order;
+		while(this.isNotOver())
+		{
+			order = this.askOrder();
+			try
+			{
+				//TODO
+				parser.parse("");	
+			}
+			catch (ParserException e)
+			{
+				System.out.println("parsing Failed");
+			}
+			System.out.println(renderer.render());
+		}
+	}
 
 	public static void main(String[] args) throws ParserException, IOException {
 		Parser parser = new Parser();
@@ -191,5 +243,7 @@ public class Game {
 		System.out.println(game);
 		Renderer renderer = new Renderer(game);
 		System.out.println(renderer.render());
+		
+		game.play(parser, renderer);
 	}
 }

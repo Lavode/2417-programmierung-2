@@ -18,6 +18,8 @@ public class Player {
 	private Tile tile;
 	private  final Target target;
 
+	private int amountOfWalls;
+	
 	public enum Target {
 		LEFT, RIGHT, UP, DOWN
 	}
@@ -109,6 +111,41 @@ public class Player {
 	 */
 	public String toString() {
 		return String.format("<%s> [%s] @ (%s, %s) -> %s", this.name, this.sign, this.tile.position().x, this.tile.position().y, this.target);
+	}
+	
+	/**
+	 * Checks if there is still a path for the player so he can win the game after
+	 * a potentially new Wall has been placed between (xFrom, yFrom) and (xTo, yTo).
+	 * @param xFrom x-Coordinate
+	 * @param yFrom y-Coordinate
+	 * @param xTo x-Coordinate
+	 * @param yTo y-Coordinate
+	 * @return
+	 */
+	private boolean hasPath(int xFrom, int yFrom, int xTo, int yTo)
+	{
+		//TODO Check if there is still a Winning path after a Wall has been placed
+		return false;
+	}
+	
+	/**
+	 * Lets Player place a Wall between (xFrom, yFrom) and (xTo, yTo)
+	 * @param xFrom x-Coordinate
+	 * @param yFrom y-Coordinate
+	 * @param xTo x-Coordinate
+	 * @param yTo y-Coordinate
+	 */
+	public void placeWall(int xFrom, int yFrom, int xTo, int yTo)
+	{
+		assert(this.amountOfWalls > 0);
+		assert(xFrom-xTo <= 1 && xFrom-xTo >= -1) && (yFrom-yTo <= 1 && yFrom-yTo >= -1)
+				&& (xFrom-xTo != 0 || yFrom-yTo != 0);
+		if(this.hasPath(xFrom, yFrom, xTo, yTo))
+		{
+			game.getTile(xFrom, yFrom).setWall();
+			game.getTile(xTo, yTo).setWall();
+			this.amountOfWalls--;
+		}
 	}
 	
 	private void moveFromTo(Tile current, Tile next) throws TileOccupiedException

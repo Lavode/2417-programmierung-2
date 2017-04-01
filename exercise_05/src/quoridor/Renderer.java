@@ -1,5 +1,7 @@
 package quoridor;
 
+import java.util.List;
+
 /**
  * Renders a {@link Game} object.
  *
@@ -100,8 +102,27 @@ public class Renderer {
 		renderHorizontalLine(this.output.length - 1, WALL_SIGN);
 		renderVerticalLine(0, WALL_SIGN);
 		renderVerticalLine(this.output[0].length - 1, WALL_SIGN);
+		renderPlayerWalls();	
 	}
 
+	/**
+	 * renders Walls that have been set by Players
+	 */
+	private void renderPlayerWalls()
+	{
+		for(List<Tile> list : game.tiles())
+		{
+			for(Tile t : list);
+			{
+				//Why does this not work?!
+				if(t.hasWall())
+				{
+					//TODO print WALL_SIGN at correct position
+				}
+			}
+		}
+	}
+	
 	/**
 	 * Render vertical line.
 	 *

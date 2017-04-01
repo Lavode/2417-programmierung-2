@@ -14,16 +14,29 @@ import java.awt.Point;
 public class Tile {
 	private Point position;
 	private Player player;
-
+	private boolean hasWall;
+	
 	public Tile(Point position) {
 		this.position = position;
 		this.player = null;
+		this.hasWall = false;
 	}
 
 	public String toString()
 	{
 		return "X: " + this.position.x + ", Y:" + this.position.y;
 	}
+	
+	public boolean hasWall()
+	{
+		return this.hasWall;
+	}
+	
+	public void setWall()
+	{
+		this.hasWall = true;
+	}
+	
 	public Point position() {
 		return this.position;
 	}
