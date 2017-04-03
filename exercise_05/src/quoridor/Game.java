@@ -34,7 +34,6 @@ public class Game {
 		this.players = new ArrayList<Player>();
 		this.playerAmountOfWalls = 0;
 		this.winner = null;
-		this.currentPlayer = players.get(0);
 	}
 	
 	/**
@@ -232,6 +231,7 @@ public class Game {
 	
 	public void play(Parser parser, Renderer renderer)
 	{
+		this.currentPlayer = players.get(0);
 		//TODO implement main gameloop
 		boolean validInput = false;
 		String order;
@@ -288,7 +288,7 @@ public class Game {
 		System.out.println(game);
 		Renderer renderer = new Renderer(game);
 		System.out.println(renderer.render());
-		
+
 		game.play(parser, renderer);
 	}
 }

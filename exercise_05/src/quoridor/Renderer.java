@@ -102,27 +102,23 @@ public class Renderer {
 		renderHorizontalLine(this.output.length - 1, WALL_SIGN);
 		renderVerticalLine(0, WALL_SIGN);
 		renderVerticalLine(this.output[0].length - 1, WALL_SIGN);
-		renderPlayerWalls();	
+		renderPlayerWalls();
 	}
 
 	/**
 	 * renders Walls that have been set by Players
 	 */
-	private void renderPlayerWalls()
-	{
-		for(List<Tile> list : game.tiles())
-		{
-			for(Tile t : list);
-			{
+	private void renderPlayerWalls() {
+		for(List<Tile> list : game.tiles()) {
+			for(Tile tile : list) {
 				//Why does this not work?!
-				if(t.hasWall())
-				{
-					//TODO print WALL_SIGN at correct position
+				if(tile.hasWall()) {
+					this.output[tile.position().y][tile.position().x] = WALL_SIGN;
 				}
 			}
 		}
 	}
-	
+
 	/**
 	 * Render vertical line.
 	 *
