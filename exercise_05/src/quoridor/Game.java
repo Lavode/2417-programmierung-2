@@ -1,6 +1,7 @@
 package quoridor;
 
 import java.awt.Point;
+import java.util.Scanner;
 import java.util.List;
 import java.util.ArrayList;
 import java.io.IOException;
@@ -222,8 +223,11 @@ public class Game {
 	 */
 	public String askOrder()
 	{
-		//TODO ask player for order
-		return "";
+		Scanner scan = new Scanner(System.in);
+		System.out.println(currentPlayer + " enter your next Order (U, D, L, R, (xFrom, yFrom, xTo, yTo))");
+		String input = scan.nextLine();
+		scan.close();
+		return input;
 	}
 	
 	public void play(Parser parser, Renderer renderer)
