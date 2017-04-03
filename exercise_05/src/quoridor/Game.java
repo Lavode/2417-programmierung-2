@@ -37,7 +37,16 @@ public class Game {
 	}
 	
 	/**
-	 * Tell game how many Walls each player can use!
+	 * lets next player be new currentPlayer
+	 */
+	public void switchCurrentPlayer()
+	{
+		int i = players.indexOf(currentPlayer);
+		currentPlayer = players.get((i+1) % players.size());
+	}
+	
+	/**
+	 * Tell game how many Walls each player can use! (During step by step init)
 	 * Variable equals 0 if this method is never called.
 	 * @param i amount of Walls
 	 */
@@ -220,20 +229,52 @@ public class Game {
 	public void play(Parser parser, Renderer renderer)
 	{
 		//TODO implement main gameloop
+		boolean validInput = false;
 		String order;
 		while(this.isNotOver())
 		{
-			order = this.askOrder();
-			try
+			while(!validInput)
 			{
-				//TODO
-				parser.parse("");	
+				order = this.askOrder();
+				try
+				{
+					if(parser.orderType(order) == Player.CommandType.MOVEMENT)
+					{
+						try
+						{
+							if(order.toLowerCase() == "u")
+								currentPlayer.moveUp();
+							else if(order.toLowerCase() == "d")
+								currentPlayer.moveDown();
+							else if(order.toLowerCase() == "l")
+								currentPlayer.moveLeft();
+							else if(order.toLowerCase() == "r")
+								currentPlayer.moveRight();
+							
+							if(currentPlayer.hasFinished())
+								this.winner = currentPlayer;
+							validInput = true;
+						}
+						catch(TileOccupiedException e)
+						{
+							System.out.println("You try to move onto a occupied Tile, please make another move!");
+						}
+					}
+					else
+					{
+						int i[] = parser.parseWallplacement();
+						currentPlayer.placeWall(i[0], i[1], i[2], i[3]);
+						validInput = true;
+					}
+				}
+				catch (ParserException e)
+				{
+					System.out.println("Your order could not be read, please repeat!");
+				}
+				System.out.println(renderer.render());
 			}
-			catch (ParserException e)
-			{
-				System.out.println("parsing Failed");
-			}
-			System.out.println(renderer.render());
+			
+			this.switchCurrentPlayer();
 		}
 	}
 

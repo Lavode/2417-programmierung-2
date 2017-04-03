@@ -24,6 +24,10 @@ public class Player {
 		LEFT, RIGHT, UP, DOWN
 	}
 
+	public enum CommandType {
+		MOVEMENT, PLACEWALL
+	}
+	
 	public Player(String name, char sign, Tile tile, Target target) {
 		assert !tile.isOccupied();
 		this.name = name;
@@ -231,5 +235,19 @@ public class Player {
 	private boolean invariant()
 	{
 		return this.tile != null;
+	}
+
+	/**
+	 * checks if player is at Target
+	 */
+	public boolean hasFinished() {
+		if(this.target() == Player.Target.DOWN)
+			return this.tile.position().y == game.height();
+		else if(this.target() == Player.Target.UP)
+			return this.tile.position().y == 1;
+		else if(this.target() == Player.Target.LEFT)
+			return this.tile.position().x == 1;
+		else 
+			return this.tile.position().x == game.width();	
 	}
 }
