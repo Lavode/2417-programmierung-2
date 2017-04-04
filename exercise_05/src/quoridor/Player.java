@@ -19,7 +19,7 @@ public class Player {
 	private  final Target target;
 
 	private int amountOfWalls;
-	
+
 	public enum Target {
 		LEFT, RIGHT, UP, DOWN
 	}
@@ -27,7 +27,7 @@ public class Player {
 	public enum CommandType {
 		MOVEMENT, PLACEWALL
 	}
-	
+
 	public Player(String name, char sign, Tile tile, Target target) {
 		assert !tile.isOccupied();
 		this.name = name;
@@ -37,7 +37,7 @@ public class Player {
 		this.target = target;
 		this.game = null;
 	}
-	
+
 	/**
 	 * @return true if player is in a game, false otherwise
 	 */
@@ -45,7 +45,7 @@ public class Player {
 	{
 		return this.game != null;
 	}
-	
+
 	/**
 	 * lets a player enter a game.
 	 * 
@@ -116,7 +116,7 @@ public class Player {
 	public String toString() {
 		return String.format("<%s> [%s] @ (%s, %s) -> %s", this.name, this.sign, this.tile.position().x, this.tile.position().y, this.target);
 	}
-	
+
 	/**
 	 * Checks if there is still a path for the player so he can win the game after
 	 * a potentially new Wall has been placed between (xFrom, yFrom) and (xTo, yTo).
@@ -131,7 +131,7 @@ public class Player {
 		//TODO Check if there is still a Winning path after a Wall has been placed
 		return false;
 	}
-	
+
 	/**
 	 * Lets Player place a Wall between (xFrom, yFrom) and (xTo, yTo)
 	 * @param xFrom x-Coordinate
@@ -151,89 +151,70 @@ public class Player {
 			this.amountOfWalls--;
 		}
 	}
-	
-	private void moveFromTo(Tile current, Tile next) throws TileOccupiedException
-	{
-		if(!(next.isOccupied()))
-		{
-			current.leave();
-			next.enter(this);
-			this.tile = next;
-			assert this.invariant();
-		}	
-		else
-		{
-			assert this.invariant();
-			throw new TileOccupiedException("Field you want to move to is occupied!");
-		}
+
+	public void jump(int x, int y) throws TileOccupiedException {
+		moveTo(this.game.getTile(x, y));
+
+		assert(invariant());
 	}
 
 	/**
 	 * Tries to move the player up by one field
 	 * @throws TileOccupiedException in case of other player beeing on Tile the player tries to land on
 	 */
-	public void moveUp() throws TileOccupiedException
-	{
-		assert this.invariant();
-		Tile current = this.currentPosition();
-		assert game.isValidPosition(current.position().x, current.position().y - 1);
-		Tile next = game.getTile(current.position().x, current.position().y - 1);
-		
-		assert this.hasGame() && this.currentPosition() != null;
-		assert game.isValidPosition(current.position().x, current.position().y - 1);
-		this.moveFromTo(current, next);
+	public void moveUp() throws TileOccupiedException {
+		moveTo(this.game.getTile(this.position().x, this.position().y - 1));
+
+		assert(invariant());
 	}
-	
+
 	/**
 	 * Tries to move the player down by one tile
 	 * @throws TileOccupiedException in case of other player beeing on Tile the player tries to land on
 	 */
-	public void moveDown() throws TileOccupiedException
-	{
-		assert this.invariant();
-		Tile current = this.currentPosition();
-		Tile next = game.getTile(current.position().x, current.position().y + 1);
+	public void moveDown() throws TileOccupiedException {
+		moveTo(this.game.getTile(this.position().x, this.position().y + 1));
 
-		assert this.hasGame() && this.currentPosition() != null;
-		assert game.isValidPosition(current.position().x, current.position().y + 1);
-		
-		this.moveFromTo(current, next);
+		assert(invariant());
 	}
-	
+
 	/**
 	 * tries to move the player to the right by one tile
 	 * @throws TileOccupiedException in case of other player beeing on Tile the player tries to land on
 	 */
-	public void moveRight() throws TileOccupiedException
-	{
-		assert this.invariant();
-		Tile current = this.currentPosition();
-		Tile next = game.getTile(current.position().x + 1, current.position().y);
+	public void moveRight() throws TileOccupiedException {
+		moveTo(this.game.getTile(this.position().x + 1, this.position().y));
 
-		assert this.hasGame() && this.currentPosition() != null;
-		assert game.isValidPosition(current.position().x + 1, current.position().y);
-		
-		this.moveFromTo(current, next);
+		assert(invariant());
 	}
-	
+
 	/**
 	 * tries to move the player to the left by one tile
 	 * @throws TileOccupiedException in case of other player beeing on Tile the player tries to land on
 	 */
-	public void moveLeft() throws TileOccupiedException
-	{
-		assert this.invariant();
-		Tile current = this.currentPosition();
-		Tile next = game.getTile(current.position().x - 1, current.position().y);
+	public void moveLeft() throws TileOccupiedException {
+		moveTo(this.game.getTile(this.position().x - 1, this.position().y));
 
-		assert this.hasGame() && this.currentPosition() != null;
-		assert game.isValidPosition(current.position().x - 1, current.position().y);
-		
-		this.moveFromTo(current, next);
+		assert(invariant());
 	}
-	
-	private boolean invariant()
-	{
+
+	private void moveTo(Tile next) throws TileOccupiedException {
+		/* TODO: Throwing a TileOccupiedException should happen within
+		 * the tile - it has the authority to decide whether another
+		 * player fits or not.  However, care must be taken not to end
+		 * up with a ghost player sitting on a tile.
+		 */
+		if (next.isOccupied()) {
+			System.out.println(String.format("Tile %s is occupied by %s", next, next.player()));
+			throw new TileOccupiedException("Field you want to move to is occupied!");
+		} else {
+			this.tile.leave();
+			next.enter(this);
+			this.tile = next;
+		}
+	}
+
+	private boolean invariant() {
 		return this.tile != null;
 	}
 
@@ -247,7 +228,7 @@ public class Player {
 			return this.tile.position().y == 1;
 		else if(this.target() == Player.Target.LEFT)
 			return this.tile.position().x == 1;
-		else 
-			return this.tile.position().x == game.width();	
+		else
+			return this.tile.position().x == game.width();
 	}
 }
