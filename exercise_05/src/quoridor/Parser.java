@@ -151,38 +151,4 @@ public class Parser {
 			throw new ParserException(String.format("Invalid player entry: %s", input));
 		}
 	}
-
-	public Player.CommandType orderType(String order) throws ParserException{
-		if(this.orderIsMoveCommand(order))
-		{
-			return Player.CommandType.MOVEMENT;
-		}
-		else if (this.orderIsWallPlacement())
-		{
-			return Player.CommandType.PLACEWALL;
-		}
-		else
-		{
-			throw new ParserException("Invalid Command");
-		}
-	}
-
-	private boolean orderIsWallPlacement() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	private boolean orderIsMoveCommand(String order) {
-		return order.toLowerCase().equals("l") || order.toLowerCase().equals("r") ||
-				order.toLowerCase().equals("u") || order.toLowerCase().equals("d");
-	}
-
-	/**
-	 * Parses a Wallplacement command
-	 * @return Array with the coordinates from where to where the wall should go. (xFrom, yFrom, xTo, yTo)
-	 */
-	public int[] parseWallplacement() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

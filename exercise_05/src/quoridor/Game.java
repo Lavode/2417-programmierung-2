@@ -13,9 +13,9 @@ import java.io.IOException;
 public class Game {
 	private int width;
 	private int height;
-	
+
 	private int playerAmountOfWalls;
-	
+
 	private Player winner;
 	private Player currentPlayer;
 
@@ -35,7 +35,7 @@ public class Game {
 		this.playerAmountOfWalls = 0;
 		this.winner = null;
 	}
-	
+
 	/**
 	 * lets next player be new currentPlayer
 	 */
@@ -44,7 +44,7 @@ public class Game {
 		int i = players.indexOf(currentPlayer);
 		currentPlayer = players.get((i+1) % players.size());
 	}
-	
+
 	/**
 	 * Tell game how many Walls each player can use! (During step by step init)
 	 * Variable equals 0 if this method is never called.
@@ -171,6 +171,10 @@ public class Game {
 		return this.players;
 	}
 
+	public Player currentPlayer() {
+		return this.currentPlayer;
+	}
+
 	/**
 	 * Compare two game objects for equality.
 	 *
@@ -183,7 +187,6 @@ public class Game {
 	 */
 	public boolean equals(Object other) {
 		if (!(other instanceof Game)) {
-			System.out.println("Instance");
 			return false;
 		}
 
@@ -211,81 +214,39 @@ public class Game {
 
 		return String.format("Size: %s\nPlayers:\n%s\n", size, players);
 	}
-	
+
 	public boolean isNotOver()
 	{
 		return this.winner == null;
 	}
 
-	/**
-	 * Askes the player what he wants to do next.
-	 */
-	public String askOrder()
-	{
-		Scanner scan = new Scanner(System.in);
-		System.out.println(currentPlayer + " enter your next Order (U, D, L, R, (xFrom, yFrom, xTo, yTo))");
-		String input = scan.nextLine();
-		scan.close();
-		return input;
-	}
-	
 	public void play(Parser parser, Renderer renderer)
 	{
+		for (Player player : this.players) {
+			player.enterGame(this);
+		}
 		this.currentPlayer = players.get(0);
-		//TODO implement main gameloop
-		boolean validInput = false;
-		String order;
+
+		UserInteraction ui = new UserInteraction(this);
+
 		while(this.isNotOver())
 		{
-			while(!validInput)
-			{
-				order = this.askOrder();
-				try
-				{
-					if(parser.orderType(order) == Player.CommandType.MOVEMENT)
-					{
-						try
-						{
-							if(order.toLowerCase() == "u")
-								currentPlayer.moveUp();
-							else if(order.toLowerCase() == "d")
-								currentPlayer.moveDown();
-							else if(order.toLowerCase() == "l")
-								currentPlayer.moveLeft();
-							else if(order.toLowerCase() == "r")
-								currentPlayer.moveRight();
-							
-							if(currentPlayer.hasFinished())
-								this.winner = currentPlayer;
-							validInput = true;
-						}
-						catch(TileOccupiedException e)
-						{
-							System.out.println("You try to move onto a occupied Tile, please make another move!");
-						}
-					}
-					else
-					{
-						int i[] = parser.parseWallplacement();
-						currentPlayer.placeWall(i[0], i[1], i[2], i[3]);
-						validInput = true;
-					}
-				}
-				catch (ParserException e)
-				{
-					System.out.println("Your order could not be read, please repeat!");
-				}
-				System.out.println(renderer.render());
+			ICommand command = ui.askNextCommand();
+			System.out.println(String.format("Got command: %s", command));
+			try {
+				command.execute(this.currentPlayer);
+				this.switchCurrentPlayer();
+			} catch (TileOccupiedException e) {
+				System.out.println("You tried to move onto an occupied Tile, please make another move!");
 			}
-			
-			this.switchCurrentPlayer();
+
+			System.out.println(renderer.render());
 		}
 	}
 
 	public static void main(String[] args) throws ParserException, IOException {
 		Parser parser = new Parser();
 		Game game = parser.parseFromFile("games/game1.txt");
-		System.out.println(game);
 		Renderer renderer = new Renderer(game);
 		System.out.println(renderer.render());
 
