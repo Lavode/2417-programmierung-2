@@ -214,9 +214,16 @@ public class Game {
 		return String.format("Size: %s\nPlayers:\n%s\n", size, players);
 	}
 
-	public boolean isNotOver()
-	{
-		return this.winner == null;
+	public boolean isOver() {
+		for (Player player : this.players) {
+			if (player.hasFinished()) {
+				System.out.println("Player has won " + player);
+				this.winner = player;
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	public void play(Parser parser, Renderer renderer)
@@ -228,8 +235,7 @@ public class Game {
 
 		UserInteraction ui = new UserInteraction(this);
 
-		while(this.isNotOver())
-		{
+		while(!this.isOver()) {
 			ICommand command = ui.askNextCommand();
 			try {
 				command.execute(this.currentPlayer);
@@ -240,6 +246,8 @@ public class Game {
 
 			System.out.println(renderer.render());
 		}
+
+		System.out.println(String.format("Congratulations %s, you have won!", this.winner.name()));
 	}
 
 	public static void main(String[] args) throws ParserException, IOException {
