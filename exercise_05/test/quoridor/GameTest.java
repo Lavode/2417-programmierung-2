@@ -5,9 +5,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.awt.Point;
 
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -16,7 +14,7 @@ import quoridor.Game;
 
 public class GameTest
 {
-	private Player player1 = new Player("George", 'g', new Tile(new Point(1, 1)), Player.Target.LEFT);
+	private Player player1 = new Player("George", 'g', new Tile(new Point(1, 1)), Player.Target.RIGHT);
 	private Player player2 = new Player("John", 'j',   new Tile(new Point(3, 3)), Player.Target.DOWN);
 	private List<Player> players = new ArrayList<Player>(Arrays.asList(player1, player2));
 
@@ -32,11 +30,34 @@ public class GameTest
 		this.game.setDimension(5, 7);
 		this.game.addPlayer(player1);
 		this.game.addPlayer(player2);
+
+		this.player1.enterGame(this.game);
+		this.player2.enterGame(this.game);
 	}
 
 	@Test
 	public void getTileReturnsTile() {
 		assertTrue(game.getTile(1, 3) instanceof Tile);
+	}
+
+	@Test(expected = AssertionError.class)
+	public void getTileLeftOfBoardViolatesContract() {
+		this.game.getTile(0, 1);
+	}
+
+	@Test(expected = AssertionError.class)
+	public void getTileRightOfBoardViolatesContract() {
+		this.game.getTile(6, 1);
+	}
+
+	@Test(expected = AssertionError.class)
+	public void getTileAboveBoardViolatesContract() {
+		this.game.getTile(1, 0);
+	}
+
+	@Test(expected = AssertionError.class)
+	public void getTileBelowBoardViolatesContract() {
+		this.game.getTile(1, 8);
 	}
 
 	@Test
@@ -91,5 +112,28 @@ public class GameTest
 		Game game2 = new Game(5, 7, players);
 
 		assertEquals(game, game2);
+	}
+
+	@Test
+	public void toStringReturnsUseableRepresentation() {
+		assertEquals(String.format("Size: 5x7\nPlayers:\n%s\n%s\n", this.player1.toString(), this.player2.toString()), this.game.toString());
+	}
+
+	@Test
+	public void isOverReturnsTrueIfAPlayerHasWon() throws TileOccupiedException {
+		assertFalse(this.game.isOver());
+		this.player1.jump(5, 1);
+		assertTrue(this.game.isOver());
+	}
+
+	@Test
+	public void switchCurrentPlayerMovesToNextPlayerInQueue() {
+		assertEquals(this.player1, this.game.currentPlayer());
+		this.game.switchCurrentPlayer();
+
+		assertEquals(this.player2, this.game.currentPlayer());
+		this.game.switchCurrentPlayer();
+
+		assertEquals(this.player1, this.game.currentPlayer());
 	}
 }

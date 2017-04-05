@@ -211,13 +211,12 @@ public class Game {
 			players += "\n";
 		}
 
-		return String.format("Size: %s\nPlayers:\n%s\n", size, players);
+		return String.format("Size: %s\nPlayers:\n%s", size, players);
 	}
 
 	public boolean isOver() {
 		for (Player player : this.players) {
 			if (player.hasFinished()) {
-				System.out.println("Player has won " + player);
 				this.winner = player;
 				return true;
 			}
@@ -231,7 +230,6 @@ public class Game {
 		for (Player player : this.players) {
 			player.enterGame(this);
 		}
-		this.currentPlayer = players.get(0);
 
 		UserInteraction ui = new UserInteraction(this);
 
