@@ -33,6 +33,12 @@ public class CommandParserTest
 	}
 
 	@Test
+	public void parseIsCaseInsensitive() throws ParserException {
+		ICommand cmd = CommandParser.parse("R");
+		assertEquals(new MoveCommand(MoveCommand.Direction.RIGHT), cmd);
+	}
+
+	@Test
 	public void parseHandlesWallCommand() throws ParserException {
 		ICommand cmd = CommandParser.parse("wall 3 3 3 5");
 		assertEquals(new WallCommand(new Point(3, 3), new Point(3, 5)), cmd);

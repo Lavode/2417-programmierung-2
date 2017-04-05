@@ -6,18 +6,20 @@ import java.util.regex.Matcher;
 
 public class CommandParser
 {
+	/* TODO: Could not get Pattern.compile("...", Pattern.CASE_INSENSITIVE)
+	 * to work, for some reason. */
 	private static Pattern MOVE_COMMAND_PATTERN = Pattern.compile("^([udlr])$");
 	private static Pattern WALL_COMMAND_PATTERN = Pattern.compile("^wall ([0-9]) ([0-9]) ([0-9]) ([0-9])$");
 
 	public static ICommand parse(String input) throws ParserException {
 		try {
-			return parseMoveCommand(input);
+			return parseMoveCommand(input.toLowerCase());
 		} catch (ParserException e) {
 			// No-op
 		}
 
 		try {
-			return parseWallCommand(input);
+			return parseWallCommand(input.toLowerCase());
 		} catch (ParserException e) {
 			// No-op
 		}
