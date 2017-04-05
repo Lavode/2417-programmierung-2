@@ -1,6 +1,9 @@
 package quoridor;
 
 import java.awt.Point;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Represents a Player of the quoridor game.
@@ -141,7 +144,7 @@ public class Player {
 	/**
 	 * Lets Player place a Wall between (xFrom, yFrom) and (xTo, yTo)
 	 */
-	public void placeWall(Point from, Point to) {
+	public void placeWall(Point from, Point to) throws TileOccupiedException {
 		assert(this.wallsAvailable > 0);
 		game.buildWall(from, to);
 		this.wallsAvailable--;
@@ -224,5 +227,55 @@ public class Player {
 			return this.tile.position().x == 1;
 		else
 			return this.tile.position().x == game.width();
+	}
+
+	public boolean canReachTarget() {
+		System.out.println(this.toString());
+		for (Tile targetTile : targetTiles()) {
+			// System.out.println(t.toString());
+			PathFinding path = new PathFinding(this.game.toPathFindingBoard(), this.position(), targetTile.position());
+			if (path.existsPath()) {
+				/* Path to one target square found. */
+				return true;
+			}
+		}
+		/* No target square reachable. */
+		return false;
+	}
+
+	private List<Tile> targetTiles() {
+		List<Tile> out = new ArrayList<Tile>();
+
+		switch (this.target) {
+			case UP:
+				for (int i = 1; i <= this.game.width(); i++) {
+					out.add(this.game.getTile(i, 1));
+				}
+				break;
+			case DOWN:
+				for (int i = 1; i <= this.game.width(); i++) {
+					out.add(this.game.getTile(i, this.game.height()));
+				}
+				break;
+			case LEFT:
+				for (int i = 1; i <= this.game.height(); i++) {
+					out.add(this.game.getTile(1, i));
+				}
+				break;
+			case RIGHT:
+				for (int i = 1; i <= this.game.height(); i++) {
+					out.add(this.game.getTile(this.game.width(), i));
+				}
+				break;
+		}
+
+		for (Iterator<Tile> iterator = out.iterator(); iterator.hasNext();) {
+			Tile tile = iterator.next();
+			if (tile.hasWall()) {
+				iterator.remove();
+			}
+		}
+
+		return out;
 	}
 }

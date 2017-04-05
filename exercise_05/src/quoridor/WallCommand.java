@@ -20,7 +20,7 @@ public class WallCommand implements ICommand
 		return this.to;
 	}
 
-	public void execute(Player player) {
+	public void execute(Player player) throws TileOccupiedException {
 		player.placeWall(this.from, this.to);
 	}
 

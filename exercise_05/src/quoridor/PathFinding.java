@@ -15,11 +15,11 @@ public class PathFinding
 
 	public PathFinding(int[][] board, Point from, Point to) {
 		this.board = board;
-		this.from = from;
-		this.to = to;
+		this.from = new Point(from.x - 1, from.y - 1);
+		this.to = new Point(to.x - 1, to.y - 1);
 
 		initializeNodes();
-		printState();
+		// printState();
 	}
 
 	private void initializeNodes() {
@@ -119,7 +119,7 @@ public class PathFinding
 			}
 		}
 
-		System.out.printf("Next node: %s\n", out.toString());
+		// System.out.printf("Next node: %s\n", out.toString());
 		return out;
 	}
 

@@ -36,6 +36,11 @@ public class Tile {
 	{
 		this.hasWall = true;
 	}
+
+	public void unsetWall()
+	{
+		this.hasWall = false;
+	}
 	
 	public Point position() {
 		return this.position;

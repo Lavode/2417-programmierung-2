@@ -169,9 +169,28 @@ public class Game {
 		return this.currentPlayer;
 	}
 
-	public void buildWall(Point from, Point to) {
+	public void buildWall(Point from, Point to) throws TileOccupiedException {
 		getTile(from).setWall();
 		getTile(to).setWall();
+
+		if (!allPlayersAbleToReachTarget()) {
+			System.out.println("You may not box in players.");
+			getTile(from).unsetWall();
+			getTile(to).unsetWall();
+
+			/* TODO: Abusing this exception here, to ensure player gets to pick another move - but not really clean. */
+			throw new TileOccupiedException("You may not box in players.");
+		}
+	}
+
+	private boolean allPlayersAbleToReachTarget() {
+		for (Player player : this.players) {
+			if (!player.canReachTarget()) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	/**
@@ -255,5 +274,28 @@ public class Game {
 		System.out.println(renderer.render());
 
 		game.play(parser, renderer);
+		// Game game = new Game();
+		// game.setDimension(4, 6);
+		// game.buildWall(new Point(1, 2), new Point(1, 3));
+		// game.buildWall(new Point(2, 2), new Point(3, 2));
+		// game.buildWall(new Point(3, 4), new Point(4, 4));
+		// game.buildWall(new Point(1, 4), new Point(2, 4));
+		// PathFinding path = new PathFinding(game.toPathFindingBoard(), new Point(0, 0), new Point(3, 5));
+		// path.existsPath();
+	}
+
+	public int[][] toPathFindingBoard() {
+		int[][] board = new int[this.width][this.height];
+
+		for (int i = 1; i <= this.width; i++) {
+			for (int j = 1; j <= this.height; j++) {
+				if (getTile(i, j).hasWall()) {
+					board[i - 1][j - 1] = 1;
+				} else {
+					board[i - 1][j - 1] = 0;
+				}
+			}
+		}
+		return board;
 	}
 }
