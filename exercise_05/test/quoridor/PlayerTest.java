@@ -134,14 +134,14 @@ public class PlayerTest
 	}
 
 	@Test
-	public void placeWallPlacesWalls() {
+	public void placeWallPlacesWalls() throws TileOccupiedException {
 		this.player.placeWall(new Point(2, 1), new Point(2, 2));
 		assertTrue(this.game.getTile(2, 1).hasWall());
 		assertTrue(this.game.getTile(2, 2).hasWall());
 	}
 
 	@Test(expected = AssertionError.class)
-	public void placeWallIfNoWallsAvailableValidatesContract() {
+	public void placeWallIfNoWallsAvailableValidatesContract() throws TileOccupiedException {
 		this.game.setDimension(10, 10);
 		this.player.placeWall(new Point(2, 1), new Point(2, 2));
 		this.player.placeWall(new Point(3, 1), new Point(3, 2));

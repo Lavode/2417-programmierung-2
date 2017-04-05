@@ -239,7 +239,6 @@ public class Player {
 	}
 
 	public boolean canReachTarget() {
-		System.out.println(this.toString());
 		for (Tile targetTile : targetTiles()) {
 			// System.out.println(t.toString());
 			PathFinding path = new PathFinding(this.game.toPathFindingBoard(), this.position(), targetTile.position());
