@@ -1,8 +1,6 @@
 package quoridor;
 
 import java.awt.Point;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.Assert.*;
 
