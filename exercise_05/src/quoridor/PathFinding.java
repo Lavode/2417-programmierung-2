@@ -60,17 +60,17 @@ public class PathFinding
 			}
 			next.visit();
 
-			System.out.println("--------");
-			printState();
+			// System.out.println("--------");
+			// printState();
 
 			next = closestUnvisitedNode();
 		}
 
 		if (this.destination().distance() < Integer.MAX_VALUE) {
-			System.out.println(String.format("Found path to destination with distance: %s", this.destination().distance()));
+			// System.out.println(String.format("Found path to destination with distance: %s", this.destination().distance()));
 			return true;
 		} else {
-			System.out.println("No path to destination found.");
+			// System.out.println("No path to destination found.");
 			return false;
 		}
 	}
