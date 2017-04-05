@@ -20,7 +20,7 @@ public class Player {
 	private int wallsAvailable = WALLS_PER_PLAYER;
 
 	private Tile tile;
-	private  final Target target;
+	private Target target;
 
 	public enum Target {
 		LEFT, RIGHT, UP, DOWN
@@ -84,6 +84,10 @@ public class Player {
 	 */
 	public Target target() {
 		return this.target;
+	}
+
+	public void setTarget(Target target) {
+		this.target = target;
 	}
 
 	/**

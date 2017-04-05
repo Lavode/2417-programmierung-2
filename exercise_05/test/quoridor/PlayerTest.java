@@ -95,4 +95,68 @@ public class PlayerTest
 		assertTrue(this.game.getTile(2, 2).isOccupied());
 		assertFalse(this.game.getTile(1, 1).isOccupied());
 	}
+
+	@Test(expected = TileOccupiedException.class)
+	public void moveThrowsTileOccupiedExceptionIfMovingOntoOccupiedTile() throws TileOccupiedException {
+		Player player2 = new Player("George", 'G', new Tile(new Point(2, 3)), Player.Target.LEFT);
+		this.game.addPlayer(player2);
+		player2.enterGame(this.game);
+
+		player2.moveRight();
+	}
+
+	@Test
+	public void hasFinishedReturnsTrueIfPlayerIsOnFinishLine() throws TileOccupiedException {
+		this.player.setTarget(Player.Target.UP);
+		assertFalse(this.player.hasFinished());
+		this.player.jump(3, 1);
+		assertTrue(this.player.hasFinished());
+
+		this.player.setTarget(Player.Target.LEFT);
+		assertFalse(this.player.hasFinished());
+		this.player.jump(1, 1);
+		assertTrue(this.player.hasFinished());
+
+		this.player.setTarget(Player.Target.DOWN);
+		assertFalse(this.player.hasFinished());
+		this.player.jump(1, 3);
+		assertTrue(this.player.hasFinished());
+
+		this.player.setTarget(Player.Target.RIGHT);
+		assertFalse(this.player.hasFinished());
+		this.player.jump(3, 3);
+		assertTrue(this.player.hasFinished());
+	}
+
+	@Test
+	public void toStringReturnsUseableRepresentation() {
+		assertEquals("<John> [J] @ (3, 3) -> RIGHT", this.player.toString());
+	}
+
+	@Test
+	public void placeWallPlacesWalls() {
+		this.player.placeWall(new Point(2, 1), new Point(2, 2));
+		assertTrue(this.game.getTile(2, 1).hasWall());
+		assertTrue(this.game.getTile(2, 2).hasWall());
+	}
+
+	@Test(expected = AssertionError.class)
+	public void placeWallIfNoWallsAvailableValidatesContract() {
+		this.game.setDimension(10, 10);
+		this.player.placeWall(new Point(2, 1), new Point(2, 2));
+		this.player.placeWall(new Point(3, 1), new Point(3, 2));
+		this.player.placeWall(new Point(4, 1), new Point(4, 2));
+		this.player.placeWall(new Point(5, 1), new Point(5, 2));
+		this.player.placeWall(new Point(6, 1), new Point(6, 2));
+		this.player.placeWall(new Point(7, 1), new Point(7, 2));
+	}
+
+	@Test
+	public void hasGameReturnsWhetherPlayerEnteredGame() {
+		Player player = new Player("George", 'G', new Tile(new Point(1, 1)), Player.Target.LEFT);
+
+		assertFalse(player.hasGame());
+		player.enterGame(this.game);
+		assertTrue(player.hasGame());
+	}
 }
