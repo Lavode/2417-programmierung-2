@@ -231,7 +231,6 @@ public class Game {
 		while(this.isNotOver())
 		{
 			ICommand command = ui.askNextCommand();
-			System.out.println(String.format("Got command: %s", command));
 			try {
 				command.execute(this.currentPlayer);
 				this.switchCurrentPlayer();
