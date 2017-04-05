@@ -59,6 +59,12 @@ public class CommandParserTest
 		assertEquals(new WallCommand(new Point(1, 1), new Point(1, 2)), cmd);
 	}
 
+	@Test public void parseHandlesWallCommandsWithMultiDigitCoordinates() throws ParserException, CommandInvalidException {
+		this.game.setDimension(20, 20);
+		ICommand cmd = this.parser.parse("wall 10 10 11 10");
+		assertEquals(new WallCommand(new Point(10, 10), new Point(11, 10)), cmd);
+	}
+
 	@Test(expected = CommandInvalidException.class)
 	public void parseThrowsExceptionOnWallCommandReferencingTilesOutsideOfGame() throws ParserException, CommandInvalidException {
 		this.parser.parse("wall 3 3 4 3");

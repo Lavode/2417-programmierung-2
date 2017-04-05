@@ -9,7 +9,7 @@ public class CommandParser
 	/* TODO: Could not get Pattern.compile("...", Pattern.CASE_INSENSITIVE)
 	 * to work, for some reason. */
 	private static Pattern MOVE_COMMAND_PATTERN = Pattern.compile("^([udlr])$");
-	private static Pattern WALL_COMMAND_PATTERN = Pattern.compile("^wall ([0-9]) ([0-9]) ([0-9]) ([0-9])$");
+	private static Pattern WALL_COMMAND_PATTERN = Pattern.compile("^wall ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+)$");
 
 	private Game game;
 
@@ -103,6 +103,16 @@ public class CommandParser
 			throw new CommandInvalidException("Coordinates outside of game field.");
 		}
 
+		Tile from = this.game.getTile(cmd.from());
+		Tile to = this.game.getTile(cmd.to());
+
+		if (from.isOccupied() || to.isOccupied()) {
+			throw new CommandInvalidException("Mr Trump, you can't place a wall on top of people!");
+		}
+
+		if (from.hasWall() || to.hasWall()) {
+			throw new CommandInvalidException("Mr Trump, this wall is high enough already.");
+		}
 
 		return cmd;
 	}
