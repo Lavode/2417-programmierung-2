@@ -11,23 +11,21 @@ public class CommandParser
 	private static Pattern MOVE_COMMAND_PATTERN = Pattern.compile("^([udlr])$");
 	private static Pattern WALL_COMMAND_PATTERN = Pattern.compile("^wall ([0-9]) ([0-9]) ([0-9]) ([0-9])$");
 
-	public static ICommand parse(String input) throws ParserException {
+	private Game game;
+
+	public CommandParser(Game game) {
+		this.game = game;
+	}
+
+	public ICommand parse(String input) throws ParserException {
 		try {
 			return parseMoveCommand(input.toLowerCase());
 		} catch (ParserException e) {
-			// No-op
-		}
-
-		try {
 			return parseWallCommand(input.toLowerCase());
-		} catch (ParserException e) {
-			// No-op
 		}
-
-		throw new ParserException("Not a valid command.");
 	}
 
-	private static ICommand parseMoveCommand(String input) throws ParserException {
+	private ICommand parseMoveCommand(String input) throws ParserException {
 		Matcher matcher = MOVE_COMMAND_PATTERN.matcher(input);
 		if (matcher.matches()) {
 			MoveCommand.Direction direction;
@@ -54,7 +52,7 @@ public class CommandParser
 		}
 	}
 
-	private static ICommand parseWallCommand(String input) throws ParserException {
+	private ICommand parseWallCommand(String input) throws ParserException {
 		Matcher matcher = WALL_COMMAND_PATTERN.matcher(input);
 
 		if (matcher.matches()) {
@@ -68,9 +66,33 @@ public class CommandParser
 					Integer.parseInt(matcher.group(4))
 			);
 
-			return new WallCommand(from, to);
+			return validateWallCommand(new WallCommand(from, to));
 		}
 
 		throw new ParserException("Invalid wall command.");
+	}
+
+	/* TODO: This should probably be done by the WallCommand class. */
+	private WallCommand validateWallCommand(WallCommand cmd) throws ParserException {
+		int deltaX = Math.abs(cmd.to().x - cmd.from().x);
+		int deltaY = Math.abs(cmd.to().y - cmd.from().y);
+
+		if (deltaX > 1) {
+			throw new ParserException("Too big gap on x axis.");
+		}
+		if (deltaY > 1) {
+			throw new ParserException("Too big gap on y axis.");
+		}
+
+		if (deltaX + deltaY != 1) {
+			throw new ParserException("Coordinates not 1 apart.");
+		}
+
+		if (!this.game.isValidPosition(cmd.to().x, cmd.to().y) || !this.game.isValidPosition(cmd.from().x, cmd.from().y)) {
+			throw new ParserException("Coordinates outside of game field.");
+		}
+
+
+		return cmd;
 	}
 }

@@ -5,9 +5,11 @@ import java.util.Scanner;
 public class UserInteraction
 {
 	private Game game;
+	private CommandParser parser;
 
 	public UserInteraction(Game game) {
 		this.game = game;
+		this.parser = new CommandParser(game);
 	}
 
 	public ICommand askNextCommand() {
@@ -24,10 +26,10 @@ public class UserInteraction
 			 * close STDIN. :P */
 			String input = scn.nextLine();
 			try {
-				ICommand command = CommandParser.parse(input);
+				ICommand command = parser.parse(input);
 				return command;
 			} catch (ParserException e) {
-				System.out.println("Your command was invalid, please try again.");
+				System.out.println(String.format("Your command was invalid, please try again: %s", e.getMessage()));
 			}
 
 		}
