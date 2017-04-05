@@ -9,11 +9,16 @@ import org.junit.Test;
 public class CommandParserTest
 {
 	private CommandParser parser;
+	private Game game;
+	private Player player;
 
 	@Before
 	public void init() {
-		Game game = new Game();
-		game.setDimension(3, 3);
+		this.game = new Game();
+		this.game.setDimension(3, 3);
+		this.player = new Player("John", 'J', this.game.getTile(2, 2), Player.Target.DOWN);
+		this.game.addPlayer(this.player);
+		this.player.enterGame(this.game);
 
 		this.parser = new CommandParser(game);
 	}
@@ -74,9 +79,14 @@ public class CommandParserTest
 		this.parser.parse("wall 1 1 2 2");
 	}
 
-
 	@Test(expected = ParserException.class)
 	public void parseThrowsParserExceptionOnInvalidCommand() throws ParserException {
 		this.parser.parse("udlr");
+	}
+
+	@Test(expected = ParserException.class)
+	public void parseThrowsParserExceptionOnMovementCommandLeavingField() throws ParserException, TileOccupiedException {
+		this.game.currentPlayer().jump(1, 1);
+		this.parser.parse("u");
 	}
 }

@@ -81,6 +81,9 @@ public class Game {
 	 */
 	public void addPlayer(Player player) {
 		this.players.add(player);
+		if (this.currentPlayer == null) {
+			this.currentPlayer = player;
+		}
 	}
 
 	/**

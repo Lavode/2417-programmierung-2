@@ -46,7 +46,7 @@ public class CommandParser
 					throw new ParserException("Invalid move direction.");
 			}
 
-			return new MoveCommand(direction);
+			return validateMoveCommand(new MoveCommand(direction));
 		} else {
 			throw new ParserException("Invalid move command.");
 		}
@@ -72,7 +72,18 @@ public class CommandParser
 		throw new ParserException("Invalid wall command.");
 	}
 
-	/* TODO: This should probably be done by the WallCommand class. */
+	/* TODO:
+	 * The two validations below don't belong here. They introduce and -
+	 * worse - duplicate game logic (e.g. how does 'UP' map to coordinates)
+	 * to the parser.
+	 * Instead, one should try to simply apply the given commands and -
+	 * when one of the inner classes throws an exception - catch it, and
+	 * let the player enter a second command.
+	 *
+	 * If one wants to do pre-emptive validation (which has its merits),
+	 * then it should be a method provided by ICommand, e.g.
+	 * ICommand#validInContext(Game, Player).
+	 */
 	private WallCommand validateWallCommand(WallCommand cmd) throws ParserException {
 		int deltaX = Math.abs(cmd.to().x - cmd.from().x);
 		int deltaY = Math.abs(cmd.to().y - cmd.from().y);
@@ -93,6 +104,32 @@ public class CommandParser
 		}
 
 
+		return cmd;
+	}
+
+	/* TODO: Dito */
+	private MoveCommand validateMoveCommand(MoveCommand cmd) throws ParserException {
+		Player player = this.game.currentPlayer();
+		Point pos = player.position();
+
+		switch (cmd.direction()) {
+			case UP:
+				if (!this.game.isValidPosition(pos.x, pos.y - 1)) {
+					throw new ParserException("Leaving field at the top.");
+				}
+			case DOWN:
+				if (!this.game.isValidPosition(pos.x, pos.y + 1)) {
+					throw new ParserException("Leaving field at the bottom.");
+				}
+			case LEFT:
+				if (!this.game.isValidPosition(pos.x -1, pos.y)) {
+					throw new ParserException("Leaving field at the left.");
+				}
+			case RIGHT:
+				if (!this.game.isValidPosition(pos.x + 1, pos.y)) {
+					throw new ParserException("Leaving field at the right.");
+				}
+		}
 		return cmd;
 	}
 }
