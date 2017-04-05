@@ -11,14 +11,16 @@ import java.awt.Point;
  *
  */
 public class Player {
+	private static final int WALLS_PER_PLAYER = 5;
+
 	private Game game;
 	private final String name;
 	private final char sign;
 
+	private int wallsAvailable = WALLS_PER_PLAYER;
+
 	private Tile tile;
 	private  final Target target;
-
-	private int amountOfWalls;
 
 	public enum Target {
 		LEFT, RIGHT, UP, DOWN
@@ -134,22 +136,11 @@ public class Player {
 
 	/**
 	 * Lets Player place a Wall between (xFrom, yFrom) and (xTo, yTo)
-	 * @param xFrom x-Coordinate
-	 * @param yFrom y-Coordinate
-	 * @param xTo x-Coordinate
-	 * @param yTo y-Coordinate
 	 */
-	public void placeWall(int xFrom, int yFrom, int xTo, int yTo)
-	{
-		assert(this.amountOfWalls > 0);
-		assert(xFrom-xTo <= 1 && xFrom-xTo >= -1) && (yFrom-yTo <= 1 && yFrom-yTo >= -1)
-				&& (xFrom-xTo != 0 || yFrom-yTo != 0);
-		if(this.hasPath(xFrom, yFrom, xTo, yTo))
-		{
-			game.getTile(xFrom, yFrom).setWall();
-			game.getTile(xTo, yTo).setWall();
-			this.amountOfWalls--;
-		}
+	public void placeWall(Point from, Point to) {
+		assert(this.wallsAvailable > 0);
+		game.buildWall(from, to);
+		this.wallsAvailable--;
 	}
 
 	public void jump(int x, int y) throws TileOccupiedException {

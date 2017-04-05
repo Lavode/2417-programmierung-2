@@ -14,8 +14,6 @@ public class Game {
 	private int width;
 	private int height;
 
-	private int playerAmountOfWalls;
-
 	private Player winner;
 	private Player currentPlayer;
 
@@ -32,7 +30,6 @@ public class Game {
 	public Game() {
 		this.tiles = new ArrayList<List<Tile>>();
 		this.players = new ArrayList<Player>();
-		this.playerAmountOfWalls = 0;
 		this.winner = null;
 	}
 
@@ -43,16 +40,6 @@ public class Game {
 	{
 		int i = players.indexOf(currentPlayer);
 		currentPlayer = players.get((i+1) % players.size());
-	}
-
-	/**
-	 * Tell game how many Walls each player can use! (During step by step init)
-	 * Variable equals 0 if this method is never called.
-	 * @param i amount of Walls
-	 */
-	public void setWallAmount(int i)
-	{
-		this.playerAmountOfWalls = i;
 	}
 
 	/**
@@ -142,6 +129,10 @@ public class Game {
 		return this.tiles.get(x - 1).get(y - 1);
 	}
 
+	public Tile getTile(Point position) {
+		return this.getTile(position.x, position.y);
+	}
+
 	/**
 	 * @return Game board's width.
 	 */
@@ -176,6 +167,11 @@ public class Game {
 
 	public Player currentPlayer() {
 		return this.currentPlayer;
+	}
+
+	public void buildWall(Point from, Point to) {
+		getTile(from).setWall();
+		getTile(to).setWall();
 	}
 
 	/**

@@ -21,6 +21,7 @@ public class WallCommand implements ICommand
 	}
 
 	public void execute(Player player) {
+		player.placeWall(this.from, this.to);
 	}
 
 	public boolean equals(Object other) {
