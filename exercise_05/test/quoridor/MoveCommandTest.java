@@ -38,4 +38,10 @@ public class MoveCommandTest
 		new MoveCommand(MoveCommand.Direction.RIGHT).execute(this.player);
 		assertEquals(this.player.currentPosition(), this.game.getTile(3, 3));
 	}
+
+	@Test
+	public void equalsChecksForEqualDirection() {
+		assertEquals(new MoveCommand(MoveCommand.Direction.UP), new MoveCommand(MoveCommand.Direction.UP));
+		assertNotEquals(new MoveCommand(MoveCommand.Direction.LEFT), new MoveCommand(MoveCommand.Direction.UP));
+	}
 }

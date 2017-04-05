@@ -12,6 +12,10 @@ public class MoveCommand implements ICommand
 		this.direction = direction;
 	}
 
+	public Direction direction() {
+		return this.direction;
+	}
+
 	public void execute(Player player) throws TileOccupiedException {
 		switch (this.direction) {
 			case UP:
@@ -27,5 +31,16 @@ public class MoveCommand implements ICommand
 				player.moveRight();
 				break;
 		}
+	}
+
+	public boolean equals(Object other) {
+		if (!(other instanceof MoveCommand)) {
+			return false;
+		}
+
+
+		MoveCommand cmd = (MoveCommand)other;
+
+		return this.direction == cmd.direction();
 	}
 }
