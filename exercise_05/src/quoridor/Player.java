@@ -20,7 +20,7 @@ public class Player {
 	private final String name;
 	private final char sign;
 
-	private int wallsAvailable = WALLS_PER_PLAYER;
+	private int availableWalls = WALLS_PER_PLAYER;
 
 	private Tile tile;
 	private Target target;
@@ -89,6 +89,14 @@ public class Player {
 		return this.target;
 	}
 
+	public int availableWalls() {
+		return this.availableWalls;
+	}
+
+	public void setAvailableWalls(int val) {
+		this.availableWalls = val;
+	}
+
 	public void setTarget(Target target) {
 		this.target = target;
 	}
@@ -145,9 +153,10 @@ public class Player {
 	 * Lets Player place a Wall between (xFrom, yFrom) and (xTo, yTo)
 	 */
 	public void placeWall(Point from, Point to) throws TileOccupiedException {
-		assert(this.wallsAvailable > 0);
+		assert(this.availableWalls > 0);
 		game.buildWall(from, to);
-		this.wallsAvailable--;
+
+		this.availableWalls--;
 	}
 
 	public void jump(int x, int y) throws TileOccupiedException {

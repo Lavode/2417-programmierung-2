@@ -177,6 +177,10 @@ public class Game {
 			System.out.println("You may not box in players.");
 			getTile(from).unsetWall();
 			getTile(to).unsetWall();
+			/* Note that we don't have to refund the player, as we
+			 * throw an exception before he substracts.
+			 * However, relying on an implementation detail like
+			 * this is bound to bite us in the ass sooner or later. */
 
 			/* TODO: Abusing this exception here, to ensure player gets to pick another move - but not really clean. */
 			throw new TileOccupiedException("You may not box in players.");
