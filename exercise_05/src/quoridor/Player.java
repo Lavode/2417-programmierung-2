@@ -195,8 +195,7 @@ public class Player {
 		 * player fits or not.  However, care must be taken not to end
 		 * up with a ghost player sitting on a tile.
 		 */
-		if (next.isOccupied()) {
-			System.out.println(String.format("Tile %s is occupied by %s", next, next.player()));
+		if (next.isOccupied() || next.hasWall()) {
 			throw new TileOccupiedException("Field you want to move to is occupied!");
 		} else {
 			this.tile.leave();
