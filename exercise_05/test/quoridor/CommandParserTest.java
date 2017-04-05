@@ -24,68 +24,68 @@ public class CommandParserTest
 	}
 
 	@Test
-	public void parseHandlesMoveUpCommand() throws ParserException {
+	public void parseHandlesMoveUpCommand() throws ParserException, CommandInvalidException {
 		ICommand cmd = this.parser.parse("u");
 		assertEquals(new MoveCommand(MoveCommand.Direction.UP), cmd);
 	}
 
 	@Test
-	public void parseHandlesMoveDownCommand() throws ParserException {
+	public void parseHandlesMoveDownCommand() throws ParserException, CommandInvalidException {
 		ICommand cmd = this.parser.parse("d");
 		assertEquals(new MoveCommand(MoveCommand.Direction.DOWN), cmd);
 	}
 
 	@Test
-	public void parseHandlesMoveLeftCommand() throws ParserException {
+	public void parseHandlesMoveLeftCommand() throws ParserException, CommandInvalidException {
 		ICommand cmd = this.parser.parse("l");
 		assertEquals(new MoveCommand(MoveCommand.Direction.LEFT), cmd);
 	}
 
 	@Test
-	public void parseHandlesMoveRightCommand() throws ParserException {
+	public void parseHandlesMoveRightCommand() throws ParserException, CommandInvalidException {
 		ICommand cmd = this.parser.parse("r");
 		assertEquals(new MoveCommand(MoveCommand.Direction.RIGHT), cmd);
 	}
 
 	@Test
-	public void parseIsCaseInsensitive() throws ParserException {
+	public void parseIsCaseInsensitive() throws ParserException, CommandInvalidException {
 		ICommand cmd = this.parser.parse("R");
 		assertEquals(new MoveCommand(MoveCommand.Direction.RIGHT), cmd);
 	}
 
 	@Test
-	public void parseHandlesWallCommand() throws ParserException {
+	public void parseHandlesWallCommand() throws ParserException, CommandInvalidException {
 		ICommand cmd = this.parser.parse("wall 1 1 1 2");
 		assertEquals(new WallCommand(new Point(1, 1), new Point(1, 2)), cmd);
 	}
 
-	@Test(expected = ParserException.class)
-	public void parseThrowsExceptionOnWallCommandReferencingTilesOutsideOfGame() throws ParserException {
+	@Test(expected = CommandInvalidException.class)
+	public void parseThrowsExceptionOnWallCommandReferencingTilesOutsideOfGame() throws ParserException, CommandInvalidException {
 		this.parser.parse("wall 3 3 4 3");
 	}
 
-	@Test(expected = ParserException.class)
-	public void parseThrowsExceptionOnWallCommandWithIdenticalCoordinates() throws ParserException {
+	@Test(expected = CommandInvalidException.class)
+	public void parseThrowsExceptionOnWallCommandWithIdenticalCoordinates() throws ParserException, CommandInvalidException {
 		this.parser.parse("wall 2 2 2 2");
 	}
 
-	@Test(expected = ParserException.class)
-	public void parseThrowsExceptionOnWallCommandWithTooFarApartCoordinates() throws ParserException {
+	@Test(expected = CommandInvalidException.class)
+	public void parseThrowsExceptionOnWallCommandWithTooFarApartCoordinates() throws ParserException, CommandInvalidException {
 		this.parser.parse("wall 1 1 1 3");
 	}
 
-	@Test(expected = ParserException.class)
-	public void parseThrowsExceptionOnWallCommandWithDiagonalCoordinates() throws ParserException {
+	@Test(expected = CommandInvalidException.class)
+	public void parseThrowsExceptionOnWallCommandWithDiagonalCoordinates() throws ParserException, CommandInvalidException {
 		this.parser.parse("wall 1 1 2 2");
 	}
 
 	@Test(expected = ParserException.class)
-	public void parseThrowsParserExceptionOnInvalidCommand() throws ParserException {
+	public void parseThrowsParserExceptionOnInvalidCommand() throws ParserException, CommandInvalidException {
 		this.parser.parse("udlr");
 	}
 
-	@Test(expected = ParserException.class)
-	public void parseThrowsParserExceptionOnMovementCommandLeavingField() throws ParserException, TileOccupiedException {
+	@Test(expected = CommandInvalidException.class)
+	public void parseThrowsParserExceptionOnMovementCommandLeavingField() throws ParserException, CommandInvalidException, TileOccupiedException {
 		this.game.currentPlayer().jump(1, 1);
 		this.parser.parse("u");
 	}

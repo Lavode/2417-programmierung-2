@@ -28,8 +28,8 @@ public class UserInteraction
 			try {
 				ICommand command = parser.parse(input);
 				return command;
-			} catch (ParserException e) {
-				System.out.println(String.format("Your command was invalid, please try again: %s", e.getMessage()));
+			} catch (ParserException | CommandInvalidException e) {
+				System.out.println(String.format("Invalid command, please try again: %s", e.getMessage()));
 			}
 
 		}

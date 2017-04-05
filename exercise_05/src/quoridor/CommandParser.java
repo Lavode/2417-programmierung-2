@@ -17,7 +17,7 @@ public class CommandParser
 		this.game = game;
 	}
 
-	public ICommand parse(String input) throws ParserException {
+	public ICommand parse(String input) throws ParserException, CommandInvalidException {
 		try {
 			return parseMoveCommand(input.toLowerCase());
 		} catch (ParserException e) {
@@ -25,7 +25,7 @@ public class CommandParser
 		}
 	}
 
-	private ICommand parseMoveCommand(String input) throws ParserException {
+	private ICommand parseMoveCommand(String input) throws ParserException, CommandInvalidException {
 		Matcher matcher = MOVE_COMMAND_PATTERN.matcher(input);
 		if (matcher.matches()) {
 			MoveCommand.Direction direction;
@@ -52,7 +52,7 @@ public class CommandParser
 		}
 	}
 
-	private ICommand parseWallCommand(String input) throws ParserException {
+	private ICommand parseWallCommand(String input) throws ParserException, CommandInvalidException {
 		Matcher matcher = WALL_COMMAND_PATTERN.matcher(input);
 
 		if (matcher.matches()) {
@@ -84,23 +84,23 @@ public class CommandParser
 	 * then it should be a method provided by ICommand, e.g.
 	 * ICommand#validInContext(Game, Player).
 	 */
-	private WallCommand validateWallCommand(WallCommand cmd) throws ParserException {
+	private WallCommand validateWallCommand(WallCommand cmd) throws CommandInvalidException {
 		int deltaX = Math.abs(cmd.to().x - cmd.from().x);
 		int deltaY = Math.abs(cmd.to().y - cmd.from().y);
 
 		if (deltaX > 1) {
-			throw new ParserException("Too big gap on x axis.");
+			throw new CommandInvalidException("Too big gap on x axis.");
 		}
 		if (deltaY > 1) {
-			throw new ParserException("Too big gap on y axis.");
+			throw new CommandInvalidException("Too big gap on y axis.");
 		}
 
 		if (deltaX + deltaY != 1) {
-			throw new ParserException("Coordinates not 1 apart.");
+			throw new CommandInvalidException("Coordinates not 1 apart.");
 		}
 
 		if (!this.game.isValidPosition(cmd.to().x, cmd.to().y) || !this.game.isValidPosition(cmd.from().x, cmd.from().y)) {
-			throw new ParserException("Coordinates outside of game field.");
+			throw new CommandInvalidException("Coordinates outside of game field.");
 		}
 
 
@@ -108,27 +108,31 @@ public class CommandParser
 	}
 
 	/* TODO: Dito */
-	private MoveCommand validateMoveCommand(MoveCommand cmd) throws ParserException {
+	private MoveCommand validateMoveCommand(MoveCommand cmd) throws CommandInvalidException {
 		Player player = this.game.currentPlayer();
 		Point pos = player.position();
 
 		switch (cmd.direction()) {
 			case UP:
 				if (!this.game.isValidPosition(pos.x, pos.y - 1)) {
-					throw new ParserException("Leaving field at the top.");
+					throw new CommandInvalidException("Leaving field at the top.");
 				}
+				break;
 			case DOWN:
 				if (!this.game.isValidPosition(pos.x, pos.y + 1)) {
-					throw new ParserException("Leaving field at the bottom.");
+					throw new CommandInvalidException("Leaving field at the bottom.");
 				}
+				break;
 			case LEFT:
-				if (!this.game.isValidPosition(pos.x -1, pos.y)) {
-					throw new ParserException("Leaving field at the left.");
+				if (!this.game.isValidPosition(pos.x - 1, pos.y)) {
+					throw new CommandInvalidException("Leaving field at the left.");
 				}
+				break;
 			case RIGHT:
 				if (!this.game.isValidPosition(pos.x + 1, pos.y)) {
-					throw new ParserException("Leaving field at the right.");
+					throw new CommandInvalidException("Leaving field at the right.");
 				}
+				break;
 		}
 		return cmd;
 	}
