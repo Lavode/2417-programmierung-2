@@ -25,14 +25,23 @@ public class Player {
 	private Tile tile;
 	private Target target;
 
+	/**
+	 * Target side of the player.
+	 */
 	public enum Target {
 		LEFT, RIGHT, UP, DOWN
 	}
 
-	public enum CommandType {
-		MOVEMENT, PLACEWALL
-	}
-
+	/**
+	 * Create new instance of this class.
+	 *
+	 * @param name Player's name, used in various interactions with the
+	 * user.
+	 * @param sign Char used to represent player on game field.
+	 * @param tile Tile on which player starts on.
+	 * @param target Target side of game board which player must reach in
+	 * order to win.
+	 */
 	public Player(String name, char sign, Tile tile, Target target) {
 		assert !tile.isOccupied();
 		this.name = name;
@@ -89,14 +98,27 @@ public class Player {
 		return this.target;
 	}
 
+	/**
+	 * @return Number of walls available to player.
+	 */
 	public int availableWalls() {
 		return this.availableWalls;
 	}
 
+	/**
+	 * Set number of walls available to player.
+	 *
+	 * @param val Value which to set it to.
+	 */
 	public void setAvailableWalls(int val) {
 		this.availableWalls = val;
 	}
 
+	/**
+	 * Set target of player.
+	 *
+	 * @param target Target which to set it to.
+	 */
 	public void setTarget(Target target) {
 		this.target = target;
 	}
@@ -135,21 +157,6 @@ public class Player {
 	}
 
 	/**
-	 * Checks if there is still a path for the player so he can win the game after
-	 * a potentially new Wall has been placed between (xFrom, yFrom) and (xTo, yTo).
-	 * @param xFrom x-Coordinate
-	 * @param yFrom y-Coordinate
-	 * @param xTo x-Coordinate
-	 * @param yTo y-Coordinate
-	 * @return
-	 */
-	private boolean hasPath(int xFrom, int yFrom, int xTo, int yTo)
-	{
-		//TODO Check if there is still a Winning path after a Wall has been placed
-		return false;
-	}
-
-	/**
 	 * Lets Player place a Wall between (xFrom, yFrom) and (xTo, yTo)
 	 */
 	public void placeWall(Point from, Point to) throws TileOccupiedException {
@@ -159,6 +166,14 @@ public class Player {
 		this.availableWalls--;
 	}
 
+	/**
+	 * Make player 'jump' to new position.
+	 *
+	 * @param x X coordinate.
+	 * @param y Y coordinate.
+	 *
+	 * @throws TileOccupiedException if target tile is occupied.
+	 */
 	public void jump(int x, int y) throws TileOccupiedException {
 		moveTo(this.game.getTile(x, y));
 
@@ -225,7 +240,9 @@ public class Player {
 	}
 
 	/**
-	 * checks if player is at Target
+	 * Checks if player is at Target
+	 * 
+	 * @return True if player is in target column / row, false otherwise.
 	 */
 	public boolean hasFinished() {
 		if(this.target() == Player.Target.DOWN)
@@ -238,12 +255,17 @@ public class Player {
 			return this.tile.position().x == game.width();
 	}
 
+	/**
+	 * Check whether player is able to reach target column / row.
+	 *
+	 * @return True if player is able to reach at least one tile of the target column / row.
+	 */
 	public boolean canReachTarget() {
 		for (Tile targetTile : targetTiles()) {
 			// System.out.println(t.toString());
 			PathFinding path = new PathFinding(this.game.toPathFindingBoard(), this.position(), targetTile.position());
 			if (path.existsPath()) {
-				/* Path to one target square found. */
+				/* Path to (at least) one target square found. */
 				return true;
 			}
 		}
@@ -251,7 +273,16 @@ public class Player {
 		return false;
 	}
 
+	/**
+	 * @return List of tiles in target column / row. This will exclude
+	 * tiles containing a wall, but will not exclude tiles on which a
+	 * player resides, as those would be valid locations.
+	 */
 	private List<Tile> targetTiles() {
+		/* @TODO: Counting an occupied tile as reachable makes sense,
+		 * but could lead to a deadlock, where players are in a
+		 * walled-off corridor, and block each other's way. 
+		 */
 		List<Tile> out = new ArrayList<Tile>();
 
 		switch (this.target) {

@@ -129,6 +129,11 @@ public class Game {
 		return this.tiles.get(x - 1).get(y - 1);
 	}
 
+	/**
+	 * Get tile at given position.
+	 *
+	 * See {@link Game#getTile} for further details.
+	 */
 	public Tile getTile(Point position) {
 		return this.getTile(position.x, position.y);
 	}
@@ -165,10 +170,23 @@ public class Game {
 		return this.players;
 	}
 
+	/**
+	 * @return Player whose turn it is.
+	 */
 	public Player currentPlayer() {
 		return this.currentPlayer;
 	}
 
+	/**
+	 * Build wall between two points.
+	 *
+	 * @param from First endpoint of wall.
+	 * @param to Second endpoint of wall.
+	 *
+	 * @throws TileOccupiedException if building the wall fails e.g. due to
+	 * a tile being occupied by a player or wall, or if it would cut off
+	 * one of the players.
+	 */
 	public void buildWall(Point from, Point to) throws TileOccupiedException {
 		getTile(from).setWall();
 		getTile(to).setWall();
@@ -187,6 +205,9 @@ public class Game {
 		}
 	}
 
+	/**
+	 * Check whether all players are able to reach their targets.
+	 */
 	private boolean allPlayersAbleToReachTarget() {
 		for (Player player : this.players) {
 			if (!player.canReachTarget()) {
@@ -237,6 +258,9 @@ public class Game {
 		return String.format("Size: %s\nPlayers:\n%s", size, players);
 	}
 
+	/**
+	 * @return True if one of the game's players has reached his target.
+	 */
 	public boolean isOver() {
 		for (Player player : this.players) {
 			if (player.hasFinished()) {
@@ -248,7 +272,13 @@ public class Game {
 		return false;
 	}
 
-	public void play(Parser parser, Renderer renderer)
+	/**
+	 * Main game loop. Continuously ask players for commands and execute
+	 * them, until one of the players has won the game.
+	 *
+	 * @param renderer Renderer which to use to render game state.
+	 */
+	public void play(Renderer renderer)
 	{
 		for (Player player : this.players) {
 			player.enterGame(this);
@@ -271,23 +301,27 @@ public class Game {
 		System.out.println(String.format("Congratulations %s, you have won!", this.winner.name()));
 	}
 
+	/**
+	 * Read specification from gamess/game1.txt, and start game.
+	 */
 	public static void main(String[] args) throws ParserException, IOException {
 		Parser parser = new Parser();
 		Game game = parser.parseFromFile("games/game1.txt");
 		Renderer renderer = new Renderer(game);
 		System.out.println(renderer.render());
 
-		game.play(parser, renderer);
-		// Game game = new Game();
-		// game.setDimension(4, 6);
-		// game.buildWall(new Point(1, 2), new Point(1, 3));
-		// game.buildWall(new Point(2, 2), new Point(3, 2));
-		// game.buildWall(new Point(3, 4), new Point(4, 4));
-		// game.buildWall(new Point(1, 4), new Point(2, 4));
-		// PathFinding path = new PathFinding(game.toPathFindingBoard(), new Point(0, 0), new Point(3, 5));
-		// path.existsPath();
+		game.play(renderer);
 	}
 
+	/**
+	 * Convert this game's board to a two-dimensional array of integers
+	 * suitable for the pathfinding algorithm.
+	 *
+	 * Free (passable) tiles will be represented as a 0, whereas walls will
+	 * be represented as a 1.
+	 *
+	 * @return Two-dimensonal integer array representing game board.
+	 */
 	public int[][] toPathFindingBoard() {
 		int[][] board = new int[this.width][this.height];
 
