@@ -5,6 +5,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ArrayList;
 
+/**
+ * Class to handle basic pathfinding in a matrix containing fields (passable),
+ * and walls (non-passable).
+ *
+ * Pathfinding is implemented as a slimmed-down version of Dijkstra's
+ * algorithm, which simply determines whether there is a path, without worrying
+ * about the path itself.
+ */
 public class PathFinding
 {
 	private int[][] board;
@@ -13,6 +21,15 @@ public class PathFinding
 
 	private PathNode[][] nodes;
 
+	/**
+	 * Create new instance of this class.
+	 *
+	 * @param board Two-dimensional array of integers. `0` denotes a field
+	 * which can be walked on, whereas `1` denotes a field which has a wall
+	 * built atop.
+	 * @param from One-based coordinate of starting point.
+	 * @param to One-based coordinate of destination.
+	 */
 	public PathFinding(int[][] board, Point from, Point to) {
 		this.board = board;
 		this.from = new Point(from.x - 1, from.y - 1);
@@ -48,6 +65,11 @@ public class PathFinding
 		return this.nodes[this.from.x][this.from.y];
 	}
 
+	/**
+	 * Determine whether path from source to destination exists.
+	 *
+	 * @return True if a path exists, false otherwise.
+	 */
 	public boolean existsPath() {
 		PathNode next = closestUnvisitedNode();
 		while (next != null && next.distance() < Integer.MAX_VALUE) {
