@@ -31,3 +31,15 @@ Your UMLs are good too, they are both mostly accurate and exhaustive. You should
 **Feedback**: Well done, you tested all the relevant cases and achieved great coverage. At some point in GameTest you mentioned that you didn’t mock the Player, since you had to implement a lot of business logic. That’s definitely true. Personally, I don’t think frameworks like Mockito help you much there. However, if you really need a mock version of the player, you could create a custom mock like you did with MockDie. Regarding your comment on custom mock objects: the God class code smell is a good observation. Still, if you have such God classes, you can’t always avoid using them in tests, so you might have to mock them anyway. I would say having to use custom mocks might be a sign to check for God classes, and consider a refactoring if necessary, but it should not affect your testing behaviour.<br>
 
 One thing I missed in your statement were the advantages of mock frameworks. They seem to be more limited than whatever you can do by creating a custom mock, so why do people use them anyway?
+
+## Lab2 05 and 06 ##
+**Grade:** ok<br>
+**Feedback**: Your game fulfils all the requirements of exercises 5 and 6, well done! Very nice input error feedback (invalid wall command, leaving field at the left, etc.) this is cool! I noticed though that apparently, every invalid command says “Invalid wall command”, which can be confusing. I like that you provide the valid commands in the input prompt, but I think you may the wall command specification should be something like <code>Wall \<x1> \<y1> \<x2> \<y2></code>. Here are some things that I noticed while reading your code:
+
+* You are missing the v2 tag. Please make sure to set the required tags in the future.
+* Good separation of concerns, with the MoveCommand. Consider extending the MoveCommand into a polymorphism, instead of using a switch case.
+* Defining useful <code>equals()</code> and <code>toString()</code> methods is always a good idea, well done.
+* You could sometimes use more, smaller methods, I have especially noticed this about parse- and validate methods (although for algorithms, long methods generally more acceptable).
+* Avoid magic numbers (e.g. in Parser, you say something like <code>game.players().size() < 2</code>. If you ever want to change the minimum number of players, you will never find this again. * Use a constant instead, and define it in whichever class you think should decide such things.
+* Maybe instead of <code>List<List<Tile>> tiles</code> you could have used a separate <code>Board</code> class. Regardless of how you represent the tiles within that, it might be more comfortable for other classes to work with it. E.g. it would make the player’s move methods look much more readable, which increases maintainability and reduces the chance of bugs. Further, the board might have an invariant that checks for valid and invalid board states.
+* Overall, you did a very good job on RDD and DBC.

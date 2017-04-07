@@ -48,7 +48,7 @@ public class WallCommand implements ICommand
 	 */
 	public void execute(Player player) throws TileOccupiedException {
 		if (player.availableWalls() < 1) {
-			/* TODO: Abusing this exception here. */
+			/* TODO: Abusing this exception here. */ //@Silas: yes, I suggest you use some InvalidWallException for all the wall-related problems
 			throw new TileOccupiedException("Not enough walls available.");
 		}
 		player.placeWall(this.from, this.to);
