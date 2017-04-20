@@ -7,15 +7,15 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-import quoridor.Parser;
+import quoridor.ParserV1;
 
-public class ParserTest
+public class ParserV1Test
 {
-	private Parser parser;
+	private ParserV1 parser;
 
 	@Before
 	public void init() {
-		this.parser = new Parser();
+		this.parser = new ParserV1();
 	}
 
 	@Test

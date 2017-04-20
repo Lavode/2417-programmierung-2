@@ -305,8 +305,7 @@ public class Game {
 	 * Read specification from gamess/game1.txt, and start game.
 	 */
 	public static void main(String[] args) throws ParserException, IOException {
-		Parser parser = new Parser();
-		Game game = parser.parseFromFile("games/game1.txt");
+		Game game = Parser.parseFromFile("games/game1.txt");
 		Renderer renderer = new Renderer(game);
 		System.out.println(renderer.render());
 
