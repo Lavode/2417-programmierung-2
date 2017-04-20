@@ -1,4 +1,4 @@
-/* TODO: available walls
+/* 
  * TODO: target tiles
  */
 
@@ -87,32 +87,38 @@ public class ParserV2 extends Parser
 	}
 
 	private void parseBoard(Scanner scanner) throws ParserException {
-		for (int i = 0; i < this.height; i++) {
+		for (int y = 0; y < this.height; y++) {
 			if (scanner.hasNextLine()) {
 				String input = scanner.nextLine();
 				Matcher matcher = BOARD_ROW_PATTERN.matcher(input);
 				if (matcher.matches()) {
-					int j = 1;
+					int x = 1;
 					for (char c : input.toCharArray()) {
 						if (c == '#') {
+							try {
+								this.game.buildWall(new Point(x, y), new Point(x, y));
+							} catch (TileOccupiedException e) {
+								throw new ParserException(String.format("Invalid wall placement at %s/%s", x, y));
+							}
 						} else if (c == ' ') {
+							// No-op, empty tiles are initialized already.
 						} else if (Character.isLowerCase(c)) {
 							/* Lower case alphabetic char denotes a destination tile, store for later usage. */
 							if (this.playerTargetPositions.get(c) == null) {
 								this.playerTargetPositions.put(c, new ArrayList<Point>());
 							}
-							this.playerTargetPositions.get(c).add(new Point(j, i + 1));
+							this.playerTargetPositions.get(c).add(new Point(x, y + 1));
 						} else if (Character.isUpperCase(c)) {
 							/* Upper case alphabetic denotes a starting position, store for later usage. */
-							this.playerStartingPositions.put(c, new Point(j, i + 1));
+							this.playerStartingPositions.put(c, new Point(x, y + 1));
 						}
-						j++;
+						x++;
 					}
 				} else {
 					throw new ParserException(String.format("Invalid board row: %s", input));
 				}
 			} else {
-				throw new ParserException(String.format("Not enough rows in board defintion. Expected: %i, Got: %i", this.height, i));
+				throw new ParserException(String.format("Not enough rows in board defintion. Expected: %i, Got: %i", this.height, y));
 			}
 		}
 	}
