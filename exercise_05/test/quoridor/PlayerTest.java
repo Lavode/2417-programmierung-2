@@ -150,7 +150,7 @@ public class PlayerTest
 	}
 
 	@Test(expected = AssertionError.class)
-	public void placeWallIfNoWallsAvailableValidatesContract() throws TileOccupiedException {
+	public void placeWallIfNoWallsAvailableViolatesContract() throws TileOccupiedException {
 		this.game.setDimension(10, 10);
 		this.player.setAvailableWalls(2);
 		this.player.placeWall(new Point(2, 1), new Point(2, 2));
