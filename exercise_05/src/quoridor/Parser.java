@@ -18,7 +18,12 @@ public class Parser
 	 */
 	public static Game parseFromFile(String path) throws ParserException, IOException {
 		String input = new String(Files.readAllBytes(Paths.get(path)));
-		ParserV1 parser = new ParserV1();
-		return parser.parse(input);
+		try {
+			ParserV1 parser = new ParserV1();
+			return parser.parse(input);
+		} catch (ParserException e) {
+			ParserV2 parser = new ParserV2();
+			return parser.parse(input);
+		}
 	}
 }
