@@ -129,6 +129,15 @@ public class PlayerTest
 	}
 
 	@Test
+	public void hasFinishedReturnsTrueIfPlayerIsOnTargetTile() throws TileOccupiedException {
+		this.player.jump(1, 1);
+		this.player.addTargetTile(this.game.getTile(1, 2));
+		assertFalse(this.player.hasFinished());
+		this.player.jump(1, 2);
+		assertTrue(this.player.hasFinished());
+	}
+
+	@Test
 	public void toStringReturnsUseableRepresentation() {
 		assertEquals("<John> [J] @ (3, 3) -> RIGHT", this.player.toString());
 	}

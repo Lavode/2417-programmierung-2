@@ -248,17 +248,10 @@ public class Player {
 	/**
 	 * Checks if player is at Target
 	 * 
-	 * @return True if player is in target column / row, false otherwise.
+	 * @return True if player is on a target tile, false otherwise.
 	 */
 	public boolean hasFinished() {
-		if(this.target() == Player.Target.DOWN)
-			return this.tile.position().y == game.height();
-		else if(this.target() == Player.Target.UP)
-			return this.tile.position().y == 1;
-		else if(this.target() == Player.Target.LEFT)
-			return this.tile.position().x == 1;
-		else
-			return this.tile.position().x == game.width();
+		return (this.targetTiles().contains(this.currentPosition()));
 	}
 
 	/**
@@ -314,6 +307,10 @@ public class Player {
 					}
 					break;
 			}
+		}
+
+		for (Tile tile : this.targetTiles) {
+			out.add(tile);
 		}
 
 		for (Iterator<Tile> iterator = out.iterator(); iterator.hasNext();) {
