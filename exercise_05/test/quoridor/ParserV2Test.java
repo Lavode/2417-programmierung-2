@@ -25,6 +25,9 @@ public class ParserV2Test
 
 		assertEquals(new Player("John", 'J', new Tile(new Point(1, 1)), null), game.players().get(0));
 		assertEquals(new Player("George", 'G', new Tile(new Point(6, 3)), null), game.players().get(1));
+		assertEquals(2, game.players().get(0).availableWalls());
+		assertEquals(3, game.players().get(1).availableWalls());
+
 		assertEquals(6, game.width());
 		assertEquals(4, game.height());
 	}
@@ -40,7 +43,7 @@ public class ParserV2Test
 
 	@Test
 	public void parseHandlesMoreThanTwoPlayers() throws ParserException {
-		String input = "6 4 2 3\nJ    g\nS   s\njjj  G\n   gg \nJ John\nG George\nS Sascha";
+		String input = "6 4 2 3 5\nJ    g\nS   s\njjj  G\n   gg \nJ John\nG George\nS Sascha";
 		Game game = this.parser.parse(input);
 
 		assertEquals(new Player("John", 'J', new Tile(new Point(1, 1)), null), game.players().get(0));
@@ -64,5 +67,11 @@ public class ParserV2Test
 	public void parseThrowsExceptionOnEmptyInput() throws ParserException {
 		String input = "";
 		this.parser.parse(input);
+	}
+
+	@Test(expected = ParserException.class)
+	public void parseThrowsExceptionIfInsufficientWallAllowancesSpecified() throws ParserException {
+		String input = "6 4 2 3\nJ    g\nS   s\njjj  G\n   gg \nJ John\nG George\nS Sascha";
+		Game game = this.parser.parse(input);
 	}
 }

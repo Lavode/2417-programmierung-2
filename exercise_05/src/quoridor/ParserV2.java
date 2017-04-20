@@ -81,7 +81,6 @@ public class ParserV2 extends Parser
 			for (int i = 2; i < wallAllowances.length; i++) {
 				this.playerWallAllowances.add(Integer.parseInt(wallAllowances[i]));
 			}
-
 		} else {
 			throw new ParserException(String.format("Invalid board dimensions or player wall counts: %s", input));
 		}
@@ -132,12 +131,19 @@ public class ParserV2 extends Parser
 			String playerName = matcher.group(2);
 			Point startingPosition = this.playerStartingPositions.get(playerSign);
 			Tile startingTile = this.game.getTile(startingPosition.x, startingPosition.y);
-			return new Player(
+			Player p = new Player(
 					playerName,
 					playerSign,
 					startingTile,
 					null
 			);
+
+			if (this.playerWallAllowances.size() < 1) {
+				throw new ParserException("Insufficient wall allowances defined.");
+			}
+			/* We have no way of matching wall allowances with players except by implicit order... */
+			p.setAvailableWalls(this.playerWallAllowances.remove(0));
+			return p;
 		} else {
 			throw new ParserException(String.format("Invalid player entry: %s", input));
 		}

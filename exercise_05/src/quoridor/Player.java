@@ -24,6 +24,7 @@ public class Player {
 
 	private Tile tile;
 	private Target target;
+	private List<Tile> targetTiles = new ArrayList<Tile>();
 
 	/**
 	 * Target side of the player.
@@ -111,6 +112,7 @@ public class Player {
 	 * @param val Value which to set it to.
 	 */
 	public void setAvailableWalls(int val) {
+		assert val > 0;
 		this.availableWalls = val;
 	}
 
@@ -121,6 +123,10 @@ public class Player {
 	 */
 	public void setTarget(Target target) {
 		this.target = target;
+	}
+
+	public void addTargetTile(Tile target) {
+		this.targetTiles.add(target);
 	}
 
 	/**
@@ -285,27 +291,29 @@ public class Player {
 		 */
 		List<Tile> out = new ArrayList<Tile>();
 
-		switch (this.target) {
-			case UP:
-				for (int i = 1; i <= this.game.width(); i++) {
-					out.add(this.game.getTile(i, 1));
-				}
-				break;
-			case DOWN:
-				for (int i = 1; i <= this.game.width(); i++) {
-					out.add(this.game.getTile(i, this.game.height()));
-				}
-				break;
-			case LEFT:
-				for (int i = 1; i <= this.game.height(); i++) {
-					out.add(this.game.getTile(1, i));
-				}
-				break;
-			case RIGHT:
-				for (int i = 1; i <= this.game.height(); i++) {
-					out.add(this.game.getTile(this.game.width(), i));
-				}
-				break;
+		if (this.target != null) {
+			switch (this.target) {
+				case UP:
+					for (int i = 1; i <= this.game.width(); i++) {
+						out.add(this.game.getTile(i, 1));
+					}
+					break;
+				case DOWN:
+					for (int i = 1; i <= this.game.width(); i++) {
+						out.add(this.game.getTile(i, this.game.height()));
+					}
+					break;
+				case LEFT:
+					for (int i = 1; i <= this.game.height(); i++) {
+						out.add(this.game.getTile(1, i));
+					}
+					break;
+				case RIGHT:
+					for (int i = 1; i <= this.game.height(); i++) {
+						out.add(this.game.getTile(this.game.width(), i));
+					}
+					break;
+			}
 		}
 
 		for (Iterator<Tile> iterator = out.iterator(); iterator.hasNext();) {
