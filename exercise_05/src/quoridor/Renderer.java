@@ -36,6 +36,7 @@ public class Renderer {
 		resetOutput();
 		renderWalls();
 		renderPlayers();
+		renderTargetTiles();
 
 		return this.buildOutput();
 	}
@@ -89,6 +90,14 @@ public class Renderer {
 			 * 1 to accomodate for the wall column/row. Which
 			 * leaves us with a difference of 0. */
 			this.output[player.position().y][player.position().x] = player.sign();
+		}
+	}
+
+	private void renderTargetTiles() {
+		for (Player player : this.game.players()) {
+			for (Tile tile : player.targetTiles()) {
+				this.output[tile.position().y][tile.position().x] = Character.toLowerCase(player.sign());
+			}
 		}
 	}
 
