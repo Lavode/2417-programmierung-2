@@ -23,7 +23,7 @@ public class ParserV2Test
 
 	@Test
 	public void parseHandlesSimpleBoard() throws ParserException {
-		String input = "6 4 2 3\nJ    g\n     \njjj  G\n   gg \nJ John\nG George";
+		String input = "6 4 2 3\nJ    g\n      \njjj  G\n   gg \nJ John\nG George";
 		Game game = this.parser.parse(input);
 
 		assertEquals(new Player("John", 'J', new Tile(new Point(1, 1)), null), game.players().get(0));
@@ -37,7 +37,7 @@ public class ParserV2Test
 
 	@Test
 	public void parseHandlesPlayerNameConsistingOfMultipleWords() throws ParserException {
-		String input = "6 4 2 3\nJ    g\n     \njjj  G\n   gg \nJ John Jacobi\nG George Orwell";
+		String input = "6 4 2 3\nJ    g\n      \njjj  G\n   gg \nJ John Jacobi\nG George Orwell";
 		Game game = this.parser.parse(input);
 
 		assertEquals("John Jacobi", game.players().get(0).name());
@@ -46,7 +46,7 @@ public class ParserV2Test
 
 	@Test
 	public void parseHandlesMoreThanTwoPlayers() throws ParserException {
-		String input = "6 4 2 3 5\nJ    g\nS   s\njjj  G\n   gg \nJ John\nG George\nS Sascha";
+		String input = "6 4 2 3 5\nJ    g\nS    s\njjj  G\n   gg \nJ John\nG George\nS Sascha";
 		Game game = this.parser.parse(input);
 
 		assertEquals(new Player("John", 'J', new Tile(new Point(1, 1)), null), game.players().get(0));
@@ -56,7 +56,7 @@ public class ParserV2Test
 
 	@Test
 	public void parsePlacesWallsWhereIndicated() throws ParserException {
-		String input = "6 4 2 3\nJ    g\n###  \njjj  G\n#  gg \nJ John\nG George";
+		String input = "6 4 2 3\nJ    g\n###   \njjj  G\n#  gg \nJ John\nG George";
 		Game game = this.parser.parse(input);
 
 		assertTrue(game.getTile(1, 2).hasWall());
@@ -66,7 +66,7 @@ public class ParserV2Test
 
 	@Test
 	public void parseSetsPlayerTargetTiles() throws ParserException {
-		String input = "6 4 2 3\nJ    g\n###  \njjj  G\n#  gg \nJ John\nG George";
+		String input = "6 4 2 3\nJ    g\n###   \njjj  G\n#  gg \nJ John\nG George";
 		Game game = this.parser.parse(input);
 
 		List<Tile> expected = new ArrayList<Tile>();
@@ -97,7 +97,19 @@ public class ParserV2Test
 
 	@Test(expected = ParserException.class)
 	public void parseThrowsExceptionIfInsufficientWallAllowancesSpecified() throws ParserException {
-		String input = "6 4 2 3\nJ    g\nS   s\njjj  G\n   gg \nJ John\nG George\nS Sascha";
+		String input = "6 4 2 3\nJ    g\nS    s\njjj  G\n   gg \nJ John\nG George\nS Sascha";
+		Game game = this.parser.parse(input);
+	}
+
+	@Test(expected = ParserException.class)
+	public void parseThrowsExceptionIfInsufficientRowsSpecified() throws ParserException {
+		String input = "6 4 2 3\nJ    g";
+		Game game = this.parser.parse(input);
+	}
+
+	@Test(expected = ParserException.class)
+	public void parseThrowsExceptionIfInvalidPlayerEntryEncountered() throws ParserException {
+		String input = "6 4 2 3\nJ    g\n      \njjj  G\n   gg \nJ John\nGeorge";
 		Game game = this.parser.parse(input);
 	}
 }

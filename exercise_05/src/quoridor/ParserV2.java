@@ -91,7 +91,7 @@ public class ParserV2 extends Parser
 			if (scanner.hasNextLine()) {
 				String input = scanner.nextLine();
 				Matcher matcher = BOARD_ROW_PATTERN.matcher(input);
-				if (matcher.matches()) {
+				if (matcher.matches() && input.length() == this.width) {
 					int x = 1;
 					for (char c : input.toCharArray()) {
 						if (c == '#') {
@@ -118,7 +118,7 @@ public class ParserV2 extends Parser
 					throw new ParserException(String.format("Invalid board row: %s", input));
 				}
 			} else {
-				throw new ParserException(String.format("Not enough rows in board defintion. Expected: %i, Got: %i", this.height, y - 1));
+				throw new ParserException(String.format("Not enough rows in board defintion. Expected: %s, Got: %s", this.height, y - 1));
 			}
 		}
 	}
