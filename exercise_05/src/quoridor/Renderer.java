@@ -35,8 +35,8 @@ public class Renderer {
 	public String render() {
 		resetOutput();
 		renderWalls();
-		renderPlayers();
 		renderTargetTiles();
+		renderPlayers();
 
 		return this.buildOutput();
 	}
