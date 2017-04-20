@@ -104,10 +104,10 @@ public class ParserV2 extends Parser
 							// No-op, empty tiles are initialized already.
 						} else if (Character.isLowerCase(c)) {
 							/* Lower case alphabetic char denotes a destination tile, store for later usage. */
-							if (this.playerTargetPositions.get(c) == null) {
-								this.playerTargetPositions.put(c, new ArrayList<Point>());
+							if (this.playerTargetPositions.get(Character.toUpperCase(c)) == null) {
+								this.playerTargetPositions.put(Character.toUpperCase(c), new ArrayList<Point>());
 							}
-							this.playerTargetPositions.get(c).add(new Point(x, y));
+							this.playerTargetPositions.get(Character.toUpperCase(c)).add(new Point(x, y));
 						} else if (Character.isUpperCase(c)) {
 							/* Upper case alphabetic denotes a starting position, store for later usage. */
 							this.playerStartingPositions.put(c, new Point(x, y));
@@ -143,6 +143,10 @@ public class ParserV2 extends Parser
 					startingTile,
 					null
 			);
+
+			for (Point point : this.playerTargetPositions.get(playerSign)) {
+				p.addTargetTile(this.game.getTile(point.x, point.y));
+			}
 
 			if (this.playerWallAllowances.size() < 1) {
 				throw new ParserException("Insufficient wall allowances defined.");

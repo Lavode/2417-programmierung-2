@@ -1,5 +1,7 @@
 package quoridor;
 
+import java.util.List;
+import java.util.ArrayList;
 import java.awt.Point;
 
 import static org.junit.Assert.assertTrue;
@@ -60,6 +62,19 @@ public class ParserV2Test
 		assertTrue(game.getTile(1, 2).hasWall());
 		assertTrue(game.getTile(2, 2).hasWall());
 		assertTrue(game.getTile(1, 4).hasWall());
+	}
+
+	@Test
+	public void parseSetsPlayerTargetTiles() throws ParserException {
+		String input = "6 4 2 3\nJ    g\n###  \njjj  G\n#  gg \nJ John\nG George";
+		Game game = this.parser.parse(input);
+
+		List<Tile> expected = new ArrayList<Tile>();
+		expected.add(game.getTile(6, 1));
+		expected.add(game.getTile(4, 4));
+		expected.add(game.getTile(5, 4));
+
+		assertEquals(expected, game.players().get(1).targetTiles());
 	}
 
 	@Test(expected = ParserException.class)
