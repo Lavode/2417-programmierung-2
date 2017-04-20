@@ -87,7 +87,7 @@ public class ParserV2 extends Parser
 	}
 
 	private void parseBoard(Scanner scanner) throws ParserException {
-		for (int y = 0; y < this.height; y++) {
+		for (int y = 1; y <= this.height; y++) {
 			if (scanner.hasNextLine()) {
 				String input = scanner.nextLine();
 				Matcher matcher = BOARD_ROW_PATTERN.matcher(input);
@@ -107,10 +107,10 @@ public class ParserV2 extends Parser
 							if (this.playerTargetPositions.get(c) == null) {
 								this.playerTargetPositions.put(c, new ArrayList<Point>());
 							}
-							this.playerTargetPositions.get(c).add(new Point(x, y + 1));
+							this.playerTargetPositions.get(c).add(new Point(x, y));
 						} else if (Character.isUpperCase(c)) {
 							/* Upper case alphabetic denotes a starting position, store for later usage. */
-							this.playerStartingPositions.put(c, new Point(x, y + 1));
+							this.playerStartingPositions.put(c, new Point(x, y));
 						}
 						x++;
 					}
@@ -118,7 +118,7 @@ public class ParserV2 extends Parser
 					throw new ParserException(String.format("Invalid board row: %s", input));
 				}
 			} else {
-				throw new ParserException(String.format("Not enough rows in board defintion. Expected: %i, Got: %i", this.height, y));
+				throw new ParserException(String.format("Not enough rows in board defintion. Expected: %i, Got: %i", this.height, y - 1));
 			}
 		}
 	}

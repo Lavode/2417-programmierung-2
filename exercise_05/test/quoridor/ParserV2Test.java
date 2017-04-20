@@ -2,6 +2,7 @@ package quoridor;
 
 import java.awt.Point;
 
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
@@ -49,6 +50,16 @@ public class ParserV2Test
 		assertEquals(new Player("John", 'J', new Tile(new Point(1, 1)), null), game.players().get(0));
 		assertEquals(new Player("George", 'G', new Tile(new Point(6, 3)), null), game.players().get(1));
 		assertEquals(new Player("Sascha", 'S', new Tile(new Point(1, 2)), null), game.players().get(2));
+	}
+
+	@Test
+	public void parsePlacesWallsWhereIndicated() throws ParserException {
+		String input = "6 4 2 3\nJ    g\n###  \njjj  G\n#  gg \nJ John\nG George";
+		Game game = this.parser.parse(input);
+
+		assertTrue(game.getTile(1, 2).hasWall());
+		assertTrue(game.getTile(2, 2).hasWall());
+		assertTrue(game.getTile(1, 4).hasWall());
 	}
 
 	@Test(expected = ParserException.class)
