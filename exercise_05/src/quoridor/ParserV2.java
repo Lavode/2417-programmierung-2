@@ -1,7 +1,3 @@
-/* 
- * TODO: target tiles
- */
-
 package quoridor;
 
 import java.util.regex.Pattern;
