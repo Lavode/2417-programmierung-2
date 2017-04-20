@@ -277,7 +277,7 @@ public class Player {
 	 * tiles containing a wall, but will not exclude tiles on which a
 	 * player resides, as those would be valid locations.
 	 */
-	private List<Tile> targetTiles() {
+	public List<Tile> targetTiles() {
 		/* @TODO: Counting an occupied tile as reachable makes sense,
 		 * but could lead to a deadlock, where players are in a
 		 * walled-off corridor, and block each other's way. 

@@ -166,4 +166,27 @@ public class PlayerTest
 		player.enterGame(this.game);
 		assertTrue(player.hasGame());
 	}
+
+	@Test
+	public void targetTilesContainsTilesOfTarget() {
+		List<Tile> expected = new ArrayList<Tile>();
+		expected.add(this.game.getTile(3, 1));
+		expected.add(this.game.getTile(3, 2));
+		expected.add(this.game.getTile(3, 3));
+
+		assertEquals(expected, this.player.targetTiles());
+	}
+
+	@Test
+	public void targetTilesContainsArbitrarySpecifiedTiles() {
+		List<Tile> expected = new ArrayList<Tile>();
+		expected.add(this.game.getTile(1, 2));
+		expected.add(this.game.getTile(3, 1));
+
+		this.player.setTarget(null);
+		this.player.addTargetTile(this.game.getTile(1, 2));
+		this.player.addTargetTile(this.game.getTile(3, 1));
+
+		assertEquals(expected, this.player.targetTiles());
+	}
 }
