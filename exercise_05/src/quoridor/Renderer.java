@@ -9,6 +9,11 @@ import java.util.List;
  */
 public class Renderer {
 	private static final char WALL_SIGN = '#';
+
+	private static final char BORDER_SIGN_HORIZONTAL = '-';
+	private static final char BORDER_SIGN_VERTICAL   = '|';
+	private static final char BORDER_SIGN_EDGE       = '*';
+
 	private Game game;
 	private char[][] output;
 
@@ -34,7 +39,8 @@ public class Renderer {
 	 */
 	public String render() {
 		resetOutput();
-		renderWalls();
+		renderBorder();
+		renderPlayerWalls();
 		renderTargetTiles();
 		renderPlayers();
 
@@ -106,12 +112,16 @@ public class Renderer {
 	 *
 	 * To-be-used sign will be taken from WALL_SIGN constant.
 	 */
-	private void renderWalls() {
-		renderHorizontalLine(0, WALL_SIGN);
-		renderHorizontalLine(this.output.length - 1, WALL_SIGN);
-		renderVerticalLine(0, WALL_SIGN);
-		renderVerticalLine(this.output[0].length - 1, WALL_SIGN);
-		renderPlayerWalls();
+	private void renderBorder() {
+		renderHorizontalLine(0, BORDER_SIGN_HORIZONTAL);
+		renderHorizontalLine(this.output.length - 1, BORDER_SIGN_HORIZONTAL);
+		renderVerticalLine(0, BORDER_SIGN_VERTICAL);
+		renderVerticalLine(this.output[0].length - 1, BORDER_SIGN_VERTICAL);
+
+		this.output[0][0] = BORDER_SIGN_EDGE;
+		this.output[0][this.output[0].length - 1] = BORDER_SIGN_EDGE;
+		this.output[this.output.length - 1][0] = BORDER_SIGN_EDGE;
+		this.output[this.output.length - 1][this.output[0].length - 1] = BORDER_SIGN_EDGE;
 	}
 
 	/**

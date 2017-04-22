@@ -25,7 +25,7 @@ public class RendererTest
 
 	@Test
 	public void renderReturnsTextRenderingOfGameObjectValid() {
-		String should = "#######\n#pM  m#\n#p   m#\n#p   P#\n#######\n";
+		String should = "*-----*\n|pM  m|\n|p   m|\n|p   P|\n*-----*\n";
 		assertEquals(should, renderer.render());
 	}
 }
