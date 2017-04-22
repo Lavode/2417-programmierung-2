@@ -189,4 +189,89 @@ public class PlayerTest
 
 		assertEquals(expected, this.player.targetTiles());
 	}
+
+	@Test
+	public void targetTilesDoesNotContainBlockedTiles() {
+		List<Tile> expected = new ArrayList<Tile>();
+		expected.add(this.game.getTile(1, 2));
+
+		this.player.setTarget(null);
+		this.player.addTargetTile(this.game.getTile(1, 2));
+		this.player.addTargetTile(this.game.getTile(3, 1));
+
+		this.game.getTile(3, 1).setWall();
+
+		assertEquals(expected, this.player.targetTiles());
+	}
+
+	/* Basic integration tests only, detailed testing done as unit tests of
+	 * PathFinding class. */
+	@Test
+	public void canReachTargetReturnsTrueIfPathExists() throws TileOccupiedException {
+		this.game.setDimension(5, 5);
+		this.player.jump(1, 1);
+
+		this.player.setTarget(null);
+		this.player.addTargetTile(game.getTile(5, 5));
+
+		/* Board will look like:
+                 *   #######
+                 *   #J   ##
+                 *   #### ##
+                 *   #  #  #
+                 *   #  ## #
+                 *   #  # j#
+                 *   #######
+		 */
+
+		/* Walled-off section */
+		this.game.getTile(1, 2).setWall();
+		this.game.getTile(2, 2).setWall();
+		this.game.getTile(3, 2).setWall();
+		this.game.getTile(3, 3).setWall();
+		this.game.getTile(3, 4).setWall();
+		this.game.getTile(3, 5).setWall();
+
+		/* Normal hindrances */
+		this.game.getTile(5, 1).setWall();
+		this.game.getTile(5, 2).setWall();
+		this.game.getTile(4, 4).setWall();
+
+		assertTrue(this.player.canReachTarget());
+	}
+
+	@Test
+	public void canReachTargetReturnsFalseIfNoPathExists() throws TileOccupiedException {
+		this.game.setDimension(5, 5);
+		this.player.jump(1, 1);
+
+		this.player.setTarget(null);
+		this.player.addTargetTile(game.getTile(5, 5));
+
+		/* Board will look like:
+                 *   #######
+                 *   #J#   #
+                 *   # ### #
+                 *   #  #  #
+                 *   # ## ##
+                 *   # #  j#
+                 *   #######
+		 */
+
+		this.game.getTile(2, 1).setWall();
+
+		this.game.getTile(2, 2).setWall();
+		this.game.getTile(3, 2).setWall();
+		this.game.getTile(4, 2).setWall();
+
+		this.game.getTile(3, 3).setWall();
+
+		this.game.getTile(2, 4).setWall();
+		this.game.getTile(3, 4).setWall();
+		this.game.getTile(5, 4).setWall();
+
+		this.game.getTile(2, 5).setWall();
+
+		assertFalse(this.player.canReachTarget());
+	}
 }
