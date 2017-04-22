@@ -165,7 +165,7 @@ public class Player {
 	/**
 	 * Lets Player place a Wall between (xFrom, yFrom) and (xTo, yTo)
 	 */
-	public void placeWall(Point from, Point to) throws TileOccupiedException {
+	public void placeWall(Point from, Point to) throws CommandRollbackException {
 		assert(this.availableWalls > 0);
 		game.buildWall(from, to);
 
@@ -261,7 +261,7 @@ public class Player {
 	 */
 	public boolean canReachTarget() {
 		for (Tile targetTile : targetTiles()) {
-			// System.out.println(t.toString());
+			// System.out.println(t.toStringd());
 			PathFinding path = new PathFinding(this.game.toPathFindingBoard(), this.position(), targetTile.position());
 			if (path.existsPath()) {
 				/* Path to (at least) one target square found. */

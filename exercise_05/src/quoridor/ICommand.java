@@ -15,6 +15,9 @@ public interface ICommand
 	 * @param player Player which to execute command on.
 	 *
 	 * @throws TileOccupiedException If moving onto an occupied tile.
+	 * @throws CommandRollbackException If the executed command was denied
+	 * by a higher instance. Used to tell all objects in the stack to undo
+	 * the actions of this command.
 	 */
-	public void execute(Player player) throws TileOccupiedException;
+	public void execute(Player player) throws TileOccupiedException, CommandRollbackException;
 }

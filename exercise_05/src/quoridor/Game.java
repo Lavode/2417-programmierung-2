@@ -187,12 +187,11 @@ public class Game {
 	 * a tile being occupied by a player or wall, or if it would cut off
 	 * one of the players.
 	 */
-	public void buildWall(Point from, Point to) throws TileOccupiedException {
+	public void buildWall(Point from, Point to) throws CommandRollbackException {
 		getTile(from).setWall();
 		getTile(to).setWall();
 
 		if (!allPlayersAbleToReachTarget()) {
-			System.out.println("You may not box in players.");
 			getTile(from).unsetWall();
 			getTile(to).unsetWall();
 			/* Note that we don't have to refund the player, as we
@@ -200,8 +199,7 @@ public class Game {
 			 * However, relying on an implementation detail like
 			 * this is bound to bite us in the ass sooner or later. */
 
-			/* TODO: Abusing this exception here, to ensure player gets to pick another move - but not really clean. */
-			throw new TileOccupiedException("You may not box in players.");
+			throw new CommandRollbackException("You may not box in players.");
 		}
 	}
 
@@ -293,6 +291,8 @@ public class Game {
 				this.switchCurrentPlayer();
 			} catch (TileOccupiedException e) {
 				System.out.println("You tried to move onto an occupied Tile, please make another move!");
+			} catch (CommandRollbackException e) {
+				System.out.println(String.format("\n>>>> Error <<<<<\n%s\nPlease enter another command.\n", e.getMessage()));
 			}
 
 			System.out.println(renderer.render());
@@ -305,7 +305,7 @@ public class Game {
 	 * Read specification from gamess/game1.txt, and start game.
 	 */
 	public static void main(String[] args) throws ParserException, IOException {
-		Game game = Parser.parseFromFile("games/game1.txt");
+		Game game = Parser.parseFromFile("games/game3.txt");
 		Renderer renderer = new Renderer(game);
 		System.out.println(renderer.render());
 

@@ -93,7 +93,7 @@ public class ParserV2 extends Parser
 						if (c == '#') {
 							try {
 								this.game.buildWall(new Point(x, y), new Point(x, y));
-							} catch (TileOccupiedException e) {
+							} catch (CommandRollbackException e) {
 								throw new ParserException(String.format("Invalid wall placement at %s/%s", x, y));
 							}
 						} else if (c == ' ') {

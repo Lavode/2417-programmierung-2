@@ -143,14 +143,14 @@ public class PlayerTest
 	}
 
 	@Test
-	public void placeWallPlacesWalls() throws TileOccupiedException {
+	public void placeWallPlacesWalls() throws CommandRollbackException {
 		this.player.placeWall(new Point(2, 1), new Point(2, 2));
 		assertTrue(this.game.getTile(2, 1).hasWall());
 		assertTrue(this.game.getTile(2, 2).hasWall());
 	}
 
 	@Test(expected = AssertionError.class)
-	public void placeWallIfNoWallsAvailableViolatesContract() throws TileOccupiedException {
+	public void placeWallIfNoWallsAvailableViolatesContract() throws CommandRollbackException {
 		this.game.setDimension(10, 10);
 		this.player.setAvailableWalls(2);
 		this.player.placeWall(new Point(2, 1), new Point(2, 2));
