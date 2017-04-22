@@ -281,6 +281,7 @@ public class Game {
 		for (Player player : this.players) {
 			player.enterGame(this);
 		}
+		System.out.println(renderer.render());
 
 		UserInteraction ui = new UserInteraction(this);
 
@@ -305,9 +306,8 @@ public class Game {
 	 * Read specification from gamess/game1.txt, and start game.
 	 */
 	public static void main(String[] args) throws ParserException, IOException {
-		Game game = Parser.parseFromFile("games/game3.txt");
+		Game game = Parser.parseFromFile("games/game1.txt");
 		Renderer renderer = new Renderer(game);
-		System.out.println(renderer.render());
 
 		game.play(renderer);
 	}
