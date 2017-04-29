@@ -32,7 +32,7 @@ Your UMLs are good too, they are both mostly accurate and exhaustive. You should
 
 One thing I missed in your statement were the advantages of mock frameworks. They seem to be more limited than whatever you can do by creating a custom mock, so why do people use them anyway?
 
-## Lab2 05 and 06 ##
+## Labs 05 and 06 ##
 **Grade:** ok<br>
 **Feedback**: Your game fulfils all the requirements of exercises 5 and 6, well done! Very nice input error feedback (invalid wall command, leaving field at the left, etc.) this is cool! I noticed though that apparently, every invalid command says “Invalid wall command”, which can be confusing. I like that you provide the valid commands in the input prompt, but I think you may the wall command specification should be something like <code>Wall \<x1> \<y1> \<x2> \<y2></code>. Here are some things that I noticed while reading your code:
 
@@ -43,3 +43,9 @@ One thing I missed in your statement were the advantages of mock frameworks. The
 * Avoid magic numbers (e.g. in Parser, you say something like <code>game.players().size() < 2</code>. If you ever want to change the minimum number of players, you will never find this again. * Use a constant instead, and define it in whichever class you think should decide such things.
 * Maybe instead of <code>List<List<Tile>> tiles</code> you could have used a separate <code>Board</code> class. Regardless of how you represent the tiles within that, it might be more comfortable for other classes to work with it. E.g. it would make the player’s move methods look much more readable, which increases maintainability and reduces the chance of bugs. Further, the board might have an invariant that checks for valid and invalid board states.
 * Overall, you did a very good job on RDD and DBC.
+
+## Lab 07 ##
+**Grade:** ok<br>
+**Feedback**: Well done, the «don’t box in» function works. Your tests are good too. I especially like how well readable the path finding tests are. Good documentation. Make sure you don’t forget about null cases in your contracts. You don’t necessarily need to do null checks, but you should state the behaviour, in case a certain argument is null. Similarly, your PathFinding constructor doesn’t state what happens, if <code>from</code> or <code>to</code> are 0 (since your coordinates are 1-indexed, which someone might overlook) or generally out of bounds.
+
+The new parser works as well. Again, your methods there are rather long. Just remember that shorter methods can make your code more readable, which makes debugging much easier. There are two more things I noticed about the parser. First, it’s not the best idea to call the classes <code>ParserV1</code> and <code>ParserV2</code>. If you don’t just know how the two versions are different, you can’t really know what either of them do. Second, you should never use exceptions to implement your logic. This refers to the <code>Parser</code> class, where you use the v1 parser first, and then use the v2 parser second, if the first one caused an exception. An idea would be to use a regex to describe each file format. If your file content matches one of the regexes, you choose the appropriate parser, if not, you throw a parser exception right away.
