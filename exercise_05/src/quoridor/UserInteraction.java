@@ -5,29 +5,25 @@ import java.util.Scanner;
 /**
  * Class to handle interaction with the user, e.g. asking him from commands.
  */
-public class UserInteraction
+public class UserInteraction implements IUserInteraction
 {
-	private Game game;
-	private CommandParser parser;
+	private IGame game;
+	private ICommandParser parser;
 
 	/**
 	 * Create new instance of this class.
 	 *
 	 * @parma game Game which the user interaction is for.
 	 */
-	public UserInteraction(Game game) {
+	public UserInteraction(IGame game) {
 		this.game = game;
-		this.parser = new CommandParser(game);
+		this.parser = ServiceLocator.instance().getCommandParser(this.game);
 	}
 
-	/**
-	 * Ask user for next command.
-	 *
-	 * This will continue to prompt the user, until he entered a
-	 * syntactically and semantically correct command.
-	 *
-	 * @return ICommand user-supplieid command.
+	/* (non-Javadoc)
+	 * @see quoridor.IUserInteraction#askNextCommand()
 	 */
+	@Override
 	public ICommand askNextCommand() {
 		System.out.println(String.format("%s: Enter your next command. (U, D, L, R, Wall <x> <y>)", this.game.currentPlayer().name()));
 

@@ -16,7 +16,7 @@ import java.util.Iterator;
 public class Player {
 	private static final int WALLS_PER_PLAYER = 5;
 
-	private Game game;
+	private IGame game;
 	private final String name;
 	private final char sign;
 
@@ -66,7 +66,7 @@ public class Player {
 	 * 
 	 * @param game which player should enter
 	 */
-	public void enterGame(Game game)
+	public void enterGame(IGame game)
 	{
 		this.game = game;
 	}

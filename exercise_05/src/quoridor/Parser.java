@@ -16,7 +16,7 @@ public class Parser
 	 *
 	 * @return Game object corresponding to specification in file. 
 	 */
-	public static Game parseFromFile(String path) throws ParserException, IOException {
+	public static IGame parseFromFile(String path) throws ParserException, IOException {
 		String input = new String(Files.readAllBytes(Paths.get(path)));
 		try {
 			ParserV1 parser = new ParserV1();

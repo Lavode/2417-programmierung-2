@@ -14,7 +14,7 @@ public class Renderer {
 	private static final char BORDER_SIGN_VERTICAL   = '|';
 	private static final char BORDER_SIGN_EDGE       = '*';
 
-	private Game game;
+	private IGame game;
 	private char[][] output;
 
 	/**
@@ -22,7 +22,7 @@ public class Renderer {
 	 *
 	 * @param game To-be-rendered game. Must not be null.
 	 */
-	public Renderer(Game game) {
+	public Renderer(IGame game) {
 		assert(game != null);
 
 		this.game = game;

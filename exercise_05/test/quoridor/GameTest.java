@@ -18,7 +18,7 @@ public class GameTest
 	private Player player2 = new Player("John", 'j',   new Tile(new Point(3, 3)), Player.Target.DOWN);
 	private List<Player> players = new ArrayList<Player>(Arrays.asList(player1, player2));
 
-	private Game game;
+	private IGame game;
 
 	@Before
 	public void init() {
@@ -92,13 +92,13 @@ public class GameTest
 				)
 		);
 
-		Game game2 = new Game (5, 5, otherPlayers);
+		IGame game2 = new Game (5, 5, otherPlayers);
 		assertNotEquals(game, game2);
 	}
 
 	@Test
 	public void equalsChecksForIdenticalBoardDimensions() {
-		Game game2 = new Game (7, 7, players);
+		IGame game2 = new Game (7, 7, players);
 		assertNotEquals(game, game2);
 	}
 
@@ -109,7 +109,7 @@ public class GameTest
 
 	@Test
 	public void equalsReturnsTrueForIdenticalGames() {
-		Game game2 = new Game(5, 7, players);
+		IGame game2 = new Game(5, 7, players);
 
 		assertEquals(game, game2);
 	}

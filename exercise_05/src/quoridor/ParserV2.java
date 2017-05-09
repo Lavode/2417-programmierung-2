@@ -23,7 +23,7 @@ public class ParserV2 extends Parser
 	private static Pattern BOARD_ROW_PATTERN = Pattern.compile("^[#a-zA-Z ]+$");
 	private static Pattern PLAYER_ENTRY_PATTERN = Pattern.compile("^(.) (.+)$");
 
-	private Game game;
+	private IGame game;
 	private List<Integer> playerWallAllowances;
 	private HashMap<Character, Point> playerStartingPositions = new HashMap<Character, Point>();
 	private HashMap<Character, List<Point>> playerTargetPositions = new HashMap<Character, List<Point>>();
@@ -31,10 +31,11 @@ public class ParserV2 extends Parser
 	private int height;
 
 	public ParserV2() {
-		this.game = new Game();
+		//TODO
+		this.game = ServiceLocator.instance().getGame();
 	}
 
-	public Game parse(String input) throws ParserException {
+	public IGame parse(String input) throws ParserException {
 		Scanner scanner = new Scanner(input);
 
 		if (!scanner.hasNextLine()) {

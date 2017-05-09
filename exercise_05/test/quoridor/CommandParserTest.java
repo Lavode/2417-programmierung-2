@@ -8,8 +8,8 @@ import org.junit.Test;
 
 public class CommandParserTest
 {
-	private CommandParser parser;
-	private Game game;
+	private ICommandParser parser;
+	private IGame game;
 	private Player player;
 
 	@Before

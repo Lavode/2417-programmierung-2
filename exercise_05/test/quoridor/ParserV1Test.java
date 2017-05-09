@@ -21,7 +21,7 @@ public class ParserV1Test
 	@Test
 	public void parseHandlesSimpleBoard() throws ParserException {
 		String input = "7 9\nJohn J 1 1 R\nGeorge G 3 4 D";
-		Game game = this.parser.parse(input);
+		IGame game = this.parser.parse(input);
 
 		assertEquals(new Player("John", 'J', new Tile(new Point(1, 1)), Player.Target.RIGHT), game.players().get(0));
 		assertEquals(new Player("George", 'G', new Tile(new Point(3, 4)), Player.Target.DOWN), game.players().get(1));
@@ -32,7 +32,7 @@ public class ParserV1Test
 	@Test
 	public void parseHandlesPlayerNameConsistingOfMultipleWords() throws ParserException {
 		String input = "7 9\nWill Smith J 1 1 L\nGeorge Orwell G 3 4 D";
-		Game game = this.parser.parse(input);
+		IGame game = this.parser.parse(input);
 
 		assertEquals("Will Smith", game.players().get(0).name());
 		assertEquals("George Orwell", game.players().get(1).name());
@@ -41,7 +41,7 @@ public class ParserV1Test
 	@Test
 	public void parseHandlesMoreThanTwoPlayers() throws ParserException {
 		String input = "7 9\nJohn J 1 1 R\nGeorge G 3 4 D\nWilliam W 4 5 U\n";
-		Game game = this.parser.parse(input);
+		IGame game = this.parser.parse(input);
 
 		assertEquals(new Player("John", 'J',    new Tile(new Point(1, 1)), Player.Target.RIGHT), game.players().get(0));
 		assertEquals(new Player("George", 'G',  new Tile(new Point(3, 4)), Player.Target.DOWN), game.players().get(1));

@@ -7,7 +7,7 @@ import org.junit.Test;
 
 public class RendererTest
 {
-	private Game game;
+	private IGame game;
 	private Renderer renderer;
 
 	@Before

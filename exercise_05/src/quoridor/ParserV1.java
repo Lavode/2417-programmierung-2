@@ -16,13 +16,14 @@ public class ParserV1 extends Parser
 	private static Pattern BOARD_DIMENSION_PATTERN = Pattern.compile("^(\\d+) (\\d+)$");
 	private static Pattern PLAYER_ENTRY_PATTERN = Pattern.compile("^(.+) (.) (\\d+) (\\d+) (\\w)$");
 
-	private Game game;
+	private IGame game;
 
 	/** 
 	 * Create new instance of Parser class.
 	 */
 	public ParserV1() {
-		this.game = new Game();
+		//TODO
+		this.game = ServiceLocator.instance().getGame();
 	}
 
 	/**
@@ -34,7 +35,7 @@ public class ParserV1 extends Parser
 	 *
 	 * @return Game object corresponding to specification in given string.
 	 */
-	public Game parse(String input) throws ParserException {
+	public IGame parse(String input) throws ParserException {
 		Scanner scanner = new Scanner(input);
 
 		if (!scanner.hasNextLine()) {

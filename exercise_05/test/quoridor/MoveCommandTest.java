@@ -10,7 +10,7 @@ import quoridor.Player;
 
 public class MoveCommandTest
 {
-	private Game game;
+	private IGame game;
 	private Player player;
 
 	@Before

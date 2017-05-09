@@ -7,14 +7,14 @@ import java.util.regex.Matcher;
 /**
  * Class to parse and validate user-supplied commands.
  */
-public class CommandParser
+public class CommandParser implements ICommandParser
 {
 	/* TODO: Could not get Pattern.compile("...", Pattern.CASE_INSENSITIVE)
 	 * to work, for some reason. */
 	private static Pattern MOVE_COMMAND_PATTERN = Pattern.compile("^([udlr])$");
 	private static Pattern WALL_COMMAND_PATTERN = Pattern.compile("^wall ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+)$");
 
-	private Game game;
+	private IGame game;
 
 	/**
 	 * Create new instance of this class.
@@ -22,21 +22,14 @@ public class CommandParser
 	 * @param game Game which the supplied commands are intended for. Is
 	 * needed for validation purposes.
 	 */
-	public CommandParser(Game game) {
+	public CommandParser(IGame game) {
 		this.game = game;
 	}
 
-	/**
-	 * Parse a command.
-	 *
-	 * @param input User-supplied command.
-	 * @return ICommand Command class representing user-supplied command.
-	 * @throws ParserException if user-supplied command is an unknown, or
-	 * syntactically incorrect, command, e.g. if a wall command is missing a parameter.
-	 * @throws CommandInvalidException if user-supplied command is
-	 * semantically invalid, e.g. if a movement command tries to move to an
-	 * invalid position.
+	/* (non-Javadoc)
+	 * @see quoridor.ICommandParser#parse(java.lang.String)
 	 */
+	@Override
 	public ICommand parse(String input) throws ParserException, CommandInvalidException {
 		try {
 			return parseMoveCommand(input.toLowerCase());

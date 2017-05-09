@@ -10,16 +10,16 @@ import java.io.IOException;
 /**
  * Represents a Quoridor game.
  */
-public class Game {
-	private int width;
-	private int height;
+public class Game implements IGame {
+	protected int width;
+	protected int height;
 
-	private Player winner;
-	private Player currentPlayer;
+	protected Player winner;
+	protected Player currentPlayer;
 
-	private List<Player> players;
+	protected List<Player> players;
 
-	private List<List<Tile>> tiles;
+	protected List<List<Tile>> tiles;
 
 	/**
 	 * Create a new instance of this class.
@@ -33,9 +33,10 @@ public class Game {
 		this.winner = null;
 	}
 
-	/**
-	 * lets next player be new currentPlayer
+	/* (non-Javadoc)
+	 * @see quoridor.IGame#switchCurrentPlayer()
 	 */
+	@Override
 	public void switchCurrentPlayer()
 	{
 		int i = players.indexOf(currentPlayer);
@@ -61,11 +62,10 @@ public class Game {
 		}
 	}
 
-	/**
-	 * Add additional player to the game.
-	 *
-	 * @param player Player which to add.
+	/* (non-Javadoc)
+	 * @see quoridor.IGame#addPlayer(quoridor.Player)
 	 */
+	@Override
 	public void addPlayer(Player player) {
 		this.players.add(player);
 		if (this.currentPlayer == null) {
@@ -73,24 +73,19 @@ public class Game {
 		}
 	}
 
-	/**
-	 * Checks Position (@param x, @param y) for beeing a valid Positon
-	 * @return true if valid Position, false otherwise
+	/* (non-Javadoc)
+	 * @see quoridor.IGame#isValidPosition(int, int)
 	 */
+	@Override
 	public boolean isValidPosition(int x, int y)
 	{
 		return 0 < x && x <= width && 0 < y && y <= height;
 	}
 
-	/**
-	 * Set dimensions of game board.
-	 *
-	 * This will create new regular tiles to fill the board - overwriting
-	 * whatever was there before.
-	 *
-	 * @param width Width of game board. Must be > 0;
-	 * @param height Height of game board. Must be > 0;
+	/* (non-Javadoc)
+	 * @see quoridor.IGame#setDimension(int, int)
 	 */
+	@Override
 	public void setDimension(int width, int height) {
 		assert(width > 0);
 		assert(height > 0);
@@ -109,17 +104,10 @@ public class Game {
 		}
 	}
 
-	/**
-	 * Return tile at given position.
-	 *
-	 * Tile coordinates are 1-indexed, i.e. they go from 1 up to the
-	 * board's width/height.
-	 *
-	 * @param x X / horizontal coordinate of tile. Must be >= 1 and <= board height.
-	 * @param y Y / vertical coordinate of tile. Must be >= 1 and <= board width.
-	 *
-	 * @return Tile at given coordinates.
+	/* (non-Javadoc)
+	 * @see quoridor.IGame#getTile(int, int)
 	 */
+	@Override
 	public Tile getTile(int x, int y) {
 		assert(x >= 1);
 		assert(x <= this.width);
@@ -129,64 +117,62 @@ public class Game {
 		return this.tiles.get(x - 1).get(y - 1);
 	}
 
-	/**
-	 * Get tile at given position.
-	 *
-	 * See {@link Game#getTile} for further details.
+	/* (non-Javadoc)
+	 * @see quoridor.IGame#getTile(java.awt.Point)
 	 */
+	@Override
 	public Tile getTile(Point position) {
 		return this.getTile(position.x, position.y);
 	}
 
-	/**
-	 * @return Game board's width.
+	/* (non-Javadoc)
+	 * @see quoridor.IGame#width()
 	 */
+	@Override
 	public int width() {
 		return this.width;
 	}
 
-	/**
-	 * @return Game board's height.
+	/* (non-Javadoc)
+	 * @see quoridor.IGame#height()
 	 */
+	@Override
 	public int height() {
 		return this.height;
 	}
 
-	/**
-	 * @return Game board's tiles.
+	/* (non-Javadoc)
+	 * @see quoridor.IGame#tiles()
 	 */
+	@Override
 	public List<List<Tile>> tiles() {
 		/* It's a bit silly to wrap it in accessor, as it's a mutable
 		 * object. */
 		return this.tiles;
 	}
 
-	/**
-	 * @return Game's players.
+	/* (non-Javadoc)
+	 * @see quoridor.IGame#players()
 	 */
+	@Override
 	public List<Player> players() {
 		/* It's a bit silly to wrap it in accessor, as it's a mutable
 		 * object. */
 		return this.players;
 	}
 
-	/**
-	 * @return Player whose turn it is.
+	/* (non-Javadoc)
+	 * @see quoridor.IGame#currentPlayer()
 	 */
+	@Override
 	public Player currentPlayer() {
 		return this.currentPlayer;
 	}
 
-	/**
-	 * Build wall between two points.
-	 *
-	 * @param from First endpoint of wall.
-	 * @param to Second endpoint of wall.
-	 *
-	 * @throws TileOccupiedException if building the wall fails e.g. due to
-	 * a tile being occupied by a player or wall, or if it would cut off
-	 * one of the players.
+	/* (non-Javadoc)
+	 * @see quoridor.IGame#buildWall(java.awt.Point, java.awt.Point)
 	 */
+	@Override
 	public void buildWall(Point from, Point to) throws CommandRollbackException {
 		getTile(from).setWall();
 		getTile(to).setWall();
@@ -216,22 +202,16 @@ public class Game {
 		return true;
 	}
 
-	/**
-	 * Compare two game objects for equality.
-	 *
-	 * They are considered equal if:
-	 * - Their width and height is equal
-	 * - All their players are equal
-	 * - All their tiles are equal
-	 *
-	 * @return Whether the two objects are equal.
+	/* (non-Javadoc)
+	 * @see quoridor.IGame#equals(java.lang.Object)
 	 */
+	@Override
 	public boolean equals(Object other) {
 		if (!(other instanceof Game)) {
 			return false;
 		}
 
-		Game game = (Game)other;
+		IGame game = (IGame)other;
 
 		return (
 				game.width() == this.width &&
@@ -241,10 +221,10 @@ public class Game {
 		);
 	}
 
-	/**
-	 * @return String representation of game object, suitable for
-	 * consumption by humans.
+	/* (non-Javadoc)
+	 * @see quoridor.IGame#toString()
 	 */
+	@Override
 	public String toString() {
 		String size = String.format("%sx%s", this.width, this.height);
 		String players = "";
@@ -256,9 +236,10 @@ public class Game {
 		return String.format("Size: %s\nPlayers:\n%s", size, players);
 	}
 
-	/**
-	 * @return True if one of the game's players has reached his target.
+	/* (non-Javadoc)
+	 * @see quoridor.IGame#isOver()
 	 */
+	@Override
 	public boolean isOver() {
 		for (Player player : this.players) {
 			if (player.hasFinished()) {
@@ -270,12 +251,10 @@ public class Game {
 		return false;
 	}
 
-	/**
-	 * Main game loop. Continuously ask players for commands and execute
-	 * them, until one of the players has won the game.
-	 *
-	 * @param renderer Renderer which to use to render game state.
+	/* (non-Javadoc)
+	 * @see quoridor.IGame#play(quoridor.Renderer)
 	 */
+	@Override
 	public void play(Renderer renderer)
 	{
 		for (Player player : this.players) {
@@ -283,7 +262,7 @@ public class Game {
 		}
 		System.out.println(renderer.render());
 
-		UserInteraction ui = new UserInteraction(this);
+		IUserInteraction ui = new UserInteraction(this);
 
 		while(!this.isOver()) {
 			ICommand command = ui.askNextCommand();
@@ -306,21 +285,16 @@ public class Game {
 	 * Read specification from gamess/game1.txt, and start game.
 	 */
 	public static void main(String[] args) throws ParserException, IOException {
-		Game game = Parser.parseFromFile("games/game1.txt");
+		IGame game = Parser.parseFromFile("games/game1.txt");
 		Renderer renderer = new Renderer(game);
 
 		game.play(renderer);
 	}
 
-	/**
-	 * Convert this game's board to a two-dimensional array of integers
-	 * suitable for the pathfinding algorithm.
-	 *
-	 * Free (passable) tiles will be represented as a 0, whereas walls will
-	 * be represented as a 1.
-	 *
-	 * @return Two-dimensonal integer array representing game board.
+	/* (non-Javadoc)
+	 * @see quoridor.IGame#toPathFindingBoard()
 	 */
+	@Override
 	public int[][] toPathFindingBoard() {
 		int[][] board = new int[this.width][this.height];
 

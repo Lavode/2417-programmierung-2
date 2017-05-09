@@ -12,7 +12,7 @@ import quoridor.Player;
 
 public class PlayerTest
 {
-	private Game game;
+	private IGame game;
 	private Player player;
 
 	@Before
