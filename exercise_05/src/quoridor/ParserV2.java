@@ -31,8 +31,11 @@ public class ParserV2 extends Parser
 	private int height;
 
 	public ParserV2() {
-		//TODO
-		this.game = ServiceLocator.instance().getGame();
+		this.game = new Game();
+	}
+
+	public ParserV2(IGame game) {
+		this.game = game;
 	}
 
 	public IGame parse(String input) throws ParserException {

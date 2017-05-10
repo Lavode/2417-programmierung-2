@@ -18,12 +18,15 @@ public class ParserV1 extends Parser
 
 	private IGame game;
 
+	public ParserV1() {
+		this.game = new Game();
+	}
+
 	/** 
 	 * Create new instance of Parser class.
 	 */
-	public ParserV1() {
-		//TODO
-		this.game = ServiceLocator.instance().getGame();
+	public ParserV1(IGame game) {
+		this.game = game;
 	}
 
 	/**

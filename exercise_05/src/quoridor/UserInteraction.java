@@ -17,7 +17,11 @@ public class UserInteraction implements IUserInteraction
 	 */
 	public UserInteraction(IGame game) {
 		this.game = game;
-		this.parser = ServiceLocator.instance().getCommandParser(this.game);
+		this.parser = new CommandParser(this.game);
+	}
+
+	public void setCommandParser(ICommandParser parser) {
+		this.parser = parser;
 	}
 
 	/* (non-Javadoc)

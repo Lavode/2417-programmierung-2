@@ -34,6 +34,8 @@ public interface IGame {
 	 */
 	void setDimension(int width, int height);
 
+	void setUserInteraction(IUserInteraction ui);
+
 	/**
 	 * Return tile at given position.
 	 *

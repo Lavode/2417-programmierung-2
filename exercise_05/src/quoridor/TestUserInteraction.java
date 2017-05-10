@@ -19,7 +19,11 @@ public class TestUserInteraction implements IUserInteraction {
 	 */
 	public TestUserInteraction(IGame game) {
 		this.game = game;
-		this.parser = ServiceLocator.instance().getCommandParser(this.game);
+		this.parser = new CommandParser(this.game);
+	}
+
+	public void setCommandParser(ICommandParser parser) {
+		this.parser = parser;
 	}
 
 	@Override

@@ -12,4 +12,6 @@ public interface IUserInteraction {
 	 */
 	ICommand askNextCommand();
 
+	void setCommandParser(ICommandParser parser);
+
 }

@@ -7,7 +7,8 @@ import java.util.List;
  *
  * Supports text-based output only.
  */
-public class Renderer {
+public class Renderer
+{
 	private static final char WALL_SIGN = '#';
 
 	private static final char BORDER_SIGN_HORIZONTAL = '-';

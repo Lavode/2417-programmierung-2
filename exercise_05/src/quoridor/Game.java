@@ -21,6 +21,8 @@ public class Game implements IGame {
 
 	protected List<List<Tile>> tiles;
 
+	private IUserInteraction userInteraction;
+
 	/**
 	 * Create a new instance of this class.
 	 *
@@ -31,6 +33,11 @@ public class Game implements IGame {
 		this.tiles = new ArrayList<List<Tile>>();
 		this.players = new ArrayList<Player>();
 		this.winner = null;
+		this.userInteraction = new UserInteraction(this);
+	}
+
+	public void setUserInteraction(IUserInteraction ui) {
+		this.userInteraction = ui;
 	}
 
 	/* (non-Javadoc)
@@ -262,10 +269,8 @@ public class Game implements IGame {
 		}
 		System.out.println(renderer.render());
 
-		IUserInteraction ui = new UserInteraction(this);
-
 		while(!this.isOver()) {
-			ICommand command = ui.askNextCommand();
+			ICommand command = this.userInteraction.askNextCommand();
 			try {
 				command.execute(this.currentPlayer);
 				this.switchCurrentPlayer();

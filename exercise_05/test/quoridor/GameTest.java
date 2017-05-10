@@ -141,14 +141,17 @@ public class GameTest
 
 	@Test
 	public void playIsQuiet() throws ParserException, IOException {
-		ServiceLocator.setServiceLocator(new TestServiceLocator());
-		IGame game = Parser.parseFromFile("games/game1.txt");
+		IGame game = new TestGame();
+		game = Parser.parseFromFile("games/game1.txt", game);
+		game.setUserInteraction(new TestUserInteraction(game));
 		Renderer renderer = new Renderer(game);
 
 		game.play(renderer);
 
 		/*
-		 * This test serves no real use, other than to demonstrate that, by using the TestServiceLocator, game.play() produces no visible output.
+		 * This test serves no real use, other than to demonstrate
+		 * that, by using the service locator / dependency injection
+		 * pattern, game.play() produces no visible output.
 		 */
 	}
 }
