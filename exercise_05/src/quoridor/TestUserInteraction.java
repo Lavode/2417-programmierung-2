@@ -15,7 +15,7 @@ public class TestUserInteraction implements IUserInteraction {
 	/**
 	 * Create new instance of this class.
 	 *
-	 * @parma game Game which the user interaction is for.
+	 * @param game Game which the user interaction is for.
 	 */
 	public TestUserInteraction(IGame game) {
 		this.game = game;
@@ -30,28 +30,23 @@ public class TestUserInteraction implements IUserInteraction {
 	private ICommand getCommand() {
 
 		while (true) {
-			int i = (int)Math.random()*4;
+			int i = (int)(Math.random() * 4);
 			String input = "";
-			switch(i)
-			{
-			case 1: input = "u";
+			switch(i) {
+				case 1: input = "u";
 					break;
-			case 2: input = "d";
+				case 2: input = "d";
 					break;
-			case 3: input = "l";
+				case 3: input = "l";
 					break;
-			case 0: input = "r";
+				case 0: input = "r";
 					break;
 			}
-			
+
 			try {
-				ICommand command = parser.parse(input);
-				return command;
+				return parser.parse(input);
 			} catch (ParserException | CommandInvalidException e) {
-				
 			}
 		}
 	}
-		
-
 }

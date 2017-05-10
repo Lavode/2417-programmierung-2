@@ -23,9 +23,9 @@ public class TestGame extends Game implements IGame {
 				command.execute(this.currentPlayer);
 				this.switchCurrentPlayer();
 			} catch (TileOccupiedException e) {
-				
+
 			} catch (CommandRollbackException e) {
-			
+
 			}
 		}
 	}

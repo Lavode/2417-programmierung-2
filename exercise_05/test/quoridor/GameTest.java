@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.ArrayList;
 import java.awt.Point;
 
+import java.io.IOException;
+
 import static org.junit.Assert.*;
 
 import org.junit.Before;
@@ -135,5 +137,18 @@ public class GameTest
 		this.game.switchCurrentPlayer();
 
 		assertEquals(this.player1, this.game.currentPlayer());
+	}
+
+	@Test
+	public void playIsQuiet() throws ParserException, IOException {
+		ServiceLocator.setServiceLocator(new TestServiceLocator());
+		IGame game = Parser.parseFromFile("games/game1.txt");
+		Renderer renderer = new Renderer(game);
+
+		game.play(renderer);
+
+		/*
+		 * This test serves no real use, other than to demonstrate that, by using the TestServiceLocator, game.play() produces no visible output.
+		 */
 	}
 }
