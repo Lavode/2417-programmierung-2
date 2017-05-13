@@ -1,8 +1,8 @@
-# P2 FS17 lab status -  group02 #
+# P2 FS17 lab status -  group02 - testat completed #
+
 ## Lab 01 ##
 **Grade:** ok <br>
 **Feedback**: Very nice and clean conversion of glob to regex, simple and elegant solution. Good job! Commit messages and size/contents of commits are also okay.
-
 
 ## Lab 02 ##
 **Grade:**  ok<br>
@@ -53,3 +53,13 @@ The new parser works as well. Again, your methods there are rather long. Just re
 ## Lab 08 ##
 **Grade:** ok<br>
 **Feedback**: Good sketches, prototype is okay. Note: A prototype is not just a series of sketches, but something you can play around with. Ideally, you should create a paper board, and cut-outs for all the changeable/movable parts like players, walls, etc. The contents of text/input fields can be set using a pencil and an eraser.
+
+## Lab 09 ##
+**Grade:** ok<br>
+**Feedback**: Service locator works, well done. Careful: you may not always want your service locator to return a new instance of whatever object someone asks for. It’s often useful to just have one object (create by the SL itself, or set there by some other object) and always return that one, so everyone uses the same instance of that class.<br>
+
+Dependency injection: also well done!<br>
+
+Silent tests: works too, good job.<br>
+
+The game still appears to be fully functional with either dependency resolution methods. All in all, good work.
