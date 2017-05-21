@@ -1,6 +1,8 @@
 import exercise_10.Batch;
 import exercise_10.Book;
 import exercise_10.BookOrder;
+import exercise_10.OrderComponent;
+
 import org.junit.Test;
 
 import java.util.Calendar;
@@ -67,7 +69,7 @@ public class IntegrationTests {
 
 		// create batches through the order, so there is no need to add the batch to the
 		// order in an extra step
-		Batch emptyBatch = order.newBatch("Empty batch");
+		OrderComponent emptyBatch = order.newBatch("Empty batch");
 		Batch patternsBatch = order.newBatch("Design Patterns");
 
 		patternsBatch.addBook(patterns, 3);
