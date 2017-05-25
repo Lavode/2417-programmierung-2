@@ -109,4 +109,4 @@ the content in the books may be outdated.
 ## Deadline
 
 Submit your solutions by pushing your code to the git repository by
-___Thursday, 2 June, 13:00___.
+___Thursday, 1 June, 13:00___.
